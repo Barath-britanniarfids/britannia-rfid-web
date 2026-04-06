@@ -1,0 +1,218 @@
+.section {
+  padding: 6rem 2rem;
+  background: #f8fafc;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.heading {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timelineLine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #e2e8f0, #bfdbfe, #e2e8f0);
+  transform: translateX(-50%);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.rowLeft {}
+.rowRight {}
+
+.timelineCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 3px #bfdbfe;
+  flex-shrink: 0;
+}
+
+.textBlock {
+  padding: 1.5rem;
+}
+
+.rowLeft .textBlock {
+  text-align: right;
+  padding-right: 2rem;
+}
+
+.rowRight .textBlock {
+  text-align: left;
+  padding-left: 2rem;
+}
+
+.rowLeft .iconBadge {
+  margin-left: auto;
+}
+
+.iconBadge {
+  width: 42px;
+  height: 42px;
+  background: #eff6ff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  border: 1.5px solid #dbeafe;
+}
+
+.stepTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.stepDesc {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.65;
+}
+
+.imageBlock {
+  padding: 0.5rem;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 200px;
+  border-radius: 14px;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.imagePlaceholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  opacity: 0.85;
+  border-radius: 14px;
+}
+
+/* Real photo — fills container, hides the ::after overlay */
+.realImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  z-index: 1;
+}
+
+.realImg ~ .imgLabel {
+  display: none;
+}
+
+/* Remove the pseudo-overlay when a real image is present */
+.imagePlaceholder:has(.realImg)::after {
+  display: none;
+}
+
+.imgLabel {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 480px) {
+  .section { padding: 4rem 1.25rem; }
+  .imagePlaceholder { height: 160px; }
+}
+
+@media (max-width: 768px) {
+  .timelineLine {
+    left: 24px;
+  }
+
+  .row {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .timelineCenter {
+    grid-column: 1;
+    grid-row: 1;
+    justify-content: flex-start;
+    padding-left: 16px;
+  }
+
+  .textBlock {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left !important;
+    padding: 0 0 0 1rem !important;
+  }
+
+  .imageBlock {
+    grid-column: 2;
+    grid-row: 2;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .rowRight .imageBlock,
+  .rowLeft .imageBlock {
+    order: 3;
+  }
+
+  .iconBadge {
+    margin-left: 0 !important;
+  }
+
+  .rowLeft .iconBadge {
+    margin-left: 0;
+  }
+}

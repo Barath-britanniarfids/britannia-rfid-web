@@ -1,0 +1,410 @@
+/* ═══════════════════════════════════════════
+   HERO — light theme
+═══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  background: #f0f4ff;
+  background-image:
+    radial-gradient(ellipse 70% 60% at 75% 40%, rgba(59,130,246,0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(139,92,246,0.06) 0%, transparent 60%);
+  padding-top: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle dot-grid */
+.bgGrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(59,130,246,0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 90% 80% at 60% 40%, black 10%, transparent 75%);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════
+   TOP ROW
+══════════════════════════════════════════ */
+.topRow {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2.5rem 3rem 1.5rem;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+/* ── Orbital scene (left) ── */
+.orbitScene {
+  width: 420px;
+  height: 420px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.glowPulse {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+  transform: translate(-50%,-50%);
+  animation: pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.glowPulse2 {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  transform: translate(-50%,-50%);
+  animation: pulse 3s ease-in-out infinite 1.5s;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+  50%      { opacity: 1;   transform: translate(-50%,-50%) scale(1.1); }
+}
+
+.track {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  border-radius: 50%;
+  border: 1px dashed rgba(59,130,246,0.25);
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+/* Logo card — white glassmorphism */
+.logoCenter {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 10;
+  background: rgba(255,255,255,0.85);
+  border: 1.5px solid rgba(59,130,246,0.18);
+  border-radius: 18px;
+  padding: 1rem 1.2rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 40px rgba(37,99,235,0.12), 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Orbit arm */
+.arm {
+  position: absolute;
+  top: 50%; left: 50%;
+  height: 0;
+  width: var(--radius, 170px);
+  transform-origin: left center;
+  will-change: transform;
+}
+.armCW  { animation: orbitCW  var(--dur,20s) linear infinite; }
+.armCCW { animation: orbitCCW var(--dur,20s) linear infinite; }
+
+@keyframes orbitCW {
+  from { transform: rotate(var(--start,0deg)); }
+  to   { transform: rotate(calc(var(--start,0deg) + 360deg)); }
+}
+@keyframes orbitCCW {
+  from { transform: rotate(var(--start,0deg)); }
+  to   { transform: rotate(calc(var(--start,0deg) - 360deg)); }
+}
+
+/* Orbit node */
+.node {
+  position: absolute;
+  right: 0; top: 0;
+  transform: translate(50%,-50%);
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.nodeCW  { animation: counterCW  var(--dur,20s) linear infinite; }
+.nodeCCW { animation: counterCCW var(--dur,20s) linear infinite; }
+
+@keyframes counterCW {
+  from { transform: translate(50%,-50%) rotate(calc(-1 * var(--start,0deg))); }
+  to   { transform: translate(50%,-50%) rotate(calc(-1 * var(--start,0deg) - 360deg)); }
+}
+@keyframes counterCCW {
+  from { transform: translate(50%,-50%) rotate(calc(-1 * var(--start,0deg))); }
+  to   { transform: translate(50%,-50%) rotate(calc(-1 * var(--start,0deg) + 360deg)); }
+}
+
+/* Node icon — white card */
+.nodeIcon {
+  width: 44px; height: 44px;
+  background: #ffffff;
+  border: 1.5px solid color-mix(in srgb, var(--clr,#3b82f6) 35%, #e2e8f0);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clr,#3b82f6);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--clr,#3b82f6) 15%, transparent), 0 1px 4px rgba(0,0,0,0.06);
+}
+.nodeIcon svg { width: 20px; height: 20px; }
+
+.nodeLabel {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ── Workflow panel (right) ── */
+.rightPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem 1.5rem;
+  overflow: hidden;
+  border-radius: 20px;
+  min-width: 0;
+}
+
+/* Light glass panel */
+.rightPanel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(59,130,246,0.12);
+  border-radius: 20px;
+  box-shadow: 0 4px 32px rgba(59,130,246,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  pointer-events: none;
+}
+
+.logoBg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.logoSpinner {
+  opacity: 0.05;
+  transform-origin: center center;
+  animation: logoBgSpin 45s linear infinite;
+  flex-shrink: 0;
+  margin-right: -80px;
+}
+@keyframes logoBgSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.logoGlow {
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 70% 50%,
+    rgba(30,201,232,0.04) 0%,
+    rgba(216,27,176,0.02) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.wfHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0.25rem;
+}
+.wfBadgeDot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: dotBlink 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes dotBlink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+.wfBadgeText {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rightPanel > :not(.logoBg) { position: relative; z-index: 2; }
+
+/* ══════════════════════════════════════════
+   BOTTOM ROW — text content
+══════════════════════════════════════════ */
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  padding: 1.5rem 3rem 2.5rem;
+  border-top: 1px solid rgba(59,130,246,0.1);
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(240,244,255,0.95) 0%, transparent 100%);
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.2);
+  color: #2563eb;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+  width: fit-content;
+  align-self: flex-start;
+}
+
+.heading {
+  font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  flex: 0 0 auto;
+}
+
+.accent { color: #2563eb; }
+
+.desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 380px;
+  flex: 1 1 280px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.btnPrimary {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.65rem 1.6rem;
+  border-radius: 8px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  white-space: nowrap;
+}
+.btnPrimary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 6px 22px rgba(37,99,235,0.4); }
+
+.btnSecondary {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #475569;
+  font-size: 0.83rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.btnSecondary:hover { color: #0f172a; }
+
+.playRing {
+  width: 34px; height: 34px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+  flex-shrink: 0;
+  background: #fff;
+}
+.playRing svg polygon { fill: #2563eb; }
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex: 0 0 auto;
+  padding-left: 2rem;
+  border-left: 1px solid #e2e8f0;
+}
+.statItem { display: flex; flex-direction: column; gap: 0.1rem; }
+.statVal {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+}
+.statLabel {
+  font-size: 0.6rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+.statDivider {
+  width: 1px;
+  height: 28px;
+  background: #e2e8f0;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .topRow { grid-template-columns: 360px 1fr; padding: 2rem 2rem 1.5rem; }
+  .orbitScene { width: 360px; height: 360px; }
+  .content { padding: 1.5rem 2rem 2.5rem; }
+}
+
+@media (max-width: 860px) {
+  .topRow { grid-template-columns: 1fr; padding: 2rem 1.5rem 1rem; }
+  .orbitScene { width: 340px; height: 340px; margin: 0 auto; }
+  .content { padding: 1.5rem 1.5rem 2.5rem; }
+  .statsRow { padding-left: 0; border-left: none; border-top: 1px solid #e2e8f0; padding-top: 1rem; width: 100%; }
+}
+
+@media (max-width: 560px) {
+  .content { flex-direction: column; align-items: flex-start; }
+  .heading { font-size: 1.8rem; }
+  .actions { flex-wrap: wrap; }
+  .orbitScene { width: 300px; height: 300px; }
+}
+
+@media (max-width: 360px) {
+  .orbitScene { width: 260px; height: 260px; }
+  .topRow { padding: 1.5rem 1rem 1rem; }
+  .content { padding: 1.25rem 1rem 2rem; gap: 1rem 1.5rem; }
+  .heading { font-size: 1.55rem; }
+}
