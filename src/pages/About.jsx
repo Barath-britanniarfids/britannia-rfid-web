@@ -119,21 +119,27 @@ const About = () => {
             ...fadeLeft(heroVisible, 0),
             flex: isMobile ? "unset" : "0 0 520px",
             width: isMobile ? "100%" : "auto",
-            height: isMobile ? "auto" : 420,
-            borderRadius: 30,
-            overflow: "hidden",
           }}
         >
-          <img
-            src={sourceimg}
-            alt="Source Tagging"
+          <div
             style={{
               width: "100%",
-              height: "100%",
-              objectFit: "cover",
+              height: isMobile ? "auto" : 420,
               borderRadius: 30,
+              overflow: "hidden",
             }}
-          />
+          >
+            <img
+              src={sourceimg}
+              alt="Source Tagging"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+          </div>
         </div>
         <div style={{ ...fadeRight(heroVisible, 0.15), flex: 1 }}>
           <h1
