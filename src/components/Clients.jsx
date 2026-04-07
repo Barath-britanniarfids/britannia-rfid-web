@@ -1,9 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return width;
+};
+
 const Clients = () => {
   const [hoveredLink, setHoveredLink] = useState(null);
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
+
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+  const isTablet = width < 1024;
 
   const navLinks = ["HOME", "PRODUCT", "ABOUT", "CLIENT", "CONTACT"];
 
@@ -152,8 +166,21 @@ const Clients = () => {
   return (
     <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", background: "#fff", color: "#1a1a1a", minHeight: "100vh", overflowX: "hidden" }}>
       {/* Hero Banner */}
-      <section style={{ background: "linear-gradient(135deg, #f0e6ef 0%, #e8dce8 25%, #d6e5ee 50%, #e4dce6 75%, #efe7ef 100%)", padding: "80px 60px 70px", textAlign: "center" }}>
-        <h1 style={{ fontSize: 52, fontWeight: 800, margin: "0 0 18px", lineHeight: 1.15, color: "#111", maxWidth: 650, marginLeft: "auto", marginRight: "auto" }}>
+      <section style={{
+        background: "linear-gradient(135deg, #f0e6ef 0%, #e8dce8 25%, #d6e5ee 50%, #e4dce6 75%, #efe7ef 100%)",
+        padding: isMobile ? "60px 20px 70px" : isTablet ? "70px 40px 70px" : "80px 60px 70px",
+        textAlign: "center",
+      }}>
+        <h1 style={{
+          fontSize: isMobile ? 32 : 52,
+          fontWeight: 800,
+          margin: "0 0 18px",
+          lineHeight: 1.15,
+          color: "#111",
+          maxWidth: 650,
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}>
           Behind the Success of Modern Industry Leaders
         </h1>
         <p style={{ fontSize: 15, color: "#555", margin: 0, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
@@ -168,11 +195,22 @@ const Clients = () => {
       </section>
 
       {/* Stats */}
-      <section style={{ padding: "40px 60px 70px" }}>
-        <div style={{ display: "flex", justifyContent: "center", gap: 80, maxWidth: 1000, margin: "0 auto" }}>
+      <section style={{ padding: isMobile ? "40px 20px 70px" : "40px 60px 70px" }}>
+        <div style={{
+          display: "flex",
+          flexWrap: isMobile ? "wrap" : "nowrap",
+          justifyContent: "center",
+          gap: isMobile ? 20 : 80,
+          maxWidth: 1000,
+          margin: "0 auto",
+        }}>
           {stats.map((s) => (
-            <div key={s.label} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 48, fontWeight: 900, color: s.color, lineHeight: 1.1 }}>{s.value}</div>
+            <div key={s.label} style={{
+              textAlign: "center",
+              flex: isMobile ? "0 1 calc(50% - 10px)" : "unset",
+              boxSizing: "border-box",
+            }}>
+              <div style={{ fontSize: isMobile ? 36 : 48, fontWeight: 900, color: s.color, lineHeight: 1.1 }}>{s.value}</div>
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, color: "#333", marginTop: 8, textTransform: "uppercase" }}>{s.label}</div>
             </div>
           ))}
@@ -180,23 +218,24 @@ const Clients = () => {
       </section>
 
       {/* Testimonial */}
-      <section style={{ background: "#f7f9fb", padding: "70px 60px", textAlign: "center" }}>
-        <div style={{ fontSize: 40, fontWeight: 800, color: "#0B73C8", marginBottom: 24 }}>99</div>
-        <p style={{ fontSize: 20, lineHeight: 1.65, color: "#333", maxWidth: 600, margin: "0 auto", fontWeight: 400 }}>
+      <section style={{ background: "#f7f9fb", padding: isMobile ? "50px 20px" : "70px 60px", textAlign: "center" }}>
+        <div style={{ fontSize: isMobile ? 32 : 40, fontWeight: 800, color: "#0B73C8", marginBottom: 24 }}>99</div>
+        <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.65, color: "#333", maxWidth: 600, margin: "0 auto", fontWeight: 400 }}>
           "BRFID transformed our supply chain visibility overnight. Their engineering team understood our specific warehousing challenges and delivered a system that outperformed all our KPIs."
         </p>
       </section>
 
       {/* CTA Section */}
-      <section style={{ padding: "70px 60px" }}>
+      <section style={{ padding: isMobile ? "50px 20px" : "70px 60px" }}>
         <div style={{
           maxWidth: 900, margin: "0 auto", borderRadius: 20, overflow: "hidden",
           background: "linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 30%, #6a4a7a 60%, #8a5a6a 80%, #5a6a8a 100%)",
-          padding: "70px 60px", textAlign: "center", position: "relative",
+          padding: isMobile ? "50px 24px" : "70px 60px",
+          textAlign: "center", position: "relative",
         }}>
           {/* Subtle circuit pattern overlay */}
           <div style={{ position: "absolute", inset: 0, opacity: 0.08, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,255,255,0.3) 30px, rgba(255,255,255,0.3) 31px), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.3) 30px, rgba(255,255,255,0.3) 31px)" }} />
-          <h2 style={{ fontSize: 38, fontWeight: 800, color: "#fff", margin: "0 0 16px", position: "relative", fontStyle: "italic" }}>
+          <h2 style={{ fontSize: isMobile ? 26 : 38, fontWeight: 800, color: "#fff", margin: "0 0 16px", position: "relative", fontStyle: "italic" }}>
             Let's Build Your Smart Infrastructure
           </h2>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,0.75)", margin: 0, maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.6, position: "relative" }}>

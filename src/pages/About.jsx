@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MapPin, Eye, Sparkles, Waves, Shield, Wind } from "lucide-react";
 import sourceimg from '../../public/images/Source Tagging.png'
 import containerimg from '../../public/images/Container.png'
+
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return width;
+};
+
 const About = () => {
   const [hoveredLink, setHoveredLink] = useState(null);
   const [hoveredValue, setHoveredValue] = useState(null);
+
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+  const isTablet = width < 1024;
 
   const navLinks = ["HOME", "PRODUCT", "ABOUT", "CLIENT", "CONTACT"];
   const values = [
@@ -25,7 +40,7 @@ const About = () => {
           <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: -0.5 }}>(( Britannia ))</span>
           <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, marginTop: -2 }}>RFID</span>
         </div>
-        <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
+        <div style={{ display: isMobile ? "none" : "flex", gap: 32, alignItems: "center" }}>
           {navLinks.map((l) => (
             <span
               key={l}
@@ -47,6 +62,7 @@ const About = () => {
         </div>
         <button
           style={{
+            display: isMobile ? "none" : "block",
             background: "#0B73C8",
             color: "#fff",
             border: "none",
@@ -65,12 +81,26 @@ const About = () => {
       </nav>
 
       {/* Hero: About Us */}
-      <section style={{ padding: "120px 80px", display: "flex", gap: 80, alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
-        <div style={{ flex: "0 0 520px", height: 440, borderRadius: 20, overflow: "hidden" }}>
+      <section style={{
+        padding: isMobile ? "60px 20px" : isTablet ? "80px 40px" : "120px 80px",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? 40 : 80,
+        alignItems: "center",
+        maxWidth: 1400,
+        margin: "0 auto",
+      }}>
+        <div style={{
+          flex: isMobile ? "unset" : "0 0 520px",
+          width: isMobile ? "100%" : "auto",
+          height: isMobile ? "auto" : 440,
+          borderRadius: 20,
+          overflow: "hidden",
+        }}>
           <img src={sourceimg} alt="Source Tagging" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 20 }} />
         </div>
         <div style={{ flex: 1 }}>
-          <h1 style={{ fontSize: 56, fontWeight: 800, margin: "0 0 16px", color: "#111" }}>About us</h1>
+          <h1 style={{ fontSize: isMobile ? 40 : 56, fontWeight: 800, margin: "0 0 16px", color: "#111" }}>About us</h1>
           <p style={{ fontSize: 15, fontWeight: 600, letterSpacing: 3, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 24px" }}>
             Visibility Starts Here
           </p>
@@ -81,9 +111,17 @@ const About = () => {
       </section>
 
       {/* Automate Warehouse Section */}
-      <section style={{ padding: "120px 80px", display: "flex", gap: 80, alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
-        <div style={{ flex: 1 }}>
-          <h2 style={{ fontSize: 52, fontWeight: 800, margin: "0 0 16px", lineHeight: 1.15, color: "#111" }}>
+      <section style={{
+        padding: isMobile ? "60px 20px" : isTablet ? "80px 40px" : "120px 80px",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? 40 : 80,
+        alignItems: "center",
+        maxWidth: 1400,
+        margin: "0 auto",
+      }}>
+        <div style={{ flex: 1, order: isMobile ? 2 : 1 }}>
+          <h2 style={{ fontSize: isMobile ? 36 : 52, fontWeight: 800, margin: "0 0 16px", lineHeight: 1.15, color: "#111" }}>
             Automate<br />Warehouse<br />Intelligence.
           </h2>
           <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: 3, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 24px" }}>
@@ -93,16 +131,29 @@ const About = () => {
             Zero-touch inventory control. Deploy tunnel scanners and overhead readers to process thousands of items in seconds, eliminating human error.
           </p>
         </div>
-        <div style={{ flex: "0 0 560px", height: 400, borderRadius: 20, overflow: "hidden" }}>
+        <div style={{
+          flex: isMobile ? "unset" : "0 0 560px",
+          width: isMobile ? "100%" : "auto",
+          height: isMobile ? "auto" : 400,
+          borderRadius: 20,
+          overflow: "hidden",
+          order: isMobile ? 1 : 2,
+        }}>
           <img src={containerimg} alt="Container" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 20 }} />
         </div>
       </section>
 
       {/* Mission & Vision - Blue Section */}
-      <section style={{ background: "#3B8DD0", padding: "120px 80px" }}>
-        <div style={{ display: "flex", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+      <section style={{ background: "#3B8DD0", padding: isMobile ? "60px 20px" : isTablet ? "80px 40px" : "120px 80px" }}>
+        <div style={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          gap: 40,
+          maxWidth: 1400,
+          margin: "0 auto",
+        }}>
           {/* Mission Card */}
-          <div style={{ flex: 1, background: "#fff", borderRadius: 20, padding: "48px 40px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
+          <div style={{ flex: 1, background: "#fff", borderRadius: 20, padding: isMobile ? "36px 24px" : "48px 40px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
             <div style={{ width: 48, height: 48, borderRadius: 10, background: "#EBF5FF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
               <MapPin size={24} color="#0B73C8" />
             </div>
@@ -112,7 +163,7 @@ const About = () => {
             </p>
           </div>
           {/* Vision Card */}
-          <div style={{ flex: 1, background: "#fff", borderRadius: 20, padding: "48px 40px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
+          <div style={{ flex: 1, background: "#fff", borderRadius: 20, padding: isMobile ? "36px 24px" : "48px 40px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
             <div style={{ width: 48, height: 48, borderRadius: 10, background: "#EBF5FF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
               <Eye size={24} color="#0B73C8" />
             </div>
@@ -125,11 +176,16 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section style={{ padding: "120px 80px", background: "#f7f9fb" }}>
+      <section style={{ padding: isMobile ? "60px 20px" : isTablet ? "80px 40px" : "120px 80px", background: "#f7f9fb" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: 40, fontWeight: 700, margin: "0 0 10px", color: "#111" }}>The Values We Live By</h2>
+          <h2 style={{ fontSize: isMobile ? 30 : 40, fontWeight: 700, margin: "0 0 10px", color: "#111" }}>The Values We Live By</h2>
           <div style={{ width: 50, height: 4, background: "#0B73C8", borderRadius: 2, margin: "16px auto 60px" }} />
-          <div style={{ display: "flex", gap: 32, justifyContent: "center" }}>
+          <div style={{
+            display: "flex",
+            flexWrap: isTablet ? "wrap" : "nowrap",
+            gap: 32,
+            justifyContent: "center",
+          }}>
             {values.map((v, i) => {
               const Icon = v.icon;
               return (
@@ -138,7 +194,7 @@ const About = () => {
                   onMouseEnter={() => setHoveredValue(i)}
                   onMouseLeave={() => setHoveredValue(null)}
                   style={{
-                    flex: "0 1 280px",
+                    flex: isMobile ? "0 1 100%" : isTablet ? "0 1 calc(50% - 16px)" : "0 1 280px",
                     background: "#fff",
                     borderRadius: 16,
                     padding: "40px 28px 36px",
@@ -147,6 +203,7 @@ const About = () => {
                     transform: hoveredValue === i ? "translateY(-4px)" : "none",
                     boxShadow: hoveredValue === i ? "0 8px 30px rgba(11,115,200,0.12)" : "0 2px 12px rgba(0,0,0,0.04)",
                     cursor: "default",
+                    boxSizing: "border-box",
                   }}
                 >
                   <div
@@ -174,10 +231,18 @@ const About = () => {
       </section>
 
       {/* Footer */}
-      <footer style={{ background: "#0a1628", color: "#c0c8d4", padding: "60px 60px 40px" }}>
-        <div style={{ display: "flex", gap: 60, maxWidth: 1200, margin: "0 auto", paddingBottom: 40, borderBottom: "1px solid #1e2d42" }}>
+      <footer style={{ background: "#0a1628", color: "#c0c8d4", padding: isMobile ? "60px 20px 40px" : "60px 60px 40px" }}>
+        <div style={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? 32 : 60,
+          maxWidth: 1200,
+          margin: "0 auto",
+          paddingBottom: 40,
+          borderBottom: "1px solid #1e2d42",
+        }}>
           {/* Brand */}
-          <div style={{ flex: "0 0 240px" }}>
+          <div style={{ flex: isMobile ? "unset" : "0 0 240px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
               <div style={{ width: 28, height: 28, borderRadius: 6, background: "#0B73C8", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <span style={{ color: "#fff", fontSize: 11, fontWeight: 700 }}>B</span>

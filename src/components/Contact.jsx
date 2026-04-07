@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AtSign, Phone, MapPin, Share2, Send } from "lucide-react";
 import contactimg from '../../public/images/img.png'
+
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return width;
+};
 
 const Contact = () => {
   const [hoveredLink, setHoveredLink] = useState(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState(null);
+
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+  const isTablet = width < 1024;
 
   const navLinks = ["HOME", "PRODUCT", "ABOUT", "CLIENT", "CONTACT"];
   const footerSolutions = ["Smart Retail", "Warehouse Automation", "Source Tagging", "Asset Tracking"];
@@ -37,9 +51,19 @@ const Contact = () => {
     <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", background: "#fff", color: "#1a1a1a", minHeight: "100vh", overflowX: "hidden" }}>
 
       {/* Hero Section */}
-      <section style={{ background: "linear-gradient(135deg, #faf5f5 0%, #f5eeef 40%, #eee8e4 70%, #f0eae6 100%)", padding: "100px 80px 90px", display: "flex", gap: 60, alignItems: "center", maxWidth: 1400, margin: "0 auto", position: "relative" }}>
+      <section style={{
+        background: "linear-gradient(135deg, #faf5f5 0%, #f5eeef 40%, #eee8e4 70%, #f0eae6 100%)",
+        padding: isMobile ? "60px 20px 90px" : isTablet ? "80px 40px 90px" : "100px 80px 90px",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? 40 : 60,
+        alignItems: "center",
+        maxWidth: 1400,
+        margin: "0 auto",
+        position: "relative",
+      }}>
         <div style={{ flex: 1, paddingTop: 10 }}>
-          <h1 style={{ fontSize: 64, fontWeight: 800, margin: "0 0 24px", lineHeight: 1.1, color: "#111" }}>
+          <h1 style={{ fontSize: isMobile ? 44 : 64, fontWeight: 800, margin: "0 0 24px", lineHeight: 1.1, color: "#111" }}>
             Get in <span style={{ color: "#0B73C8" }}>Touch</span>
           </h1>
           <p style={{ fontSize: 18, lineHeight: 1.8, color: "#555", margin: 0, maxWidth: 420 }}>
@@ -47,34 +71,51 @@ const Contact = () => {
             Connect with us to discuss your needs or discover new possibilities in technology.
           </p>
         </div>
-        <div style={{ flex: "0 0 520px", position: "relative" }}>
-          <div style={{ width: 520, height: 340, borderRadius: 18, overflow: "hidden" }}>
+        <div style={{ flex: isMobile ? "unset" : "0 0 520px", width: isMobile ? "100%" : "auto", position: "relative" }}>
+          <div style={{ width: isMobile ? "100%" : 520, height: 340, borderRadius: 18, overflow: "hidden" }}>
             <img src={contactimg} alt="Contact" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 18 }} />
           </div>
           {/* Response Time Card */}
-          <div style={{
-            position: "absolute", bottom: -36, left: -24,
-            background: "#fff", borderRadius: 16, padding: "24px 28px",
-            boxShadow: "0 8px 30px rgba(0,0,0,0.1)", minWidth: 260,
-          }}>
-            <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 10px" }}>
-              Our Response Time
-            </p>
-            <p style={{ fontSize: 16, color: "#333", margin: 0, fontWeight: 500, lineHeight: 1.5 }}>
-              "Expect a response within<br />4 business hours".
-            </p>
-          </div>
+          {!isMobile && (
+            <div style={{
+              position: "absolute", bottom: -36, left: -24,
+              background: "#fff", borderRadius: 16, padding: "24px 28px",
+              boxShadow: "0 8px 30px rgba(0,0,0,0.1)", minWidth: 260,
+            }}>
+              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 10px" }}>
+                Our Response Time
+              </p>
+              <p style={{ fontSize: 16, color: "#333", margin: 0, fontWeight: 500, lineHeight: 1.5 }}>
+                "Expect a response within<br />4 business hours".
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Contact Form + Info */}
-      <section style={{ padding: "100px 80px 80px", display: "flex", gap: 70, maxWidth: 1100, margin: "0 auto", alignItems: "center", justifyContent: "center" }}>
+      <section style={{
+        padding: isMobile ? "60px 20px 60px" : isTablet ? "80px 40px 80px" : "100px 80px 80px",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? 48 : 70,
+        maxWidth: 1100,
+        margin: "0 auto",
+        alignItems: isMobile ? "stretch" : "center",
+        justifyContent: "center",
+      }}>
         {/* Form Card */}
         <div style={{
-          flex: "0 0 480px", background: "#fff", borderRadius: 18, padding: "44px 38px",
-          border: "1px solid #e8ecf0", boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+          flex: isMobile ? "unset" : "0 0 480px",
+          width: isMobile ? "100%" : "auto",
+          background: "#fff",
+          borderRadius: 18,
+          padding: isMobile ? "32px 20px" : "44px 38px",
+          border: "1px solid #e8ecf0",
+          boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+          boxSizing: "border-box",
         }}>
-          <div style={{ display: "flex", gap: 18, marginBottom: 28 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 18, marginBottom: 28 }}>
             <div style={{ flex: 1 }}>
               <label style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Full Name</label>
               <input
@@ -185,7 +226,7 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section style={{ padding: "20px 60px 60px", maxWidth: 1200, margin: "0 auto" }}>
+      <section style={{ padding: isMobile ? "20px 20px 60px" : "20px 60px 60px", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{
           borderRadius: 16, border: "1px solid #e2e6ea", overflow: "hidden",
           background: "#f0f2f5", position: "relative", height: 300,

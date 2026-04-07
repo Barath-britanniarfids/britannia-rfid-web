@@ -1,10 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { products as productData } from "../data/products";
 
 /* ================================================================
    BRITANNIA RFID — PRODUCT PAGE
    Save as: ProductPage.jsx
    Usage: import ProductPage from "./ProductPage";
    ================================================================ */
+
+// ======================== RESPONSIVE HOOK ========================
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return width;
+};
 
 // ======================== LOGO ========================
 const BritanniaLogo = ({ size = "default" }) => {
@@ -37,6 +50,9 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const navItems = ["HOME", "PRODUCT", "ABOUT", "CLIENT", "CONTACT"];
 
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", h);
@@ -67,7 +83,7 @@ const Header = () => {
         }}
       >
         <BritanniaLogo />
-        <nav style={{ display: "flex", alignItems: "center", gap: 32 }}>
+        <nav style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: 32 }}>
           {navItems.map((item) => (
             <a
               key={item}
@@ -123,6 +139,10 @@ const Footer = () => {
     },
   ];
 
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+  const isTablet = width < 1024;
+
   return (
     <footer style={{ background: "#111118", color: "#fff", padding: "48px 24px 36px" }}>
       <div
@@ -130,7 +150,7 @@ const Footer = () => {
           maxWidth: 1200,
           margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
+          gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "1.5fr 1fr 1fr 1fr",
           gap: 40,
         }}
       >
@@ -177,236 +197,200 @@ const Footer = () => {
 };
 
 // ======================== HERO SECTION ========================
-const HeroSection = () => (
-  <section style={{ background: "#fafafa", padding: "60px 24px 80px", overflow: "hidden" }}>
-    <div
-      style={{
-        maxWidth: 1200,
-        margin: "0 auto",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 40,
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#0e7490" }} />
-          <span
+const HeroSection = () => {
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+
+  return (
+    <section style={{ background: "#fafafa", padding: "60px 24px 80px", overflow: "hidden" }}>
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          gap: 40,
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#0e7490" }} />
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: 1.5,
+                color: "#555",
+                textTransform: "uppercase",
+                fontFamily: "Inter, system-ui, sans-serif",
+              }}
+            >
+              Next-Gen RFID Ecosystem
+            </span>
+          </div>
+          <h1
             style={{
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: 1.5,
-              color: "#555",
-              textTransform: "uppercase",
+              fontSize: isMobile ? 32 : 48,
+              fontWeight: 800,
+              lineHeight: 1.1,
+              color: "#111",
+              margin: 0,
               fontFamily: "Inter, system-ui, sans-serif",
             }}
           >
-            Next-Gen RFID Ecosystem
-          </span>
-        </div>
-        <h1
-          style={{
-            fontSize: 48,
-            fontWeight: 800,
-            lineHeight: 1.1,
-            color: "#111",
-            margin: 0,
-            fontFamily: "Inter, system-ui, sans-serif",
-          }}
-        >
-          Smart RFID
-          <br />
-          <span style={{ color: "#0e7490" }}>Seamless</span>
-          <br />
-          <span style={{ color: "#0e7490" }}>Modern</span>
-          <br />
-          <span style={{ color: "#0e7490" }}>operation</span>
-        </h1>
-        <p
-          style={{
-            fontSize: 14,
-            color: "#666",
-            lineHeight: 1.7,
-            margin: "24px 0 32px",
-            maxWidth: 340,
-            fontFamily: "Inter, system-ui, sans-serif",
-          }}
-        >
-          Precision. Speed. Intelligence. We redefine inventory tracking and asset management
-          through ultra-high frequency technology.
-        </p>
-        <button
-          style={{
-            background: "#111",
-            color: "#fff",
-            border: "none",
-            borderRadius: 6,
-            padding: "14px 28px",
-            fontSize: 14,
-            fontWeight: 600,
-            cursor: "pointer",
-            fontFamily: "Inter, system-ui, sans-serif",
-          }}
-        >
-          Explore Products
-        </button>
-      </div>
-
-      <div style={{ position: "relative" }}>
-        <div
-          style={{
-            background: "linear-gradient(135deg, #0a1628 0%, #0d2137 40%, #0a1628 100%)",
-            borderRadius: 16,
-            height: 320,
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <svg
-            viewBox="0 0 400 320"
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-          >
-            <defs>
-              <radialGradient id="glow" cx="50%" cy="45%" r="50%">
-                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
-                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.1" />
-                <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-            <circle cx="200" cy="145" r="120" fill="url(#glow)" />
-            {[40, 65, 90, 115].map((r, i) => (
-              <circle
-                key={i}
-                cx="200"
-                cy="145"
-                r={r}
-                fill="none"
-                stroke="#06b6d4"
-                strokeOpacity={0.15 + i * 0.05}
-                strokeWidth="0.5"
-              />
-            ))}
-            <circle cx="200" cy="145" r="8" fill="#06b6d4" fillOpacity="0.6" />
-            <circle cx="200" cy="145" r="3" fill="#06b6d4" />
-            {Array.from({ length: 8 }).map((_, i) => {
-              const angle = (i * 45 * Math.PI) / 180;
-              return (
-                <line
-                  key={i}
-                  x1="200"
-                  y1="145"
-                  x2={200 + Math.cos(angle) * 130}
-                  y2={145 + Math.sin(angle) * 130}
-                  stroke="#06b6d4"
-                  strokeOpacity="0.08"
-                  strokeWidth="0.5"
-                />
-              );
-            })}
-          </svg>
-
-          <div
+            Smart RFID
+            <br />
+            <span style={{ color: "#0e7490" }}>Seamless</span>
+            <br />
+            <span style={{ color: "#0e7490" }}>Modern</span>
+            <br />
+            <span style={{ color: "#0e7490" }}>operation</span>
+          </h1>
+          <p
             style={{
-              position: "absolute",
-              bottom: 20,
-              left: 20,
-              right: 20,
-              background: "rgba(255,255,255,0.1)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 10,
-              padding: "12px 16px",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
+              fontSize: 14,
+              color: "#666",
+              lineHeight: 1.7,
+              margin: "24px 0 32px",
+              maxWidth: 340,
+              fontFamily: "Inter, system-ui, sans-serif",
             }}
           >
+            Precision. Speed. Intelligence. We redefine inventory tracking and asset management
+            through ultra-high frequency technology.
+          </p>
+          <button
+            style={{
+              background: "#111",
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              padding: "14px 28px",
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "Inter, system-ui, sans-serif",
+            }}
+          >
+            Explore Products
+          </button>
+        </div>
+
+        {!isMobile && (
+          <div style={{ position: "relative" }}>
             <div
               style={{
-                width: 28,
-                height: 28,
-                borderRadius: "50%",
-                background: "#06b6d4",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                background: "linear-gradient(135deg, #0a1628 0%, #0d2137 40%, #0a1628 100%)",
+                borderRadius: 16,
+                height: 320,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              <svg
+                viewBox="0 0 400 320"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+              >
+                <defs>
+                  <radialGradient id="glow" cx="50%" cy="45%" r="50%">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
+                    <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.1" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                <circle cx="200" cy="145" r="120" fill="url(#glow)" />
+                {[40, 65, 90, 115].map((r, i) => (
+                  <circle
+                    key={i}
+                    cx="200"
+                    cy="145"
+                    r={r}
+                    fill="none"
+                    stroke="#06b6d4"
+                    strokeOpacity={0.15 + i * 0.05}
+                    strokeWidth="0.5"
+                  />
+                ))}
+                <circle cx="200" cy="145" r="8" fill="#06b6d4" fillOpacity="0.6" />
+                <circle cx="200" cy="145" r="3" fill="#06b6d4" />
+                {Array.from({ length: 8 }).map((_, i) => {
+                  const angle = (i * 45 * Math.PI) / 180;
+                  return (
+                    <line
+                      key={i}
+                      x1="200"
+                      y1="145"
+                      x2={200 + Math.cos(angle) * 130}
+                      y2={145 + Math.sin(angle) * 130}
+                      stroke="#06b6d4"
+                      strokeOpacity="0.08"
+                      strokeWidth="0.5"
+                    />
+                  );
+                })}
               </svg>
-            </div>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>99.9% Accuracy</div>
-              <div style={{ fontSize: 10, color: "#94a3b8" }}>Real-time signal processing</div>
+
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                  background: "rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(10px)",
+                  borderRadius: 10,
+                  padding: "12px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <div
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    background: "#06b6d4",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>99.9% Accuracy</div>
+                  <div style={{ fontSize: 10, color: "#94a3b8" }}>Real-time signal processing</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
-  </section>
-);
-
-// ======================== PRODUCT DATA ========================
-const products = [
-  {
-    name: "RFID Bluetooth Inventory Scanner",
-    price: "$352.80",
-    model: "Model: BM02",
-    desc: "High-performance wireless handheld scanner for seamless mobile inventory tracking.",
-    img: "\u{1F4E1}",
-  },
-  {
-    name: "UHF RFID Channel Door",
-    price: "$1470.00",
-    model: "Model: RR702",
-    desc: "Industrial-grade gate reader for high-volume entry/exit logistics monitoring.",
-    img: "\u{1F6AA}",
-  },
-  {
-    name: "RFID Card Reader",
-    price: "$142.10",
-    model: "Model: RR602",
-    desc: "Fast-response desktop reader for personnel authentication and secure access.",
-    img: "\u{1F4B3}",
-  },
-  {
-    name: "RFID Self-Checkout Machine",
-    price: "$2450.00",
-    model: "Model: Retail S-1",
-    desc: "Revolutionary contactless checkout experience for high-traffic retail environments.",
-    img: "\u{1F3EA}",
-  },
-  {
-    name: "Android Dual-Screen Cash Register",
-    price: "$665.10",
-    model: "Model: POS-M1",
-    desc: "Integrated payment solution featuring dual high-definition touch displays.",
-    img: "\u{1F5A5}\u{FE0F}",
-  },
-  {
-    name: "High-Speed Tunnel Machine",
-    price: "$7840.00",
-    model: "Model: RR130",
-    desc: "Fully automated parcel scanning tunnel for enterprise logistics and sorting hubs.",
-    img: "\u{1F4E6}",
-  },
-];
+    </section>
+  );
+};
 
 // ======================== PRODUCT CARD ========================
 const ProductCard = ({ p }) => {
   const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div
+      onClick={() => navigate(`/products/${p.id}`)}
       style={{
         border: "1px solid #e8e8e8",
         borderRadius: 12,
         overflow: "hidden",
         background: "#fff",
-        transition: "box-shadow 0.2s",
+        transition: "box-shadow 0.2s, transform 0.2s",
         cursor: "pointer",
-        boxShadow: hovered ? "0 4px 20px rgba(0,0,0,0.08)" : "none",
+        boxShadow: hovered ? "0 4px 20px rgba(0,0,0,0.1)" : "none",
+        transform: hovered ? "translateY(-2px)" : "none",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -414,14 +398,40 @@ const ProductCard = ({ p }) => {
       <div
         style={{
           height: 180,
-          background: "#f5f5f5",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 60,
+          background: "#f0f4f8",
+          overflow: "hidden",
+          position: "relative",
         }}
       >
-        {p.img}
+        {p.image ? (
+          <img
+            src={p.image}
+            alt={p.name}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
+          />
+        ) : null}
+        <div
+          style={{
+            display: p.image ? "none" : "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            fontSize: 56,
+          }}
+        >
+          {p.icon || "📦"}
+        </div>
+        {p.badge && (
+          <span style={{
+            position: "absolute", top: 10, left: 10,
+            background: p.badgeColor || "#0e7490", color: "#fff",
+            fontSize: 10, fontWeight: 700, letterSpacing: 1,
+            padding: "3px 8px", borderRadius: 4, textTransform: "uppercase",
+          }}>
+            {p.badge}
+          </span>
+        )}
       </div>
       <div style={{ padding: "16px 18px 20px" }}>
         <div
@@ -453,7 +463,7 @@ const ProductCard = ({ p }) => {
               fontFamily: "Inter, system-ui, sans-serif",
             }}
           >
-            {p.price}
+            ${p.price?.toLocaleString?.() ?? p.price}
           </span>
         </div>
         <p
@@ -475,7 +485,7 @@ const ProductCard = ({ p }) => {
             fontFamily: "Inter, system-ui, sans-serif",
           }}
         >
-          {p.desc}
+          {p.shortDesc}
         </p>
       </div>
     </div>
@@ -483,101 +493,114 @@ const ProductCard = ({ p }) => {
 };
 
 // ======================== PRODUCTS SECTION ========================
-const ProductsSection = () => (
-  <section style={{ padding: "80px 24px", background: "#fff" }}>
-    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: 40,
-        }}
-      >
-        <div>
-          <h2
-            style={{
-              fontSize: 36,
-              fontWeight: 800,
-              color: "#111",
-              margin: 0,
-              lineHeight: 1.15,
-              fontFamily: "Inter, system-ui, sans-serif",
-            }}
-          >
-            Hardware Engineered for
-            <br />
-            Precision
-          </h2>
-          <p
-            style={{
-              fontSize: 14,
-              color: "#666",
-              margin: "16px 0 0",
-              lineHeight: 1.7,
-              maxWidth: 440,
-              fontFamily: "Inter, system-ui, sans-serif",
-            }}
-          >
-            Our hardware lineup integrates seamlessly into your existing workflow, providing
-            instant data clarity across every touchpoint.
-          </p>
+const ProductsSection = () => {
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+  const isTablet = width < 1024;
+
+  return (
+    <section style={{ padding: "80px 24px", background: "#fff" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            justifyContent: "space-between",
+            alignItems: isMobile ? "flex-start" : "flex-end",
+            marginBottom: 40,
+            gap: isMobile ? 16 : 0,
+          }}
+        >
+          <div>
+            <h2
+              style={{
+                fontSize: 36,
+                fontWeight: 800,
+                color: "#111",
+                margin: 0,
+                lineHeight: 1.15,
+                fontFamily: "Inter, system-ui, sans-serif",
+              }}
+            >
+              Hardware Engineered for
+              <br />
+              Precision
+            </h2>
+            <p
+              style={{
+                fontSize: 14,
+                color: "#666",
+                margin: "16px 0 0",
+                lineHeight: 1.7,
+                maxWidth: 440,
+                fontFamily: "Inter, system-ui, sans-serif",
+              }}
+            >
+              Our hardware lineup integrates seamlessly into your existing workflow, providing
+              instant data clarity across every touchpoint.
+            </p>
+          </div>
+          {!isMobile && (
+            <div style={{ display: "flex", gap: 8 }}>
+              <button
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  border: "1px solid #ddd",
+                  background: "#fff",
+                  cursor: "pointer",
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                ←
+              </button>
+              <button
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  border: "1px solid #ddd",
+                  background: "#fff",
+                  cursor: "pointer",
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                →
+              </button>
+            </div>
+          )}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <button
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              border: "1px solid #ddd",
-              background: "#fff",
-              cursor: "pointer",
-              fontSize: 16,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            \u2190
-          </button>
-          <button
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              border: "1px solid #ddd",
-              background: "#fff",
-              cursor: "pointer",
-              fontSize: 16,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            \u2192
-          </button>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+            gap: 24,
+          }}
+        >
+          {productData.map((p) => (
+            <ProductCard key={p.id} p={p} />
+          ))}
         </div>
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 24,
-        }}
-      >
-        {products.map((p, i) => (
-          <ProductCard key={i} p={p} />
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ======================== FEATURES SECTION ========================
 const FeaturesSection = () => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+
+  const width = useWindowWidth();
+  const isMobile = width < 768;
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -617,7 +640,7 @@ const FeaturesSection = () => {
           maxWidth: 1200,
           margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
           gap: 60,
           alignItems: "center",
         }}
