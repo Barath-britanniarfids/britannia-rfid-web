@@ -325,7 +325,7 @@ const About = () => {
                 margin: 0,
               }}
             >
-              Empowering businesses with smart RFID solutions for greater
+              Empowering businesses with smart RFID Technologies for greater
               visibility, precision, and seamless supply chain efficiency.
             </p>
           </div>

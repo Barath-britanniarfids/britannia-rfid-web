@@ -20,11 +20,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
-          <img
-            src={brfidLogo}
-            alt="BRFID Logo"
-            style={{ height: 40, width: "auto" }}
-          />
+          <img src={brfidLogo} alt="BRFID Logo" style={{ height: 48, width: 'auto' }} />
         </Link>
 
         <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>

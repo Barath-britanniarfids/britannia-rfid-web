@@ -26,6 +26,7 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
+  margin-left: -6%;
 }
 
 .navLinks {

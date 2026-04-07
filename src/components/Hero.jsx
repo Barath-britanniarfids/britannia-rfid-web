@@ -1,10 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import BritanniaLogo from './BritanniaLogo'
 import styles from './Hero.module.css'
 
 /* ─── CONFIG ─── */
-const H = 10  // 1000vh — more scroll = slower, cinematic feel
+const H = 5   // 400vh — ~2-3 scrolls per stage
 const N = 6   // stages: 0=intro, 1-5=flow steps
 
 /* ─── FLOW STAGES ─── */
@@ -41,7 +40,7 @@ const STAGES = [
   },
 ]
 
-/* ─── ORBIT NODES ─── */
+/* ─── ORBIT NODES — inner ring (CW, 24s) ─── */
 const orbitItems = [
   {
     angle: 0, radius: 165, dur: 24, label: 'Tag & Encode', clr: '#1EC9E8',
@@ -65,11 +64,39 @@ const orbitItems = [
   },
 ]
 
+/* ─── ORBIT NODES — outer ring (CCW, 36s, offset 30°) ─── */
+const orbitItems2 = [
+  {
+    angle: 30, radius: 275, dur: 36, label: 'Inventory', clr: '#34ace0',
+    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>,
+  },
+  {
+    angle: 90, radius: 275, dur: 36, label: 'Asset Track', clr: '#f59e0b',
+    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  },
+  {
+    angle: 150, radius: 275, dur: 36, label: 'Security', clr: '#1EC9E8',
+    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>,
+  },
+  {
+    angle: 210, radius: 275, dur: 36, label: 'Supply Chain', clr: '#C2D600',
+    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
+  },
+  {
+    angle: 270, radius: 275, dur: 36, label: 'Real-time Alerts', clr: '#D81BB0',
+    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><circle cx="12" cy="3" r="1" fill="currentColor" stroke="none"/></svg>,
+  },
+  {
+    angle: 330, radius: 275, dur: 36, label: 'ERP Integration', clr: '#3b82f6',
+    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="7" height="7" rx="1"/><rect x="15" y="3" width="7" height="7" rx="1"/><rect x="2" y="14" width="7" height="7" rx="1"/><rect x="15" y="14" width="7" height="7" rx="1"/><line x1="9" y1="6.5" x2="15" y2="6.5"/><line x1="9" y1="17.5" x2="15" y2="17.5"/><line x1="12" y1="10" x2="12" y2="14"/></svg>,
+  },
+]
+
 /* ─── PURE HELPERS ─── */
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
 const lerp  = (a, b, t)   => a + (b - a) * t
 
-/* ─── ORBIT NODE (static) ─── */
+/* ─── ORBIT NODE inner (CW) ─── */
 function OrbitNode({ item }) {
   return (
     <div
@@ -81,6 +108,24 @@ function OrbitNode({ item }) {
         style={{ '--start': `${item.angle}deg`, '--dur': `${item.dur}s`, '--clr': item.clr }}
       >
         <div className={styles.nodeIcon} style={{ '--clr': item.clr }}>{item.icon}</div>
+        <span className={styles.nodeLabel}>{item.label}</span>
+      </div>
+    </div>
+  )
+}
+
+/* ─── ORBIT NODE outer (CCW, circular style) ─── */
+function OrbitNode2({ item }) {
+  return (
+    <div
+      className={styles.arm2}
+      style={{ '--start': `${item.angle}deg`, '--radius': `${item.radius}px`, '--dur': `${item.dur}s` }}
+    >
+      <div
+        className={styles.node2}
+        style={{ '--start': `${item.angle}deg`, '--dur': `${item.dur}s`, '--clr': item.clr }}
+      >
+        <div className={styles.nodeIcon2} style={{ '--clr': item.clr }}>{item.icon}</div>
         <span className={styles.nodeLabel}>{item.label}</span>
       </div>
     </div>
@@ -301,9 +346,17 @@ export default function Hero() {
         <div ref={elOrbital} className={styles.orbital}>
           <div className={styles.glowPulse} />
           <div className={styles.glowPulse2} />
+          {/* inner track */}
           <div className={styles.track} style={{ '--r': '165px' }} />
-          <div className={styles.logoCenter}><BritanniaLogo width={160} /></div>
+          {/* outer track */}
+          <div className={styles.trackOuter} style={{ '--r': '275px' }} />
+          <div className={styles.logoCenter}>
+            <img src="/images/brfid-logo.png" alt="Britannia RFID" style={{ height: 68, width: 'auto' }} />
+          </div>
+          {/* inner ring — CW */}
           {orbitItems.map(item => <OrbitNode key={item.label} item={item} />)}
+          {/* outer ring — CCW */}
+          {orbitItems2.map(item => <OrbitNode2 key={item.label} item={item} />)}
         </div>
 
         {/* ── INTRO CONTENT ── */}
@@ -313,7 +366,7 @@ export default function Hero() {
           style={{ transformOrigin: 'center center' }}
         >
           <div className={styles.introInner}>
-            <span className={styles.badge}>AI-POWERED RFID SOLUTIONS</span>
+            <span className={styles.badge}>AI-POWERED RFID Technologies</span>
             <h1 className={styles.introHeading}>
               AI-Powered RFID.<br />
               <span className={styles.accent}>Intelligent. Accurate. Scalable.</span>

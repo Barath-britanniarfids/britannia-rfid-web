@@ -180,10 +180,10 @@
 .orbital {
   position: absolute;
   top: 50%;
-  left: 66%;
-  width: 420px;
-  height: 420px;
-  margin-top: calc(-210px + 36px);
+  left: 70%;
+  width: 560px;
+  height: 560px;
+  margin-top: calc(-280px + 36px);
   transform-origin: center center;
   will-change: transform, opacity;
   pointer-events: none;
@@ -192,9 +192,9 @@
 .glowPulse {
   position: absolute;
   top: 50%; left: 50%;
-  width: 210px; height: 210px;
+  width: 240px; height: 240px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(52,172,224,0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(52,172,224,0.20) 0%, transparent 70%);
   transform: translate(-50%,-50%);
   animation: pulse 3s ease-in-out infinite;
   pointer-events: none;
@@ -202,25 +202,38 @@
 .glowPulse2 {
   position: absolute;
   top: 50%; left: 50%;
-  width: 390px; height: 390px;
+  width: 550px; height: 550px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(52,172,224,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(52,172,224,0.07) 0%, transparent 70%);
   transform: translate(-50%,-50%);
   animation: pulse 3s ease-in-out infinite 1.5s;
   pointer-events: none;
 }
 @keyframes pulse {
   0%,100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
-  50%      { opacity: 1;   transform: translate(-50%,-50%) scale(1.1); }
+  50%      { opacity: 1;   transform: translate(-50%,-50%) scale(1.08); }
 }
 
+/* inner track */
 .track {
   position: absolute;
   top: 50%; left: 50%;
   width: calc(var(--r) * 2);
   height: calc(var(--r) * 2);
   border-radius: 50%;
-  border: 1px dashed rgba(52,172,224,0.25);
+  border: 1px dashed rgba(52,172,224,0.28);
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+/* outer track — slightly more visible */
+.trackOuter {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  border-radius: 50%;
+  border: 1px dashed rgba(52,172,224,0.16);
   transform: translate(-50%,-50%);
   pointer-events: none;
 }
@@ -267,26 +280,72 @@
 }
 
 .nodeIcon {
-  width: 40px; height: 40px;
+  width: 54px; height: 54px;
   background: #fff;
   border: 1.5px solid color-mix(in srgb, var(--clr, #34ace0) 35%, #e2e8f0);
-  border-radius: 11px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--clr, #34ace0);
   box-shadow:
-    0 2px 10px color-mix(in srgb, var(--clr, #34ace0) 14%, transparent),
-    0 1px 3px rgba(0,0,0,0.05);
+    0 3px 14px color-mix(in srgb, var(--clr, #34ace0) 20%, transparent),
+    0 1px 4px rgba(0,0,0,0.07);
 }
-.nodeIcon svg { width: 18px; height: 18px; }
+.nodeIcon svg { width: 24px; height: 24px; }
 
 .nodeLabel {
-  font-size: 0.54rem;
-  font-weight: 600;
-  color: #475569;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #334155;
   white-space: nowrap;
 }
+
+/* ── OUTER RING — CCW animations ── */
+.arm2 {
+  position: absolute;
+  top: 50%; left: 50%;
+  height: 0;
+  width: var(--radius, 275px);
+  transform-origin: left center;
+  animation: orbitCCW var(--dur, 36s) linear infinite;
+}
+@keyframes orbitCCW {
+  from { transform: rotate(var(--start, 0deg)); }
+  to   { transform: rotate(calc(var(--start, 0deg) - 360deg)); }
+}
+
+.node2 {
+  position: absolute;
+  right: 0; top: 0;
+  transform: translate(50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  animation: counterCCW var(--dur, 36s) linear infinite;
+}
+@keyframes counterCCW {
+  /* cancels CCW arm rotation so the node icon stays upright */
+  from { transform: translate(50%,-50%) rotate(calc(-1 * var(--start, 0deg))); }
+  to   { transform: translate(50%,-50%) rotate(calc(-1 * var(--start, 0deg) + 360deg)); }
+}
+
+/* circular icon style — visually distinct from inner square nodes */
+.nodeIcon2 {
+  width: 52px; height: 52px;
+  background: rgba(255,255,255,0.90);
+  border: 1.5px solid color-mix(in srgb, var(--clr, #34ace0) 40%, #dbeafe);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clr, #34ace0);
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--clr, #34ace0) 20%, transparent),
+    0 1px 3px rgba(0,0,0,0.04);
+}
+.nodeIcon2 svg { width: 22px; height: 22px; }
 
 /* ──────────────────────────────────────────
    INTRO CONTENT (left column)
@@ -306,7 +365,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
-  max-width: 500px;
+  max-width: 560px;
 }
 
 .badge {
@@ -324,7 +383,7 @@
 }
 
 .introHeading {
-  font-size: clamp(2rem, 3.4vw, 3.2rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
   font-weight: 900;
   line-height: 1.1;
   color: #0f172a;
@@ -334,10 +393,10 @@
 .accent { color: #34ace0; font-style: normal; }
 
 .introDesc {
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: #64748b;
   line-height: 1.75;
-  max-width: 440px;
+  max-width: 500px;
 }
 
 .introCtas {
@@ -420,8 +479,12 @@
 /* ──────────────────────────────────────────
    RESPONSIVE
 ────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  .orbital { left: 62%; width: 500px; height: 500px; margin-top: calc(-250px + 36px); }
+}
+
 @media (max-width: 1100px) {
-  .orbital { left: 62%; width: 360px; height: 360px; margin-top: calc(-180px + 36px); }
+  .orbital { left: 60%; width: 440px; height: 440px; margin-top: calc(-220px + 36px); }
 }
 
 @media (max-width: 860px) {
@@ -429,10 +492,12 @@
     left: 50%;
     top: calc(72px + 2rem);
     margin-top: 0;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
     transform: translateX(-50%) !important;
   }
+  /* hide outer ring on tablet/mobile — inner orbit still shows */
+  .arm2, .trackOuter { display: none; }
   .introOuter { align-items: flex-end; padding-bottom: 3rem; padding-left: clamp(1.5rem, 5%, 3rem); }
   .introInner { max-width: 100%; }
   .introHeading { font-size: 1.9rem; }
@@ -450,7 +515,7 @@
   .flowStatVal { font-size: 1.4rem; }
   .flowBigNum { font-size: clamp(8rem, 20vw, 14rem); }
   .stageFooter { left: 50%; transform: translateX(-50%); }
-  .orbital { width: 240px; height: 240px; }
+  .orbital { width: 260px; height: 260px; }
 }
 
 @media (max-width: 400px) {
