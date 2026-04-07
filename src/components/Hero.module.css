@@ -1,39 +1,38 @@
 /* ═══════════════════════════════════════════
-   HERO — grid-reveal parallax
+   HERO — 3-layer sticky-scroll parallax
 ═══════════════════════════════════════════ */
 
-.hero {
-  position: relative;
-}
+.hero { position: relative; }
 
 .stickyFrame {
   position: sticky;
   top: 0;
   height: 100vh;
   overflow: hidden;
-  background: #060c1b;
+  background: #070d1f;
 }
 
 /* ──────────────────────────────────────────
-   INTRO PANEL
-   Full-screen hero that fades out with parallax
+   INTRO BACKGROUND (light, fades out)
 ────────────────────────────────────────── */
-.introPanel {
+.introBg {
   position: absolute;
   inset: 0;
-  overflow: hidden;
   background: #f0f4ff;
-  will-change: transform, opacity;
-  z-index: 30;
+  background-image:
+    radial-gradient(ellipse 65% 55% at 72% 42%, rgba(52,172,224,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 45% at 12% 78%, rgba(52,172,224,0.06) 0%, transparent 60%);
+  will-change: opacity;
 }
 
 .dotGrid {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(52,172,224,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(52,172,224,0.14) 1px, transparent 1px);
   background-size: 36px 36px;
   mask-image: radial-gradient(ellipse 80% 70% at 65% 42%, black 0%, transparent 80%);
   pointer-events: none;
+  will-change: opacity;
 }
 
 .introGlow {
@@ -41,23 +40,150 @@
   right: 0; top: 0; bottom: 0;
   width: 55%;
   background: radial-gradient(ellipse 80% 70% at 70% 50%,
-    rgba(52,172,224,0.06) 0%,
-    rgba(171,52,128,0.03) 45%,
+    rgba(52,172,224,0.08) 0%,
+    rgba(52,172,224,0.03) 45%,
     transparent 70%
   );
   pointer-events: none;
+  will-change: opacity;
 }
 
 /* ──────────────────────────────────────────
-   ORBITAL ANIMATION (inside introPanel)
+   FLOW PARALLAX LAYERS (no images)
+────────────────────────────────────────── */
+
+/* Layer 1 — color glow (slowest) */
+.flowGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  height: 700px;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+/* Layer 2 — giant decorative step number (medium) */
+.flowBigNum {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: clamp(16rem, 28vw, 26rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+  will-change: transform, opacity;
+  z-index: 2;
+}
+
+/* Layer 3 — text content (fastest) */
+.flowStep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(680px, 80%);
+  text-align: center;
+  z-index: 20;
+  will-change: transform, opacity;
+  padding: 1rem;
+}
+
+.stepMarker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-bottom: 1.2rem;
+}
+
+.stepNum {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.stepLine {
+  height: 1px;
+  width: 28px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.stepTag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.flowHeading {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 900;
+  color: #f1f5f9;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+}
+.flowHeading em { font-style: normal; }
+
+.flowDesc {
+  font-size: 0.92rem;
+  color: rgba(226, 232, 240, 0.85);
+  line-height: 1.8;
+  margin-bottom: 1.8rem;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+}
+
+.flowStat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  padding: 0.85rem 2rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  background: rgba(0,0,0,0.30);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.flowStatVal {
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+.flowStatKey {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+/* ──────────────────────────────────────────
+   ORBITAL
 ────────────────────────────────────────── */
 .orbital {
   position: absolute;
   top: 50%;
+  left: 66%;
   width: 420px;
   height: 420px;
+  margin-top: calc(-210px + 36px);
   transform-origin: center center;
-  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
   pointer-events: none;
 }
 
@@ -66,7 +192,7 @@
   top: 50%; left: 50%;
   width: 210px; height: 210px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(52,172,224,0.16) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(52,172,224,0.18) 0%, transparent 70%);
   transform: translate(-50%,-50%);
   animation: pulse 3s ease-in-out infinite;
   pointer-events: none;
@@ -76,7 +202,7 @@
   top: 50%; left: 50%;
   width: 390px; height: 390px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(52,172,224,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(52,172,224,0.08) 0%, transparent 70%);
   transform: translate(-50%,-50%);
   animation: pulse 3s ease-in-out infinite 1.5s;
   pointer-events: none;
@@ -92,7 +218,7 @@
   width: calc(var(--r) * 2);
   height: calc(var(--r) * 2);
   border-radius: 50%;
-  border: 1px dashed rgba(52,172,224,0.22);
+  border: 1px dashed rgba(52,172,224,0.25);
   transform: translate(-50%,-50%);
   pointer-events: none;
 }
@@ -103,11 +229,11 @@
   transform: translate(-50%,-50%);
   z-index: 10;
   background: rgba(255,255,255,0.92);
-  border: 1.5px solid rgba(52,172,224,0.18);
+  border: 1.5px solid rgba(52,172,224,0.22);
   border-radius: 18px;
   padding: 0.9rem 1.1rem;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 40px rgba(52,172,224,0.14), 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 40px rgba(52,172,224,0.16), 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .arm {
@@ -141,14 +267,14 @@
 .nodeIcon {
   width: 40px; height: 40px;
   background: #fff;
-  border: 1.5px solid color-mix(in srgb, var(--clr, #34ACE0) 35%, #e2e8f0);
+  border: 1.5px solid color-mix(in srgb, var(--clr, #34ace0) 35%, #e2e8f0);
   border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--clr, #34ACE0);
+  color: var(--clr, #34ace0);
   box-shadow:
-    0 2px 10px color-mix(in srgb, var(--clr, #34ACE0) 14%, transparent),
+    0 2px 10px color-mix(in srgb, var(--clr, #34ace0) 14%, transparent),
     0 1px 3px rgba(0,0,0,0.05);
 }
 .nodeIcon svg { width: 18px; height: 18px; }
@@ -161,27 +287,31 @@
 }
 
 /* ──────────────────────────────────────────
-   INTRO FULL-SCREEN CONTENT
+   INTRO CONTENT (left column)
 ────────────────────────────────────────── */
-.introFullContent {
+.introOuter {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding-top: 72px;
   padding-left: clamp(2rem, 7%, 6rem);
-  padding-right: 4%;
-  max-width: 540px;
   z-index: 20;
+  will-change: transform, opacity;
+}
+
+.introInner {
+  display: flex;
+  flex-direction: column;
   gap: 1.1rem;
+  max-width: 500px;
 }
 
 .badge {
   display: inline-block;
-  background: rgba(52,172,224,0.08);
-  border: 1px solid rgba(52,172,224,0.22);
-  color: #34ACE0;
+  background: rgba(52,172,224,0.10);
+  border: 1px solid rgba(52,172,224,0.28);
+  color: #34ace0;
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.13em;
@@ -199,7 +329,7 @@
   letter-spacing: -0.03em;
 }
 
-.accent { color: #34ACE0; font-style: normal; }
+.accent { color: #34ace0; font-style: normal; }
 
 .introDesc {
   font-size: 0.92rem;
@@ -216,18 +346,22 @@
 }
 
 .btnPrimary {
-  background: #2988b5;
+  background: #34ace0;
   color: #fff;
   padding: 0.7rem 1.8rem;
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 4px 18px rgba(41,136,181,0.32);
+  box-shadow: 0 4px 18px rgba(52,172,224,0.35);
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   white-space: nowrap;
 }
-.btnPrimary:hover { background: #34ACE0; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(52,172,224,0.42); }
+.btnPrimary:hover {
+  background: #1e9dce;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(52,172,224,0.50);
+}
 
 .btnDemo {
   display: flex;
@@ -235,7 +369,7 @@
   gap: 0.6rem;
   background: none;
   border: none;
-  color: #475569;
+  color: #34ace0;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -244,174 +378,80 @@
   padding: 0;
   white-space: nowrap;
 }
-.btnDemo:hover { color: #2988b5; }
+.btnDemo:hover { color: #1e9dce; }
 
 .playRing {
   width: 34px; height: 34px;
-  border: 1.5px solid #cbd5e1;
+  border: 1.5px solid rgba(52,172,224,0.35);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-left: 2px;
-  background: #fff;
+  background: rgba(52,172,224,0.06);
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-}
-
-.scrollHint {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.4rem;
-  margin-top: 0.25rem;
-  will-change: opacity;
-}
-.scrollHint span {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #94a3b8;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.scrollBounce {
-  color: #94a3b8;
-  animation: bounce 1.8s ease-in-out infinite;
-}
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(5px); }
+  box-shadow: 0 2px 8px rgba(52,172,224,0.12);
 }
 
 /* ──────────────────────────────────────────
-   GRID TILES (flow stages)
+   STAGE FOOTER LABEL (bottom center)
 ────────────────────────────────────────── */
-.gridTile {
+.stageFooter {
   position: absolute;
-  overflow: hidden;
-  border-radius: 16px;
-  will-change: transform, opacity;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.50), 0 4px 16px rgba(0, 0, 0, 0.30);
-}
-
-.tileImg {
-  position: absolute;
-  inset: -15% 0;      /* extra vertical room for parallax travel */
-  width: 100%;
-  height: 130%;
-  object-fit: cover;
-  will-change: transform;
-}
-
-.tileGradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(3, 8, 20, 0.92) 0%,
-    rgba(3, 8, 20, 0.45) 45%,
-    rgba(3, 8, 20, 0.10) 100%
-  );
-}
-
-.tileContent {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem 1.2rem 1.3rem;
-  z-index: 5;
-}
-
-.tileStep {
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.45rem;
+  z-index: 30;
+  will-change: opacity;
 }
-.tileStepNum {
-  font-size: 0.58rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-}
-.tileStepLine {
-  display: inline-block;
-  height: 1px;
-  width: 22px;
-  opacity: 0.7;
-  flex-shrink: 0;
-}
-.tileStepTag {
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-}
-
-.tileHeading {
-  font-size: clamp(0.82rem, 1.15vw, 1.1rem);
-  font-weight: 800;
-  color: #f1f5f9;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.55rem;
-}
-.tileHeading em { font-style: normal; }
-
-.tileStat {
-  display: flex;
-  align-items: baseline;
-  gap: 0.45rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(255,255,255,0.10);
-}
-.tileStatVal {
-  font-size: clamp(1rem, 1.6vw, 1.35rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.tileStatKey {
-  font-size: 0.55rem;
-  font-weight: 600;
-  color: rgba(148,163,184,0.9);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1.3;
+.stageFooterStep  { font-size: 0.6rem; font-weight: 800; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; }
+.stageFooterSep   { font-size: 0.6rem; color: rgba(255,255,255,0.2); }
+.stageFooterTotal { font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; }
+.stageFooterName  {
+  font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 0.08em;
+  text-transform: uppercase; padding-left: 0.4rem; border-left: 1px solid rgba(255,255,255,0.15);
 }
 
 /* ──────────────────────────────────────────
    RESPONSIVE
 ────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  .orbital { width: 360px; height: 360px; }
+  .orbital { left: 62%; width: 360px; height: 360px; margin-top: calc(-180px + 36px); }
 }
 
 @media (max-width: 860px) {
-  .introFullContent {
-    justify-content: flex-end;
-    padding-bottom: 3rem;
-    padding-top: 72px;
-    max-width: 100%;
+  .orbital {
+    left: 50%;
+    top: calc(72px + 2rem);
+    margin-top: 0;
+    width: 300px;
+    height: 300px;
+    transform: translateX(-50%) !important;
   }
+  .introOuter { align-items: flex-end; padding-bottom: 3rem; padding-left: clamp(1.5rem, 5%, 3rem); }
+  .introInner { max-width: 100%; }
   .introHeading { font-size: 1.9rem; }
-  .tileHeading  { font-size: 0.78rem; }
-  .tileStatVal  { font-size: 0.95rem; }
-  .orbital { width: 280px; height: 280px; }
+  .flowStep { width: min(90%, 580px); }
+  .flowBigNum { font-size: clamp(10rem, 22vw, 18rem); }
 }
 
 @media (max-width: 600px) {
-  .introFullContent { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .introOuter { padding-left: 1.25rem; padding-right: 1.25rem; }
   .introHeading { font-size: 1.65rem; }
-  .introDesc    { font-size: 0.85rem; }
-  .tileContent  { padding: 0.75rem 0.9rem 1rem; }
-  .tileHeading  { font-size: 0.72rem; margin-bottom: 0.35rem; }
-  .tileStatVal  { font-size: 0.85rem; }
-  .tileStepTag, .tileStepNum { font-size: 0.5rem; }
-  .orbital { width: 220px; height: 220px; }
+  .introDesc { font-size: 0.85rem; }
+  .flowStep { width: 92%; padding: 0.75rem; }
+  .flowHeading { font-size: 1.5rem; }
+  .flowDesc { font-size: 0.82rem; margin-bottom: 1.2rem; }
+  .flowStatVal { font-size: 1.4rem; }
+  .flowBigNum { font-size: clamp(8rem, 20vw, 14rem); }
+  .stageFooter { left: 50%; transform: translateX(-50%); }
+  .orbital { width: 240px; height: 240px; }
 }
 
 @media (max-width: 400px) {
   .introHeading { font-size: 1.45rem; }
-  .orbital { width: 180px; height: 180px; }
+  .orbital { width: 200px; height: 200px; }
 }
