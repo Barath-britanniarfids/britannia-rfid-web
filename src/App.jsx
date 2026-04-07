@@ -54,9 +54,9 @@ function LandingPage() {
       <Verticals />
       <DigitalThread />
       <BritanniaStory />
-      <section id="clients"><Clients /></section>
+      {/* <section id="clients"><Clients /></section>
       <TestimonialCTA />
-      <section id="contact"><Contact /></section>
+      <section id="contact"><Contact /></section> */}
     </>
   )
 }
@@ -69,6 +69,8 @@ export default function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/about" element={<About />} />
+        <Route path="/clients" element={<Clients />} />
+        <Route path="/contact" element={<Contact />} />
       </Route>
     </Routes>
   )
