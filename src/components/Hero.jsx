@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import BritanniaLogo from './BritanniaLogo'
 import styles from './Hero.module.css'
 
 /* ─── CONFIG ─── */
-const H = 7   // 700vh total  (intro + 5 flow steps + hold)
-const N = 6   // scroll stages: 0 = intro, 1-5 = flow steps
+const H = 10  // 1000vh — more scroll = slower, cinematic feel
+const N = 6   // stages: 0=intro, 1-5=flow steps
 
 /* ─── FLOW STAGES ─── */
 const STAGES = [
@@ -13,31 +13,31 @@ const STAGES = [
     id: 'tag', step: '01', tag: 'RFID Tag & Encode', color: '#1EC9E8',
     heading: 'Every Item Gets', accent: 'a Digital Identity.',
     desc: 'At point of manufacture or receipt, RFID inlays are encoded with a unique EPC — a permanent digital fingerprint that travels with the product through its entire lifecycle.',
-    bg: '/images/product-tile.jpg', stat: { val: '1B+', key: 'Tags Encoded Annually' },
+    stat: { val: '1B+', key: 'Tags Encoded Annually' },
   },
   {
     id: 'reader', step: '02', tag: 'Antenna & Reader', color: '#C2D600',
     heading: 'Captured.', accent: 'Every Pass. Instantly.',
     desc: 'Fixed UHF readers with optimised antenna arrays silently scan hundreds of tagged items per second — no line of sight, no manual handling, zero read errors.',
-    bg: '/images/product-network.jpg', stat: { val: '1,000+', key: 'Tags Read per Second' },
+    stat: { val: '1,000+', key: 'Tags Read per Second' },
   },
   {
     id: 'edge', step: '03', tag: 'Edge Processing', color: '#D81BB0',
     heading: 'Filtered.', accent: 'Validated. In Milliseconds.',
     desc: 'On-premise edge devices filter RF noise, de-duplicate reads, and validate EPCs — all before a single byte reaches the network.',
-    bg: '/images/product-payment.jpg', stat: { val: '<50ms', key: 'Processing Latency' },
+    stat: { val: '<50ms', key: 'Processing Latency' },
   },
   {
     id: 'cloud', step: '04', tag: 'Cloud Platform', color: '#3b82f6',
     heading: 'Every Tag.', accent: 'One Dashboard.',
     desc: 'Clean event streams sync with your ERP, WMS and TMS in real time. Full audit trail, zero data loss, 99.9% uptime SLA.',
-    bg: '/images/hero-bg.jpg', stat: { val: '99.9%', key: 'Platform Uptime SLA' },
+    stat: { val: '99.9%', key: 'Platform Uptime SLA' },
   },
   {
     id: 'analytics', step: '05', tag: 'Analytics & Insights', color: '#f59e0b',
     heading: 'Data That', accent: 'Drives Decisions.',
     desc: 'Turn raw tag events into business intelligence — inventory accuracy scores, shrinkage alerts, dwell-time heatmaps, and OEE metrics refreshed every second.',
-    bg: '/images/product-retail.jpg', stat: { val: '40%', key: 'Average Cost Reduction' },
+    stat: { val: '40%', key: 'Average Cost Reduction' },
   },
 ]
 
@@ -65,15 +65,11 @@ const orbitItems = [
   },
 ]
 
-/* ─── HELPERS ─── */
-function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)) }
-function lerp(a, b, t)    { return a + (b - a) * t }
+/* ─── PURE HELPERS ─── */
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
+const lerp  = (a, b, t)   => a + (b - a) * t
 
-// Stage-local fraction 0→1 for scroll stage i
-function sf(prog, i) { return clamp(prog * N - i, 0, 1) }
-
-
-/* ─── ORBIT NODE ─── */
+/* ─── ORBIT NODE (static) ─── */
 function OrbitNode({ item }) {
   return (
     <div
@@ -91,152 +87,218 @@ function OrbitNode({ item }) {
   )
 }
 
-/* ─── MAIN HERO ─── */
+/* ─── SET helpers — write to DOM directly, skip React ─── */
+const s = (el, prop, val) => { if (el) el.style[prop] = val }
+const t = (el, val)       => { if (el) el.style.transform = val }
+const o = (el, val)       => { if (el) el.style.opacity   = val }
+
+/* ═══════════════════════════════════════════════
+   MAIN HERO — zero useState, all DOM-direct
+════════════════════════════════════════════════ */
 export default function Hero() {
   const heroRef = useRef(null)
   const rafRef  = useRef(null)
-  const [progress, setProgress] = useState(0)
 
+  /* scroll progress: target = raw, current = smoothed */
+  const targetP  = useRef(0)
+  const currentP = useRef(0)
+
+  /* refs for every animated DOM element */
+  const elIntroBg   = useRef(null)
+  const elDotGrid   = useRef(null)
+  const elIntroGlow = useRef(null)
+  const elOrbital   = useRef(null)
+  const elIntro     = useRef(null)
+  const elFooter    = useRef(null)
+  const elFStep     = useRef(null)
+  const elFName     = useRef(null)
+
+  const glowEls = useRef([])   // per-stage color glow
+  const numEls  = useRef([])   // per-stage big number
+  const stepEls = useRef([])   // per-stage text block
+
+  /* ── Animation loop: reads scroll → lerps → writes DOM ── */
   useEffect(() => {
-    function tick() {
+    /* read raw scroll progress */
+    function readScroll() {
       if (!heroRef.current) return
       const { top, height } = heroRef.current.getBoundingClientRect()
       const scrollable = height - window.innerHeight
-      setProgress(clamp(-top / scrollable, 0, 1))
+      if (scrollable > 0) targetP.current = clamp(-top / scrollable, 0, 1)
     }
-    function onScroll() {
-      cancelAnimationFrame(rafRef.current)
-      rafRef.current = requestAnimationFrame(tick)
+
+    /* write all DOM transforms/opacities for given progress p */
+    function update(p) {
+
+      /* ── INTRO (stage 0) ─────────────────────────── */
+      const f0 = clamp(p * N, 0, 1)
+
+      // Intro: hold at full scale, then zoom out on exit
+      // Scroll UP back to intro: zooms back IN from 0.55 → 1.0 (symmetric reverse)
+      const zoomT      = clamp((f0 - 0.28) / 0.72, 0, 1)
+      const introScale = lerp(1, 0.55, zoomT)
+      const introOp    = f0 > 0.62 ? clamp(1 - (f0 - 0.62) / 0.38, 0, 1) : 1
+      const orbScale   = lerp(1, 0.50, zoomT)
+      const orbOp      = f0 > 0.66 ? clamp(1 - (f0 - 0.66) / 0.34, 0, 1) : 1
+
+      // Light intro bg fades exactly as stage-1 glow fades in — no dark flash
+      const firstRaw  = p * N - 1
+      const introBgOp = clamp(1 - (firstRaw + 0.15) / 0.30, 0, 1)
+
+      o(elIntroBg.current,   introBgOp)
+      o(elDotGrid.current,   introBgOp)
+      o(elIntroGlow.current, introBgOp)
+
+      o(elOrbital.current, orbOp)
+      t(elOrbital.current, `translateX(-50%) scale(${orbScale})`)
+
+      o(elIntro.current, introOp)
+      t(elIntro.current, `scale(${introScale})`)
+      s(elIntro.current, 'pointerEvents', introOp > 0.15 ? 'auto' : 'none')
+
+      /* ── FLOW STAGES (1-5) ────────────────────────── */
+      STAGES.forEach((stage, idx) => {
+        const i   = idx + 1
+        const raw = p * N - i   // 0 at stage start, 1 at stage end
+
+        // Layer 1 — glow: slightly wider window than text so color is always present
+        const glowOp = clamp(
+          raw < -0.10 ? 0 :
+          raw <  0.10 ? (raw + 0.10) / 0.20 :
+          raw >  0.88 ? (1.10 - raw) / 0.22 :
+          raw >= 1.10 ? 0 : 1
+        , 0, 1)
+        o(glowEls.current[idx], glowOp)
+        t(glowEls.current[idx], `translate(-50%, -50%)`)
+
+        // Layer 2 — big number: symmetric zoom, same distance both ends
+        const numOp = clamp(
+          raw <  0.00 ? 0 :
+          raw <  0.18 ? raw / 0.18 :
+          raw >  0.75 ? (1.0 - raw) / 0.25 :
+          raw >= 1.00 ? 0 : 1
+        , 0, 1)
+        const numEntry = clamp(raw / 0.18, 0, 1)
+        const numExit  = clamp((raw - 0.75) / 0.25, 0, 1)
+        const numScale = numExit > 0 ? lerp(1.0, 0.76, numExit) : lerp(0.76, 1.0, numEntry)
+        o(numEls.current[idx], numOp * 0.06)
+        t(numEls.current[idx], `translate(-50%, -50%) scale(${numScale})`)
+
+        // Layer 3 — text: FULLY SYMMETRIC zoom
+        // Scroll DOWN → entry zooms IN (0.52→1.0), exit zooms OUT (1.0→0.52)
+        // Scroll UP   → reverses exactly: entry zooms OUT (1.0→0.52), exit zooms IN (0.52→1.0)
+        // Both directions feel identical because the math is the same — just p going ↑ or ↓
+        const textOp = clamp(
+          raw <  0.00 ? 0 :
+          raw <  0.20 ? raw / 0.20 :
+          raw >  0.72 ? (1.0 - raw) / 0.28 :
+          raw >= 1.00 ? 0 : 1
+        , 0, 1)
+        const entryT = clamp(raw / 0.20, 0, 1)             // 0→1 as raw 0→0.20
+        const exitT  = clamp((raw - 0.72) / 0.28, 0, 1)   // 0→1 as raw 0.72→1.0
+        // entry: 0.52→1.0  |  hold: 1.0  |  exit: 1.0→0.52  (same scale both ends)
+        const scale  = exitT > 0
+          ? lerp(1.0, 0.52, exitT)
+          : lerp(0.52, 1.0, entryT)
+        o(stepEls.current[idx], textOp)
+        t(stepEls.current[idx], `translate(-50%, -50%) scale(${scale})`)
+      })
+
+      /* ── FOOTER LABEL ──────────────────────────────── */
+      const activeStage = clamp(Math.floor(p * N), 0, N - 1)
+      if (elFooter.current) {
+        if (activeStage > 0) {
+          const stage    = STAGES[activeStage - 1]
+          const frac     = clamp(p * N - activeStage, 0, 1)
+          const footerOp = frac < 0.12 ? frac / 0.12 : frac > 0.88 ? (1 - frac) / 0.12 : 1
+          o(elFooter.current, footerOp)
+          s(elFooter.current, 'display', 'flex')
+          if (elFStep.current) elFStep.current.textContent = stage.step
+          if (elFName.current) elFName.current.textContent = stage.tag
+        } else {
+          s(elFooter.current, 'display', 'none')
+        }
+      }
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    tick()
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(rafRef.current)
+
+    /* rAF loop: lerp currentP toward targetP for buttery smoothing */
+    function loop() {
+      readScroll()
+      // 0.072 ≈ GSAP scrub:1.5 feel — chases scroll with just enough lag
+      currentP.current = lerp(currentP.current, targetP.current, 0.072)
+      update(currentP.current)
+      rafRef.current = requestAnimationFrame(loop)
     }
+
+    rafRef.current = requestAnimationFrame(loop)
+    return () => cancelAnimationFrame(rafRef.current)
   }, [])
 
-  /* ── Derived: intro stage (stage 0) ── */
-  const f0 = sf(progress, 0)
-
-  // Intro: zoom-out parallax — scales down from center like receding into distance
-  // scale: 1.0 → 0.62 (strong zoom-out so recession is clearly visible)
-  // fade:  starts at 55%, gone by 90% of the intro stage
-  // no translateY — the zoom itself creates the depth; slide fights the effect
-  const introScale = lerp(1, 0.62, f0)
-  const introOp    = f0 > 0.55 ? clamp(1 - (f0 - 0.55) / 0.45, 0, 1) : 1
-
-  // Orbital: same zoom-out, slightly faster fade so text leads the exit
-  const orbScale = lerp(1, 0.58, f0)
-  const orbOp    = f0 > 0.60 ? clamp(1 - (f0 - 0.60) / 0.40, 0, 1) : 1
-
-  // Intro bg: fades in EXACT sync with the first flow bg fading in — no dark gap
-  const firstRaw  = progress * N - 1     // raw fraction for stage-1 background
-  const introBgOp = clamp(1 - (firstRaw + 0.15) / 0.30, 0, 1)
-
-  // Active stage for dots / footer
-  const activeStage = clamp(Math.floor(progress * N), 0, N - 1)
-
+  /* ══════════════════════════════════════════
+     JSX — 100 % static, zero progress values
+     All motion driven by the rAF loop above
+  ══════════════════════════════════════════ */
   return (
     <section ref={heroRef} className={styles.hero} style={{ height: `${H * 100}vh` }}>
       <div className={styles.stickyFrame}>
 
-        {/* ── FLOW STAGES: 3-layer parallax (no images) ── */}
-        {STAGES.map((stage, idx) => {
-          const i   = idx + 1
-          const raw = progress * N - i  // -∞ to +∞; 0=stage start, 1=stage end
+        {/* ── FLOW STAGES: 3-layer parallax ── */}
+        {STAGES.map((stage, idx) => (
+          <div key={stage.id}>
 
-          // ── Layer 1: color glow (SLOWEST — barely moves, wide fade window)
-          const glowOp = clamp(
-            raw < -0.40 ? 0 :
-            raw < -0.05 ? (raw + 0.40) / 0.35 :
-            raw >  0.95 ? (1.40 - raw) / 0.45 : 1
-          , 0, 1)
-          const glowY = lerp(14, -7, clamp(raw, 0, 1))   // 21px total — almost static
+            {/* Layer 1 — color glow (slowest) */}
+            <div
+              ref={el => { glowEls.current[idx] = el }}
+              className={styles.flowGlow}
+              style={{
+                opacity: 0,
+                background: `radial-gradient(ellipse 90% 80% at 50% 50%,
+                  ${stage.color}22 0%, ${stage.color}08 50%, transparent 75%)`,
+              }}
+            />
 
-          // ── Layer 2: decorative step number (MEDIUM speed)
-          const numOp = clamp(
-            raw < -0.35 ? 0 :
-            raw < -0.05 ? (raw + 0.35) / 0.30 :
-            raw >  0.85 ? (1.35 - raw) / 0.50 : 1
-          , 0, 1)
-          const numY = lerp(50, -25, clamp(raw, 0, 1))   // 75px total — mid speed
+            {/* Layer 2 — big step number (medium) */}
+            <div
+              ref={el => { numEls.current[idx] = el }}
+              className={styles.flowBigNum}
+              style={{ opacity: 0, color: stage.color }}
+            >
+              {stage.step}
+            </div>
 
-          // ── Layer 3: text content (FASTEST — wide overlap so two stages crossfade)
-          const textOp = clamp(
-            raw < -0.28 ? 0 :
-            raw <  0.02 ? (raw + 0.28) / 0.30 :
-            raw >  0.78 ? (1.28 - raw) / 0.50 : 1
-          , 0, 1)
-          const textY = lerp(110, -55, clamp(raw, 0, 1)) // 165px total — fast
-
-          return (
-            <div key={stage.id}>
-              {/* Glow bg — slow layer */}
-              <div
-                className={styles.flowGlow}
-                style={{
-                  opacity: glowOp,
-                  background: `radial-gradient(ellipse 90% 80% at 50% 50%, ${stage.color}1e 0%, ${stage.color}08 50%, transparent 75%)`,
-                  transform: `translate(-50%, calc(-50% + ${glowY}px))`,
-                }}
-              />
-
-              {/* Big decorative number — medium layer */}
-              <div
-                className={styles.flowBigNum}
-                style={{
-                  opacity: numOp * 0.055,
-                  color: stage.color,
-                  transform: `translate(-50%, calc(-50% + ${numY}px))`,
-                }}
-              >
-                {stage.step}
+            {/* Layer 3 — text content (fastest) */}
+            <div
+              ref={el => { stepEls.current[idx] = el }}
+              className={styles.flowStep}
+              style={{ opacity: 0, '--accent': stage.color }}
+            >
+              <div className={styles.stepMarker}>
+                <span className={styles.stepNum} style={{ color: stage.color }}>{stage.step}</span>
+                <div className={styles.stepLine} style={{ background: stage.color }} />
+                <span className={styles.stepTag} style={{ color: stage.color }}>{stage.tag}</span>
               </div>
-
-              {/* Text content — fast layer */}
-              <div
-                className={styles.flowStep}
-                style={{
-                  opacity: textOp,
-                  transform: `translate(-50%, calc(-50% + ${textY}px))`,
-                  '--accent': stage.color,
-                }}
-              >
-                <div className={styles.stepMarker}>
-                  <span className={styles.stepNum} style={{ color: stage.color }}>{stage.step}</span>
-                  <div className={styles.stepLine} style={{ background: stage.color }} />
-                  <span className={styles.stepTag} style={{ color: stage.color }}>{stage.tag}</span>
-                </div>
-                <h2 className={styles.flowHeading}>
-                  {stage.heading}{' '}
-                  <em style={{ color: stage.color }}>{stage.accent}</em>
-                </h2>
-                <p className={styles.flowDesc}>{stage.desc}</p>
-                <div className={styles.flowStat}>
-                  <span className={styles.flowStatVal} style={{ color: stage.color }}>
-                    {stage.stat.val}
-                  </span>
-                  <span className={styles.flowStatKey}>{stage.stat.key}</span>
-                </div>
+              <h2 className={styles.flowHeading}>
+                {stage.heading} <em style={{ color: stage.color }}>{stage.accent}</em>
+              </h2>
+              <p className={styles.flowDesc}>{stage.desc}</p>
+              <div className={styles.flowStat}>
+                <span className={styles.flowStatVal} style={{ color: stage.color }}>
+                  {stage.stat.val}
+                </span>
+                <span className={styles.flowStatKey}>{stage.stat.key}</span>
               </div>
             </div>
-          )
-        })}
 
-        {/* ── INTRO LIGHT BACKGROUND (fades out as first flow bg fades in) ── */}
-        <div className={styles.introBg}  style={{ opacity: introBgOp }} />
-        <div className={styles.dotGrid}  style={{ opacity: introBgOp }} />
-        <div className={styles.introGlow} style={{ opacity: introBgOp }} />
+          </div>
+        ))}
 
-        {/* ── ORBITAL (right side, parallax push-back) ── */}
-        <div
-          className={styles.orbital}
-          style={{
-            opacity:   orbOp,
-            transform: `translateX(-50%) scale(${orbScale})`,
-          }}
-        >
+        {/* ── INTRO BACKGROUNDS ── */}
+        <div ref={elIntroBg}   className={styles.introBg} />
+        <div ref={elDotGrid}   className={styles.dotGrid} />
+        <div ref={elIntroGlow} className={styles.introGlow} />
+
+        {/* ── ORBITAL ── */}
+        <div ref={elOrbital} className={styles.orbital}>
           <div className={styles.glowPulse} />
           <div className={styles.glowPulse2} />
           <div className={styles.track} style={{ '--r': '165px' }} />
@@ -244,15 +306,11 @@ export default function Hero() {
           {orbitItems.map(item => <OrbitNode key={item.label} item={item} />)}
         </div>
 
-        {/* ── INTRO CONTENT (left side, parallax push-back) ── */}
+        {/* ── INTRO CONTENT ── */}
         <div
+          ref={elIntro}
           className={styles.introOuter}
-          style={{
-            opacity:       introOp,
-            transform:     `scale(${introScale})`,
-            transformOrigin: 'center center',
-            pointerEvents:  introOp > 0.2 ? 'auto' : 'none',
-          }}
+          style={{ transformOrigin: 'center center' }}
         >
           <div className={styles.introInner}>
             <span className={styles.badge}>AI-POWERED RFID SOLUTIONS</span>
@@ -282,20 +340,17 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── STAGE FOOTER (shows step label when in a flow stage) ── */}
-        {activeStage > 0 && (() => {
-          const stage  = STAGES[activeStage - 1]
-          const frac   = sf(progress, activeStage)
-          const footerOp = frac < 0.12 ? frac / 0.12 : frac > 0.88 ? (1 - frac) / 0.12 : 1
-          return (
-            <div className={styles.stageFooter} style={{ opacity: footerOp }}>
-              <span className={styles.stageFooterStep}>{stage.step}</span>
-              <span className={styles.stageFooterSep}>—</span>
-              <span className={styles.stageFooterTotal}>05</span>
-              <span className={styles.stageFooterName}>{stage.tag}</span>
-            </div>
-          )
-        })()}
+        {/* ── STAGE FOOTER ── */}
+        <div
+          ref={elFooter}
+          className={styles.stageFooter}
+          style={{ display: 'none', opacity: 0 }}
+        >
+          <span ref={elFStep} className={styles.stageFooterStep} />
+          <span className={styles.stageFooterSep}>—</span>
+          <span className={styles.stageFooterTotal}>05</span>
+          <span ref={elFName} className={styles.stageFooterName} />
+        </div>
 
       </div>
     </section>
