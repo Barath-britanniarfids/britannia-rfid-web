@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { products } from "../data/products";
 
@@ -126,6 +126,12 @@ export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeThumb, setActiveThumb] = useState(0);
+
+  // Reset state and scroll to top whenever the product id changes
+  useEffect(() => {
+    setActiveThumb(0);
+    window.scrollTo(0, 0);
+  }, [id]);
 
   const product = products.find((p) => p.id === id);
 
