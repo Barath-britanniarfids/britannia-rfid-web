@@ -101,17 +101,16 @@ const About = () => {
         ref={heroRef}
         style={{
           padding: isMobile
-            ? "50px 20px 40px"
+            ? "100px 20px 60px"
             : isTablet
-              ? "50px 40px 40px"
-              : "50px 80px 40px",
+              ? "120px 40px 60px"
+              : "120px 80px 60px",
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           gap: isMobile ? 32 : 60,
           alignItems: "center",
           maxWidth: 1400,
           margin: "0 auto",
-          paddingTop: "90px",
         }}
       >
         <div
@@ -124,7 +123,6 @@ const About = () => {
           <div
             style={{
               width: "100%",
-              height: isMobile ? "auto" : 420,
               borderRadius: 30,
               overflow: "hidden",
             }}
@@ -134,8 +132,7 @@ const About = () => {
               alt="Source Tagging"
               style={{
                 width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                height: "auto",
                 display: "block",
               }}
             />
