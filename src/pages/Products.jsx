@@ -71,53 +71,6 @@ const Header = () => {
         transition: "all 0.3s ease",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: 64,
-        }}
-      >
-        <BritanniaLogo />
-        <nav style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: 32 }}>
-          {navItems.map((item) => (
-            <a
-              key={item}
-              href="#"
-              style={{
-                fontSize: 13,
-                fontWeight: item === "PRODUCT" ? 700 : 500,
-                color: item === "PRODUCT" ? "#111" : "#666",
-                textDecoration: item === "PRODUCT" ? "underline" : "none",
-                textUnderlineOffset: 4,
-                letterSpacing: 0.5,
-                fontFamily: "Inter, system-ui, sans-serif",
-              }}
-            >
-              {item}
-            </a>
-          ))}
-          <button
-            style={{
-              background: "#0e7490",
-              color: "#fff",
-              border: "none",
-              borderRadius: 20,
-              padding: "8px 20px",
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "Inter, system-ui, sans-serif",
-            }}
-          >
-            contact us
-          </button>
-        </nav>
-      </div>
     </header>
   );
 };

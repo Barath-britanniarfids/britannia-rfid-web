@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import Navbar from './components/Navbar'
@@ -16,6 +16,25 @@ import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import About from './pages/About'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
+function Layout() {
+  return (
+    <>
+      <ScrollToTop />
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </>
+  )
+}
+
 function LandingPage() {
   const location = useLocation()
 
@@ -30,16 +49,14 @@ function LandingPage() {
 
   return (
     <>
-      <Navbar />
       <Hero />
       <Stats />
       <Verticals />
       <DigitalThread />
       <BritanniaStory />
-      <Clients />
+      <section id="clients"><Clients /></section>
       <TestimonialCTA />
-      <Contact />
-      <Footer />
+      <section id="contact"><Contact /></section>
     </>
   )
 }
@@ -47,10 +64,12 @@ function LandingPage() {
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/products" element={<Products />} />
-      <Route path="/products/:id" element={<ProductDetail />} />
-      <Route path="/about" element={<About />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/about" element={<About />} />
+      </Route>
     </Routes>
   )
 }
