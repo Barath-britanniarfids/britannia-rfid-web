@@ -218,12 +218,7 @@ const Clients = () => {
       </section>
 
       {/* Testimonial */}
-      <section style={{ background: "#f7f9fb", padding: isMobile ? "50px 20px" : "70px 60px", textAlign: "center" }}>
-        <div style={{ fontSize: isMobile ? 32 : 40, fontWeight: 800, color: "#0B73C8", marginBottom: 24 }}>99</div>
-        <p style={{ fontSize: isMobile ? 16 : 20, lineHeight: 1.65, color: "#333", maxWidth: 600, margin: "0 auto", fontWeight: 400 }}>
-          "BRFID transformed our supply chain visibility overnight. Their engineering team understood our specific warehousing challenges and delivered a system that outperformed all our KPIs."
-        </p>
-      </section>
+
 
       {/* CTA Section */}
       <section style={{ padding: isMobile ? "50px 20px" : "70px 60px" }}>
