@@ -1,5 +1,5 @@
 export default function BritanniaLogo({ width = 260, darkBg = false }) {
-  const textColor = '#ffffff'
+  const textColor = darkBg ? '#ffffff' : '#2563eb'
   const height = Math.round(width * (130 / 480))
 
   return (
