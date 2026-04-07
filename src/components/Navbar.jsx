@@ -77,7 +77,7 @@ export default function Navbar() {
 
         <button
           className={styles.contactBtn}
-          onClick={() => goToSection("contact")}
+           onClick={() => navigate("/contact")}
         >
           Contact us
         </button>

@@ -355,7 +355,7 @@
   inset: 0;
   display: flex;
   align-items: center;
-  padding-top: 72px;
+  padding-top: 100px;
   padding-left: clamp(2rem, 7%, 6rem);
   z-index: 20;
   will-change: transform, opacity;
