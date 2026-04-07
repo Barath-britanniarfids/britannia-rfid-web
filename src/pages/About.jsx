@@ -1,149 +1,218 @@
-import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import styles from './About.module.css'
+import { useState } from "react";
+import { MapPin, Eye, Sparkles, Waves, Shield, Wind } from "lucide-react";
+import sourceimg from '../../public/images/Source Tagging.png'
+import containerimg from '../../public/images/Container.png'
+const About = () => {
+  const [hoveredLink, setHoveredLink] = useState(null);
+  const [hoveredValue, setHoveredValue] = useState(null);
 
-const values = [
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-      </svg>
-    ),
-    title: 'Clarity',
-    desc: 'Delivering precise data visibility across every node of the supply chain.',
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-    ),
-    title: 'Trust',
-    desc: 'Every system we ship meets rigorous quality standards, no exceptions.',
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-      </svg>
-    ),
-    title: 'Integrity',
-    desc: 'Honest engineering, honest partnerships — built on results that speak.',
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-      </svg>
-    ),
-    title: 'Accountability',
-    desc: 'We own every outcome and continuously improve our solutions for you.',
-  },
-]
+  const navLinks = ["HOME", "PRODUCT", "ABOUT", "CLIENT", "CONTACT"];
+  const values = [
+    { icon: Sparkles, title: "Clarity", desc: "Eliminating the noise to reveal the essence." },
+    { icon: Waves, title: "Fluidity", desc: "Designing for motion and natural flow." },
+    { icon: Shield, title: "Integrity", desc: "Quality that goes beyond the surface." },
+    { icon: Wind, title: "Breathability", desc: "Giving ideas the space they need to grow." },
+  ];
+  const footerSolutions = ["Smart Retail", "Warehouse Automation", "Source Tagging", "Asset Tracking"];
+  const footerCompany = ["Global Offices", "Sustainability", "Careers", "Contact Us"];
+  const footerLegal = ["Privacy Policy", "Terms of Service", "Cookie Settings"];
 
-export default function About() {
   return (
-    <>
-      <Navbar />
-      <main className={styles.main}>
+    <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", background: "#fff", color: "#1a1a1a", minHeight: "100vh", overflowX: "hidden" }}>
+      {/* Navbar */}
+      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 48px", background: "#fff", borderBottom: "1px solid #f0f0f0", position: "sticky", top: 0, zIndex: 100 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 1 }}>
+          <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: -0.5 }}>(( Britannia ))</span>
+          <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: 3, marginTop: -2 }}>RFID</span>
+        </div>
+        <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
+          {navLinks.map((l) => (
+            <span
+              key={l}
+              onMouseEnter={() => setHoveredLink(l)}
+              onMouseLeave={() => setHoveredLink(null)}
+              style={{
+                fontSize: 13,
+                fontWeight: l === "HOME" ? 700 : 500,
+                textDecoration: l === "HOME" ? "underline" : "none",
+                cursor: "pointer",
+                color: hoveredLink === l ? "#0B73C8" : "#222",
+                transition: "color 0.2s",
+                textUnderlineOffset: 3,
+              }}
+            >
+              {l}
+            </span>
+          ))}
+        </div>
+        <button
+          style={{
+            background: "#0B73C8",
+            color: "#fff",
+            border: "none",
+            borderRadius: 24,
+            padding: "10px 26px",
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: "pointer",
+            transition: "background 0.2s",
+          }}
+          onMouseEnter={(e) => (e.target.style.background = "#095da0")}
+          onMouseLeave={(e) => (e.target.style.background = "#0B73C8")}
+        >
+          contact us
+        </button>
+      </nav>
 
-        {/* ── Section 1: About us ── */}
-        <section className={styles.section1}>
-          <div className={styles.container}>
-            <div className={styles.row}>
-              <div className={styles.imageBlock}>
-                <img src="/images/product-pos.jpg" alt="Britannia RFID technology" className={styles.img} />
-                <div className={styles.imgOverlay} />
-              </div>
-              <div className={styles.textBlock}>
-                <span className={styles.eyebrow}>QUALITY STARTS HERE</span>
-                <h1 className={styles.h1}>About us</h1>
-                <p className={styles.body}>
-                  Britannia RFID handles inventory management with real-time insights, automated scanning, and accurate data capture. It drives optimized supply chains, speeds dispatch, and reduces losses across retail and logistics environments.
-                </p>
-                <p className={styles.body}>
-                  Founded in 1979, we have grown into one of South Asia's most trusted RFID solution providers — serving enterprise clients across fashion, healthcare, logistics, and government sectors.
-                </p>
-                <Link to="/products" className={styles.cta}>Explore Products →</Link>
-              </div>
+      {/* Hero: About Us */}
+      <section style={{ padding: "120px 80px", display: "flex", gap: 80, alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ flex: "0 0 520px", height: 440, borderRadius: 20, overflow: "hidden" }}>
+          <img src={sourceimg} alt="Source Tagging" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 20 }} />
+        </div>
+        <div style={{ flex: 1 }}>
+          <h1 style={{ fontSize: 56, fontWeight: 800, margin: "0 0 16px", color: "#111" }}>About us</h1>
+          <p style={{ fontSize: 15, fontWeight: 600, letterSpacing: 3, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 24px" }}>
+            Visibility Starts Here
+          </p>
+          <p style={{ fontSize: 17, lineHeight: 1.8, color: "#444", margin: 0, maxWidth: 540 }}>
+            BRFID (Britannia RFID) redefines inventory management with real-time insights, seamless scanning, and precise data capture, it helps businesses move faster, operate smarter, and reduce losses across retail and logistics environments.
+          </p>
+        </div>
+      </section>
+
+      {/* Automate Warehouse Section */}
+      <section style={{ padding: "120px 80px", display: "flex", gap: 80, alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ flex: 1 }}>
+          <h2 style={{ fontSize: 52, fontWeight: 800, margin: "0 0 16px", lineHeight: 1.15, color: "#111" }}>
+            Automate<br />Warehouse<br />Intelligence.
+          </h2>
+          <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: 3, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 24px" }}>
+            Unrivaled Efficiency
+          </p>
+          <p style={{ fontSize: 17, lineHeight: 1.8, color: "#555", margin: 0, maxWidth: 420 }}>
+            Zero-touch inventory control. Deploy tunnel scanners and overhead readers to process thousands of items in seconds, eliminating human error.
+          </p>
+        </div>
+        <div style={{ flex: "0 0 560px", height: 400, borderRadius: 20, overflow: "hidden" }}>
+          <img src={containerimg} alt="Container" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 20 }} />
+        </div>
+      </section>
+
+      {/* Mission & Vision - Blue Section */}
+      <section style={{ background: "#3B8DD0", padding: "120px 80px" }}>
+        <div style={{ display: "flex", gap: 40, maxWidth: 1400, margin: "0 auto" }}>
+          {/* Mission Card */}
+          <div style={{ flex: 1, background: "#fff", borderRadius: 20, padding: "48px 40px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
+            <div style={{ width: 48, height: 48, borderRadius: 10, background: "#EBF5FF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+              <MapPin size={24} color="#0B73C8" />
             </div>
+            <h3 style={{ fontSize: 28, fontWeight: 700, margin: "0 0 16px", color: "#111" }}>Our Mission</h3>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: "#555", margin: 0 }}>
+              Empowering businesses with smart RFID solutions for greater visibility, precision, and seamless supply chain efficiency.
+            </p>
           </div>
-        </section>
-
-        {/* ── Section 2: Automate Warehouse ── */}
-        <section className={styles.section2}>
-          <div className={styles.container}>
-            <div className={`${styles.row} ${styles.rowReverse}`}>
-              <div className={styles.textBlock2}>
-                <span className={styles.eyebrow2}>UNMATCHED EFFICIENCY</span>
-                <h2 className={styles.h2}>
-                  Automate<br />Warehouse<br />Intelligence.
-                </h2>
-                <p className={styles.body2}>
-                  Our real-time inventory system and warehouse management platform integrates RFID at every checkpoint — from goods-in to dispatch — eliminating manual errors and reducing process time.
-                </p>
-                <p className={styles.body2}>
-                  Clients report a 40% reduction in fulfillment time and near-zero shrinkage within 90 days of deployment.
-                </p>
-              </div>
-              <div className={styles.imageBlock}>
-                <img src="/images/product-health.jpg" alt="Warehouse intelligence system" className={styles.img} />
-                <div className={styles.imgOverlay} />
-              </div>
+          {/* Vision Card */}
+          <div style={{ flex: 1, background: "#fff", borderRadius: 20, padding: "48px 40px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)" }}>
+            <div style={{ width: 48, height: 48, borderRadius: 10, background: "#EBF5FF", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+              <Eye size={24} color="#0B73C8" />
             </div>
+            <h3 style={{ fontSize: 28, fontWeight: 700, margin: "0 0 16px", color: "#111" }}>Our Vision</h3>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: "#555", margin: 0 }}>
+              To lead globally in smart tracking driving innovation, intelligent insights, and seamless automation across industries.
+            </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── Section 3: Mission & Vision ── */}
-        <section className={styles.section3}>
-          <div className={styles.container}>
-            <div className={styles.mvGrid}>
-              <div className={styles.mvCard}>
-                <div className={styles.mvIcon} style={{ background: '#eff6ff', color: '#2563eb' }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
-                    <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-                  </svg>
+      {/* Values Section */}
+      <section style={{ padding: "120px 80px", background: "#f7f9fb" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontSize: 40, fontWeight: 700, margin: "0 0 10px", color: "#111" }}>The Values We Live By</h2>
+          <div style={{ width: 50, height: 4, background: "#0B73C8", borderRadius: 2, margin: "16px auto 60px" }} />
+          <div style={{ display: "flex", gap: 32, justifyContent: "center" }}>
+            {values.map((v, i) => {
+              const Icon = v.icon;
+              return (
+                <div
+                  key={v.title}
+                  onMouseEnter={() => setHoveredValue(i)}
+                  onMouseLeave={() => setHoveredValue(null)}
+                  style={{
+                    flex: "0 1 280px",
+                    background: "#fff",
+                    borderRadius: 16,
+                    padding: "40px 28px 36px",
+                    border: hoveredValue === i ? "1.5px solid #0B73C8" : "1.5px solid #e2e8f0",
+                    transition: "all 0.25s ease",
+                    transform: hoveredValue === i ? "translateY(-4px)" : "none",
+                    boxShadow: hoveredValue === i ? "0 8px 30px rgba(11,115,200,0.12)" : "0 2px 12px rgba(0,0,0,0.04)",
+                    cursor: "default",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 64,
+                      height: 64,
+                      borderRadius: "50%",
+                      background: hoveredValue === i ? "#EBF5FF" : "#f4f6f8",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "0 auto 20px",
+                      transition: "background 0.25s",
+                    }}
+                  >
+                    <Icon size={28} color={hoveredValue === i ? "#0B73C8" : "#7a8a9e"} />
+                  </div>
+                  <h4 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 10px", color: "#111" }}>{v.title}</h4>
+                  <p style={{ fontSize: 15, lineHeight: 1.6, color: "#777", margin: 0 }}>{v.desc}</p>
                 </div>
-                <h3 className={styles.mvTitle}>Our Mission</h3>
-                <p className={styles.mvDesc}>
-                  Empowering businesses with smart RFID solutions for greater visibility, precision, and seamless supply chain efficiency.
-                </p>
-              </div>
-              <div className={styles.mvCard}>
-                <div className={styles.mvIcon} style={{ background: '#fff1f2', color: '#e11d48' }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-                  </svg>
-                </div>
-                <h3 className={styles.mvTitle}>Our Vision</h3>
-                <p className={styles.mvDesc}>
-                  To pioneer the next era of intelligent tracking, driving connected, intelligent supply chains and redefining operational excellence at scale.
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── Section 4: Values ── */}
-        <section className={styles.section4}>
-          <div className={styles.container}>
-            <h2 className={styles.valuesHeading}>The Values We Live By</h2>
-            <div className={styles.valueDivider} />
-            <div className={styles.valuesGrid}>
-              {values.map((v) => (
-                <div key={v.title} className={styles.valueCard}>
-                  <div className={styles.valueIcon}>{v.icon}</div>
-                  <h4 className={styles.valueTitle}>{v.title}</h4>
-                  <p className={styles.valueDesc}>{v.desc}</p>
-                </div>
-              ))}
+      {/* Footer */}
+      <footer style={{ background: "#0a1628", color: "#c0c8d4", padding: "60px 60px 40px" }}>
+        <div style={{ display: "flex", gap: 60, maxWidth: 1200, margin: "0 auto", paddingBottom: 40, borderBottom: "1px solid #1e2d42" }}>
+          {/* Brand */}
+          <div style={{ flex: "0 0 240px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+              <div style={{ width: 28, height: 28, borderRadius: 6, background: "#0B73C8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ color: "#fff", fontSize: 11, fontWeight: 700 }}>B</span>
+              </div>
+              <span style={{ fontSize: 14, fontWeight: 600, color: "#e8ecf1" }}>Britannia RFID Technologies</span>
             </div>
+            <p style={{ fontSize: 12.5, lineHeight: 1.6, color: "#7a8a9e", margin: 0 }}>
+              Leading the global transition to transparent, intelligent asset tracking since 1976.
+            </p>
           </div>
-        </section>
+          {/* Solutions */}
+          <div style={{ flex: 1 }}>
+            <h5 style={{ fontSize: 13, fontWeight: 600, color: "#e8ecf1", margin: "0 0 16px" }}>Solutions</h5>
+            {footerSolutions.map((s) => (
+              <p key={s} style={{ fontSize: 13, color: "#7a8a9e", margin: "0 0 10px", cursor: "pointer" }}>{s}</p>
+            ))}
+          </div>
+          {/* Company */}
+          <div style={{ flex: 1 }}>
+            <h5 style={{ fontSize: 13, fontWeight: 600, color: "#e8ecf1", margin: "0 0 16px" }}>Company</h5>
+            {footerCompany.map((s) => (
+              <p key={s} style={{ fontSize: 13, color: "#7a8a9e", margin: "0 0 10px", cursor: "pointer" }}>{s}</p>
+            ))}
+          </div>
+          {/* Legal */}
+          <div style={{ flex: 1 }}>
+            <h5 style={{ fontSize: 13, fontWeight: 600, color: "#e8ecf1", margin: "0 0 16px" }}>Legal</h5>
+            {footerLegal.map((s) => (
+              <p key={s} style={{ fontSize: 13, color: "#7a8a9e", margin: "0 0 10px", cursor: "pointer", textDecoration: s === "Privacy Policy" ? "underline" : "none" }}>{s}</p>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
-      </main>
-      <Footer />
-    </>
-  )
-}
+export default About;
