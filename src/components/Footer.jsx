@@ -1,4 +1,4 @@
-import BritanniaLogo from './BritanniaLogo'
+import brfidLogo from '../../public/images/brfid-logo.png'
 import styles from './Footer.module.css'
 
 const footerLinks = {
@@ -34,7 +34,7 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.brand}>
           <div className={styles.logoWrap}>
-            <BritanniaLogo width={160} darkBg={true} />
+            <img src={brfidLogo} alt="BRFID Logo" style={{ height: 40, width: 'auto' }} />
           </div>
           <p className={styles.brandDesc}>
             Leading the global transition to intelligent, connected identity tracking since 1979.

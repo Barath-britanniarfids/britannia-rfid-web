@@ -153,8 +153,8 @@ export default function ProductDetail() {
   const activeImage = thumbs[activeThumb] || product.image;
 
   return (
-    <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: "#1a2332", background: "#fff", minHeight: "100vh" }}>
-      <Header />
+    <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: "#1a2332", background: "#fff", minHeight: "100vh", paddingTop : "70px"}}>
+
 
       {/* Breadcrumb */}
       <div style={styles.breadcrumb}>
@@ -349,8 +349,6 @@ export default function ProductDetail() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
