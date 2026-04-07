@@ -213,21 +213,6 @@ const HeroSection = () => {
             Precision. Speed. Intelligence. We redefine inventory tracking and asset management
             through ultra-high frequency technology.
           </p>
-          <button
-            style={{
-              background: "#111",
-              color: "#fff",
-              border: "none",
-              borderRadius: 6,
-              padding: "14px 28px",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
-              fontFamily: "Inter, system-ui, sans-serif",
-            }}
-          >
-            Explore Products
-          </button>
         </div>
 
         {!isMobile && (
@@ -824,7 +809,6 @@ const Products = () => {
       <HeroSection />
       <ProductsSection />
       <FeaturesSection />
-      <Footer />
     </div>
   );
 };
