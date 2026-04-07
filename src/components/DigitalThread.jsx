@@ -157,13 +157,8 @@ export default function DigitalThread() {
   const lineTransform = isMobile ? "none" : "translateX(-50%)";
 
   return (
-    <div style={{ background: "#f8fafc", minHeight: "100vh", fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}>
-      <div style={{ height: "45vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8 }}>
-        <span style={{ fontSize: 11, color: "#94a3b8", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 700 }}>scroll to explore</span>
-        <div style={{ fontSize: 22, color: "#94a3b8", animation: "bounce 2s infinite" }}>↓</div>
-      </div>
-
-      <section style={{ padding: isMobile ? "3rem 1rem" : "6rem 2rem" }}>
+    <div style={{ background: "#f8fafc", fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}>
+      <section style={{ padding: isMobile ? "2rem 1rem" : "3rem 2rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
             <span style={{ display: "inline-block", fontSize: "0.68rem", fontWeight: 700, color: "#64748b", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 10 }}>
@@ -197,10 +192,7 @@ export default function DigitalThread() {
         </div>
       </section>
 
-      <div style={{ height: "35vh" }} />
-
       <style>{`
-        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
         @keyframes neonPulse {
           0%,100% { box-shadow: 0 0 0 4px rgba(205,209,42,0.2), 0 0 14px rgba(205,209,42,0.4), 0 0 30px rgba(205,209,42,0.15); }
           50% { box-shadow: 0 0 0 6px rgba(205,209,42,0.3), 0 0 22px rgba(205,209,42,0.55), 0 0 44px rgba(205,209,42,0.25); }

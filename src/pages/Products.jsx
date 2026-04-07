@@ -155,7 +155,7 @@ const HeroSection = () => {
   const isMobile = width < 768;
 
   return (
-    <section style={{ background: "#fafafa", padding: "60px 24px 80px", overflow: "hidden" }}>
+    <section style={{ background: "#fafafa", padding: "100px 24px 80px", overflow: "hidden" }}>
       <div
         style={{
           maxWidth: 1200,
@@ -478,42 +478,6 @@ const ProductsSection = () => {
               instant data clarity across every touchpoint.
             </p>
           </div>
-          {!isMobile && (
-            <div style={{ display: "flex", gap: 8 }}>
-              <button
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  border: "1px solid #ddd",
-                  background: "#fff",
-                  cursor: "pointer",
-                  fontSize: 16,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                ←
-              </button>
-              <button
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  border: "1px solid #ddd",
-                  background: "#fff",
-                  cursor: "pointer",
-                  fontSize: 16,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                →
-              </button>
-            </div>
-          )}
         </div>
         <div
           style={{

@@ -168,7 +168,7 @@ const Clients = () => {
       {/* Hero Banner */}
       <section style={{
         background: "linear-gradient(135deg, #f0e6ef 0%, #e8dce8 25%, #d6e5ee 50%, #e4dce6 75%, #efe7ef 100%)",
-        padding: isMobile ? "60px 20px 70px" : isTablet ? "70px 40px 70px" : "80px 60px 70px",
+        padding: isMobile ? "100px 20px 70px" : isTablet ? "110px 40px 70px" : "120px 60px 70px",
         textAlign: "center",
       }}>
         <h1 style={{

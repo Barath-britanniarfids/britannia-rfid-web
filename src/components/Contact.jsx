@@ -53,7 +53,7 @@ const Contact = () => {
       {/* Hero Section */}
       <section style={{
         background: "linear-gradient(135deg, #faf5f5 0%, #f5eeef 40%, #eee8e4 70%, #f0eae6 100%)",
-        padding: isMobile ? "60px 20px 90px" : isTablet ? "80px 40px 90px" : "100px 80px 90px",
+        padding: isMobile ? "100px 20px 90px" : isTablet ? "110px 40px 90px" : "120px 80px 90px",
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         gap: isMobile ? 40 : 60,
