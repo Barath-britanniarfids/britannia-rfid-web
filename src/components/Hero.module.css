@@ -52,7 +52,7 @@
    FLOW PARALLAX LAYERS (no images)
 ────────────────────────────────────────── */
 
-/* Layer 1 — color glow (slowest) */
+/* Layer 1 — color glow (slowest, GPU composited) */
 .flowGlow {
   position: absolute;
   top: 50%;
@@ -65,7 +65,7 @@
   z-index: 1;
 }
 
-/* Layer 2 — giant decorative step number (medium) */
+/* Layer 2 — giant decorative step number (medium, GPU composited) */
 .flowBigNum {
   position: absolute;
   top: 50%;
@@ -79,9 +79,10 @@
   white-space: nowrap;
   will-change: transform, opacity;
   z-index: 2;
+  transform-origin: center center;
 }
 
-/* Layer 3 — text content (fastest) */
+/* Layer 3 — text content (zoom-out exit, GPU composited) */
 .flowStep {
   position: absolute;
   top: 50%;
@@ -91,6 +92,7 @@
   z-index: 20;
   will-change: transform, opacity;
   padding: 1rem;
+  transform-origin: center center;
 }
 
 .stepMarker {
