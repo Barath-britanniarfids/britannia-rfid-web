@@ -189,6 +189,14 @@
   pointer-events: none;
 }
 
+/* Scalable inner wrapper — lets CSS scale the fixed-radius nodes
+   at mobile breakpoints without touching JS-controlled transforms */
+.orbitalContent {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+}
+
 .glowPulse {
   position: absolute;
   top: 50%; left: 50%;
@@ -490,35 +498,70 @@
 @media (max-width: 860px) {
   .orbital {
     left: 50%;
-    top: calc(72px + 2rem);
+    top: calc(72px + 1.5rem);
     margin-top: 0;
     width: 320px;
     height: 320px;
     transform: translateX(-50%) !important;
   }
+  /* scale inner content so 165px-radius nodes stay within the 320px container */
+  .orbitalContent { transform: scale(0.82); }
   /* hide outer ring on tablet/mobile — inner orbit still shows */
   .arm2, .trackOuter { display: none; }
-  .introOuter { align-items: flex-end; padding-bottom: 3rem; padding-left: clamp(1.5rem, 5%, 3rem); }
-  .introInner { max-width: 100%; }
+  .introOuter {
+    align-items: flex-end;
+    padding-top: 0;
+    padding-bottom: 2.5rem;
+    padding-left: clamp(1.5rem, 5%, 3rem);
+    padding-right: clamp(1.5rem, 5%, 3rem);
+    justify-content: center;
+  }
+  .introInner {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+  .badge { margin: 0 auto; }
+  .introCtas { justify-content: center; }
   .introHeading { font-size: 1.9rem; }
+  .introDesc { max-width: 100%; }
   .flowStep { width: min(90%, 580px); }
   .flowBigNum { font-size: clamp(10rem, 22vw, 18rem); }
 }
 
 @media (max-width: 600px) {
-  .introOuter { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .introHeading { font-size: 1.65rem; }
+  .orbital {
+    top: calc(64px + 1rem);
+    width: 260px;
+    height: 260px;
+  }
+  /* scale inner content so 165px-radius nodes stay within the 260px container */
+  .orbitalContent { transform: scale(0.66); }
+  .introOuter {
+    padding-bottom: 2rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .introHeading { font-size: 1.55rem; }
   .introDesc { font-size: 0.85rem; }
+  .introCtas { gap: 0.75rem; }
   .flowStep { width: 92%; padding: 0.75rem; }
-  .flowHeading { font-size: 1.5rem; }
+  .flowHeading { font-size: 1.45rem; }
   .flowDesc { font-size: 0.82rem; margin-bottom: 1.2rem; }
   .flowStatVal { font-size: 1.4rem; }
   .flowBigNum { font-size: clamp(8rem, 20vw, 14rem); }
   .stageFooter { left: 50%; transform: translateX(-50%); }
-  .orbital { width: 260px; height: 260px; }
 }
 
 @media (max-width: 400px) {
-  .introHeading { font-size: 1.45rem; }
-  .orbital { width: 200px; height: 200px; }
+  .orbital {
+    top: calc(60px + 0.75rem);
+    width: 220px;
+    height: 220px;
+  }
+  /* scale inner content so 165px-radius nodes stay within the 220px container */
+  .orbitalContent { transform: scale(0.56); }
+  .introHeading { font-size: 1.35rem; }
+  .introDesc { font-size: 0.8rem; }
+  .flowHeading { font-size: 1.3rem; }
 }

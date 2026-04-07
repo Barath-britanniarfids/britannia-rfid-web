@@ -344,19 +344,21 @@ export default function Hero() {
 
         {/* ── ORBITAL ── */}
         <div ref={elOrbital} className={styles.orbital}>
-          <div className={styles.glowPulse} />
-          <div className={styles.glowPulse2} />
-          {/* inner track */}
-          <div className={styles.track} style={{ '--r': '165px' }} />
-          {/* outer track */}
-          <div className={styles.trackOuter} style={{ '--r': '275px' }} />
-          <div className={styles.logoCenter}>
-            <img src="/images/brfid-logo.png" alt="Britannia RFID" style={{ height: 68, width: 'auto' }} />
+          <div className={styles.orbitalContent}>
+            <div className={styles.glowPulse} />
+            <div className={styles.glowPulse2} />
+            {/* inner track */}
+            <div className={styles.track} style={{ '--r': '165px' }} />
+            {/* outer track */}
+            <div className={styles.trackOuter} style={{ '--r': '275px' }} />
+            <div className={styles.logoCenter}>
+              <img src="/images/brfid-logo.png" alt="Britannia RFID" style={{ height: 68, width: 'auto' }} />
+            </div>
+            {/* inner ring — CW */}
+            {orbitItems.map(item => <OrbitNode key={item.label} item={item} />)}
+            {/* outer ring — CCW */}
+            {orbitItems2.map(item => <OrbitNode2 key={item.label} item={item} />)}
           </div>
-          {/* inner ring — CW */}
-          {orbitItems.map(item => <OrbitNode key={item.label} item={item} />)}
-          {/* outer ring — CCW */}
-          {orbitItems2.map(item => <OrbitNode2 key={item.label} item={item} />)}
         </div>
 
         {/* ── INTRO CONTENT ── */}
