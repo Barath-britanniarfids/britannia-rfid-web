@@ -484,45 +484,58 @@
   text-transform: uppercase; padding-left: 0.4rem; border-left: 1px solid rgba(255,255,255,0.15);
 }
 
-/* ══════════════════════════════════════════════════════════
-   RESPONSIVE  —  5 breakpoints, mobile-first cascade
-   Math reference (outer-ring node edge from orbital centre):
-     scale × (275 px arm + 26 px half-icon) = scale × 301 px
-   ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════════
+   RESPONSIVE  —  7 breakpoints, cascade from large → small
+   ──────────────────────────────────────────────────────────────────────
+   Orbital outer-ring node edge (horizontal, from centre):
+     edge_h = scale × 301 px   (275 px arm + 26 px half-icon)
 
-/* ── 1. ≤1280 px  (1101–1280 px) – side-by-side, large viewport ──────── */
+   Intro-text vertical position formula (stacked layout):
+     padding-top: min(
+       [orbital_visual_bottom + gap],   ← sits right below the orbital
+       calc(100vh − [text_block_h])     ← never pushes text off-screen
+     )
+
+   orbital_visual_bottom = top_offset + container_half + scale × 275 px
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. ≤1280 px — large desktop, side-by-side ───────────────────────── */
 @media (max-width: 1280px) {
   .orbital { left: 62%; width: 500px; height: 500px; margin-top: calc(-250px + 36px); }
 }
 
-/* ── 2. ≤1100 px  (1025–1100 px) – STACKED LAYOUT begins ──────────────
+/* ── 2. ≤1100 px — STACKED LAYOUT begins ────────────────────────────────
  *
- *  Below 1100 px the side-by-side layout breaks: the full-size outer ring
- *  (radius 275 px) at left: 60 % bleeds back into the text block.
- *  Switch to orbital-top / text-bottom stacked layout.
+ *  Below 1100 px, side-by-side fails: the outer ring at left:60% overlaps
+ *  the intro text block. Switch to orbital-top / text-below layout.
  *
- *  scale 0.95 → outer-ring node edge ≈ 286 px from centre.
- *  Fits any screen ≥ 572 px wide; narrower sizes are handled below.
+ *  Geometry (≤1100 px):
+ *    top_offset     = 72 px (navbar) + 32 px (2 rem gap) = 104 px
+ *    container_half = 400 px ÷ 2 = 200 px
+ *    visual_bottom  = 104 + 200 + (0.72 × 275) = 104 + 200 + 198 = 502 px
+ *    padding-top    = min(502 + 32, 100vh − 260) = min(534, 100vh − 260)
+ *
+ *  scale 0.72 → edge_h ≈ 217 px — fits any viewport ≥ 434 px wide.
  * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .orbital {
     left: 50%;
-    top: calc(72px + 2rem);      /* clears the 72 px navbar */
+    top: calc(72px + 2rem);           /* 104 px — clears the fixed 72 px navbar */
     margin-top: 0;
     width: 400px;
     height: 400px;
     transform: translateX(-50%) !important;
   }
-  .orbitalContent { transform: scale(0.95); }
+  .orbitalContent { transform: scale(0.72); }
 
-  /* ── stacked intro layout ── */
+  /* ── stacked layout: text starts just below the orbital ── */
   .introOuter {
-    align-items: flex-end;
-    padding-top: 0;
-    padding-bottom: 3rem;
+    align-items: flex-start;          /* anchor to top-of-content-area, not bottom */
+    justify-content: center;          /* horizontally centre the text block        */
+    padding-top: min(534px, calc(100vh - 260px));
+    padding-bottom: 2rem;
     padding-left: clamp(2rem, 6%, 5rem);
     padding-right: clamp(2rem, 6%, 5rem);
-    justify-content: center;
   }
   .introInner {
     max-width: 680px;
@@ -537,44 +550,46 @@
   .flowBigNum { font-size: clamp(10rem, 22vw, 18rem); }
 }
 
-/* ── 3. ≤860 px  (769–860 px) – large tablet, tighten the stacked layout */
+/* ── 3. ≤860 px — large tablet ───────────────────────────────────────────
+ *    top = 96 px, half = 170 px, visual_bottom = 96 + 170 + 0.80×275 = 486 px
+ *    padding-top = min(510, 100vh − 240)
+ * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 860px) {
   .orbital {
-    top: calc(72px + 1.5rem);
+    top: calc(72px + 3.5rem);         /* 128 px — outer ring clears 72 px navbar */
     width: 340px;
     height: 340px;
   }
-  /*
-   * scale 0.88 → outer-ring node edge ≈ 265 px from centre.
-   * Fits screens ≥ 530 px; the ≤768 px rule below overrides for narrower.
-   */
-  .orbitalContent { transform: scale(0.88); }
+  /* scale 0.80 → edge_h ≈ 241 px; fits screens ≥ 482 px wide */
+  .orbitalContent { transform: scale(0.80); }
   .introOuter {
-    padding-bottom: 2.5rem;
+    padding-top: min(542px, calc(100vh - 240px));
     padding-left: clamp(1.5rem, 5%, 3rem);
     padding-right: clamp(1.5rem, 5%, 3rem);
+    padding-bottom: 1.5rem;
   }
   .introInner { max-width: 100%; }
   .introHeading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
   .introDesc { max-width: 100%; font-size: 0.95rem; }
 }
 
-/* ── 4. ≤768 px  (601–768 px) – tablet portrait / large phone landscape ─ */
+/* ── 4. ≤768 px — tablet portrait / large phone landscape ────────────────
+ *    top = 88 px, half = 150 px, visual_bottom = 88 + 150 + 0.74×275 = 442 px
+ *    padding-top = min(466, 100vh − 220)
+ * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .orbital {
-    top: calc(68px + 1.25rem);
+    top: calc(68px + 1.25rem);        /* 88 px */
     width: 300px;
     height: 300px;
   }
-  /*
-   * scale 0.76 → outer-ring node edge ≈ 229 px from centre.
-   * Fits screens ≥ 458 px; the ≤600 px rule below overrides before clipping.
-   */
-  .orbitalContent { transform: scale(0.76); }
+  /* scale 0.74 → edge_h ≈ 223 px; fits screens ≥ 446 px wide */
+  .orbitalContent { transform: scale(0.74); }
   .introOuter {
-    padding-bottom: 2.25rem;
+    padding-top: min(466px, calc(100vh - 220px));
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+    padding-bottom: 1.25rem;
   }
   .introHeading { font-size: 1.75rem; }
   .introDesc { font-size: 0.9rem; }
@@ -584,22 +599,23 @@
   .flowBigNum { font-size: clamp(9rem, 21vw, 16rem); }
 }
 
-/* ── 5. ≤600 px  (426–600 px) – standard phones ────────────────────────── */
+/* ── 5. ≤600 px — standard phones ───────────────────────────────────────
+ *    top = 80 px, half = 135 px, visual_bottom = 80 + 135 + 0.60×275 = 380 px
+ *    padding-top = min(404, 100vh − 200)
+ * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .orbital {
-    top: calc(64px + 1rem);
+    top: calc(64px + 1rem);           /* 80 px */
     width: 270px;
     height: 270px;
   }
-  /*
-   * scale 0.62 → outer-ring node edge ≈ 187 px from centre.
-   * Fits screens ≥ 374 px wide.
-   */
-  .orbitalContent { transform: scale(0.62); }
+  /* scale 0.60 → edge_h ≈ 181 px; fits screens ≥ 362 px wide */
+  .orbitalContent { transform: scale(0.60); }
   .introOuter {
-    padding-bottom: 2rem;
+    padding-top: min(404px, calc(100vh - 200px));
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+    padding-bottom: 1rem;
   }
   .introHeading { font-size: 1.55rem; }
   .introDesc { font-size: 0.85rem; }
@@ -612,35 +628,47 @@
   .stageFooter { left: 50%; transform: translateX(-50%); }
 }
 
-/* ── 6. ≤425 px  (401–425 px) – Mobile L (iPhone 14 / Pixel) ───────────── */
+/* ── 6. ≤425 px — Mobile L: iPhone 14 / Pixel 7 ─────────────────────────
+ *    top = 76 px, half = 125 px, visual_bottom = 76 + 125 + 0.52×275 = 344 px
+ *    padding-top = min(368, 100vh − 190)
+ * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 425px) {
   .orbital {
-    top: calc(62px + 0.875rem);
+    top: calc(62px + 0.875rem);       /* 76 px */
     width: 250px;
     height: 250px;
   }
-  /*
-   * scale 0.54 → outer-ring node edge ≈ 163 px from centre.
-   * Fits the 425 px viewport with 49 px margin each side.
-   */
-  .orbitalContent { transform: scale(0.54); }
+  /* scale 0.52 → edge_h ≈ 157 px; fits 425 px viewport with 56 px margin each side */
+  .orbitalContent { transform: scale(0.52); }
+  .introOuter {
+    padding-top: min(368px, calc(100vh - 190px));
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
   .introHeading { font-size: 1.45rem; }
   .introDesc { font-size: 0.82rem; }
   .flowHeading { font-size: 1.35rem; }
 }
 
-/* ── 7. ≤400 px  (≤400 px) – smallest Android phones ───────────────────── */
+/* ── 7. ≤400 px — smallest Android phones ───────────────────────────────
+ *    top = 72 px, half = 115 px, visual_bottom = 72 + 115 + 0.48×275 = 319 px
+ *    padding-top = min(343, 100vh − 180)
+ * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 400px) {
   .orbital {
-    top: calc(60px + 0.75rem);
+    top: calc(60px + 0.75rem);        /* 72 px */
     width: 230px;
     height: 230px;
   }
-  /*
-   * scale 0.50 → outer-ring node edge ≈ 150 px from centre.
-   * Fits down to 320 px screens with 10 px margin each side.
-   */
-  .orbitalContent { transform: scale(0.50); }
+  /* scale 0.48 → edge_h ≈ 145 px; fits down to 320 px screens (15 px margin) */
+  .orbitalContent { transform: scale(0.48); }
+  .introOuter {
+    padding-top: min(343px, calc(100vh - 180px));
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
   .introHeading { font-size: 1.35rem; }
   .introDesc { font-size: 0.8rem; }
   .flowHeading { font-size: 1.3rem; }
