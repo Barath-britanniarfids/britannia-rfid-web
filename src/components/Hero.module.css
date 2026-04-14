@@ -484,59 +484,118 @@
   text-transform: uppercase; padding-left: 0.4rem; border-left: 1px solid rgba(255,255,255,0.15);
 }
 
-/* ──────────────────────────────────────────
-   RESPONSIVE
-────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE  —  5 breakpoints, mobile-first cascade
+   Math reference (outer-ring node edge from orbital centre):
+     scale × (275 px arm + 26 px half-icon) = scale × 301 px
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. ≤1280 px  (1101–1280 px) – side-by-side, large viewport ──────── */
 @media (max-width: 1280px) {
   .orbital { left: 62%; width: 500px; height: 500px; margin-top: calc(-250px + 36px); }
 }
 
+/* ── 2. ≤1100 px  (1025–1100 px) – STACKED LAYOUT begins ──────────────
+ *
+ *  Below 1100 px the side-by-side layout breaks: the full-size outer ring
+ *  (radius 275 px) at left: 60 % bleeds back into the text block.
+ *  Switch to orbital-top / text-bottom stacked layout.
+ *
+ *  scale 0.95 → outer-ring node edge ≈ 286 px from centre.
+ *  Fits any screen ≥ 572 px wide; narrower sizes are handled below.
+ * ─────────────────────────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  .orbital { left: 60%; width: 440px; height: 440px; margin-top: calc(-220px + 36px); }
-}
-
-@media (max-width: 860px) {
   .orbital {
     left: 50%;
-    top: calc(72px + 1.5rem);
+    top: calc(72px + 2rem);      /* clears the 72 px navbar */
     margin-top: 0;
-    width: 320px;
-    height: 320px;
+    width: 400px;
+    height: 400px;
     transform: translateX(-50%) !important;
   }
-  /* scale inner content so 165px-radius nodes stay within the 320px container */
-  .orbitalContent { transform: scale(0.82); }
-  /* hide outer ring on tablet/mobile — inner orbit still shows */
-  .arm2, .trackOuter { display: none; }
+  .orbitalContent { transform: scale(0.95); }
+
+  /* ── stacked intro layout ── */
   .introOuter {
     align-items: flex-end;
     padding-top: 0;
-    padding-bottom: 2.5rem;
-    padding-left: clamp(1.5rem, 5%, 3rem);
-    padding-right: clamp(1.5rem, 5%, 3rem);
+    padding-bottom: 3rem;
+    padding-left: clamp(2rem, 6%, 5rem);
+    padding-right: clamp(2rem, 6%, 5rem);
     justify-content: center;
   }
   .introInner {
-    max-width: 100%;
+    max-width: 680px;
     text-align: center;
     align-items: center;
   }
   .badge { margin: 0 auto; }
   .introCtas { justify-content: center; }
-  .introHeading { font-size: 1.9rem; }
-  .introDesc { max-width: 100%; }
-  .flowStep { width: min(90%, 580px); }
+  .introHeading { font-size: clamp(2rem, 4vw, 3rem); }
+  .introDesc { max-width: 580px; }
+  .flowStep { width: min(88%, 580px); }
   .flowBigNum { font-size: clamp(10rem, 22vw, 18rem); }
 }
 
+/* ── 3. ≤860 px  (769–860 px) – large tablet, tighten the stacked layout */
+@media (max-width: 860px) {
+  .orbital {
+    top: calc(72px + 1.5rem);
+    width: 340px;
+    height: 340px;
+  }
+  /*
+   * scale 0.88 → outer-ring node edge ≈ 265 px from centre.
+   * Fits screens ≥ 530 px; the ≤768 px rule below overrides for narrower.
+   */
+  .orbitalContent { transform: scale(0.88); }
+  .introOuter {
+    padding-bottom: 2.5rem;
+    padding-left: clamp(1.5rem, 5%, 3rem);
+    padding-right: clamp(1.5rem, 5%, 3rem);
+  }
+  .introInner { max-width: 100%; }
+  .introHeading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
+  .introDesc { max-width: 100%; font-size: 0.95rem; }
+}
+
+/* ── 4. ≤768 px  (601–768 px) – tablet portrait / large phone landscape ─ */
+@media (max-width: 768px) {
+  .orbital {
+    top: calc(68px + 1.25rem);
+    width: 300px;
+    height: 300px;
+  }
+  /*
+   * scale 0.76 → outer-ring node edge ≈ 229 px from centre.
+   * Fits screens ≥ 458 px; the ≤600 px rule below overrides before clipping.
+   */
+  .orbitalContent { transform: scale(0.76); }
+  .introOuter {
+    padding-bottom: 2.25rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .introHeading { font-size: 1.75rem; }
+  .introDesc { font-size: 0.9rem; }
+  .flowStep { width: min(90%, 520px); }
+  .flowHeading { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .flowDesc { font-size: 0.88rem; }
+  .flowBigNum { font-size: clamp(9rem, 21vw, 16rem); }
+}
+
+/* ── 5. ≤600 px  (426–600 px) – standard phones ────────────────────────── */
 @media (max-width: 600px) {
   .orbital {
     top: calc(64px + 1rem);
-    width: 260px;
-    height: 260px;
+    width: 270px;
+    height: 270px;
   }
-  /* scale inner content so 165px-radius nodes stay within the 260px container */
-  .orbitalContent { transform: scale(0.66); }
+  /*
+   * scale 0.62 → outer-ring node edge ≈ 187 px from centre.
+   * Fits screens ≥ 374 px wide.
+   */
+  .orbitalContent { transform: scale(0.62); }
   .introOuter {
     padding-bottom: 2rem;
     padding-left: 1.25rem;
@@ -553,14 +612,35 @@
   .stageFooter { left: 50%; transform: translateX(-50%); }
 }
 
+/* ── 6. ≤425 px  (401–425 px) – Mobile L (iPhone 14 / Pixel) ───────────── */
+@media (max-width: 425px) {
+  .orbital {
+    top: calc(62px + 0.875rem);
+    width: 250px;
+    height: 250px;
+  }
+  /*
+   * scale 0.54 → outer-ring node edge ≈ 163 px from centre.
+   * Fits the 425 px viewport with 49 px margin each side.
+   */
+  .orbitalContent { transform: scale(0.54); }
+  .introHeading { font-size: 1.45rem; }
+  .introDesc { font-size: 0.82rem; }
+  .flowHeading { font-size: 1.35rem; }
+}
+
+/* ── 7. ≤400 px  (≤400 px) – smallest Android phones ───────────────────── */
 @media (max-width: 400px) {
   .orbital {
     top: calc(60px + 0.75rem);
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
   }
-  /* scale inner content so 165px-radius nodes stay within the 220px container */
-  .orbitalContent { transform: scale(0.56); }
+  /*
+   * scale 0.50 → outer-ring node edge ≈ 150 px from centre.
+   * Fits down to 320 px screens with 10 px margin each side.
+   */
+  .orbitalContent { transform: scale(0.50); }
   .introHeading { font-size: 1.35rem; }
   .introDesc { font-size: 0.8rem; }
   .flowHeading { font-size: 1.3rem; }

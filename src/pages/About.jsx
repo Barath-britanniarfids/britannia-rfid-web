@@ -140,7 +140,7 @@ const About = () => {
         <div style={{ ...fadeRight(heroVisible, 0.15), flex: 1 }}>
           <h1
             style={{
-              fontSize: isMobile ? 28 : 38,
+              fontSize: "clamp(1.75rem, 5vw, 2.375rem)",
               fontWeight: 800,
               margin: "0 0 14px",
               color: "#111",
@@ -150,9 +150,9 @@ const About = () => {
           </h1>
           <p
             style={{
-              fontSize: 15,
+              fontSize: "0.8125rem",
               fontWeight: 600,
-              letterSpacing: 3,
+              letterSpacing: "0.15em",
               color: "#0B73C8",
               textTransform: "uppercase",
               margin: "0 0 20px",
@@ -162,8 +162,8 @@ const About = () => {
           </p>
           <p
             style={{
-              fontSize: 17,
-              lineHeight: 1.8,
+              fontSize: "1.0625rem",
+              lineHeight: 1.75,
               color: "#444",
               margin: 0,
             }}
@@ -207,7 +207,7 @@ const About = () => {
         >
           <p
             style={{
-              fontSize: isMobile ? 18 : isTablet ? 22 : 26,
+              fontSize: "clamp(1.125rem, 3vw, 1.625rem)",
               fontWeight: 600,
               lineHeight: 1.55,
               color: "#1a1a1a",
@@ -237,9 +237,9 @@ const About = () => {
             />
             <span
               style={{
-                fontSize: 12,
+                fontSize: "0.75rem",
                 fontWeight: 700,
-                letterSpacing: 3,
+                letterSpacing: "0.15em",
                 color: "#0B73C8",
                 textTransform: "uppercase",
               }}
@@ -274,7 +274,7 @@ const About = () => {
         >
           <h2
             style={{
-              fontSize: isMobile ? 28 : 36,
+              fontSize: "clamp(1.75rem, 4vw, 2.25rem)",
               fontWeight: 800,
               margin: "0 0 14px",
               lineHeight: 1.15,
@@ -285,9 +285,9 @@ const About = () => {
           </h2>
           <p
             style={{
-              fontSize: 14,
+              fontSize: "0.8125rem",
               fontWeight: 600,
-              letterSpacing: 3,
+              letterSpacing: "0.15em",
               color: "#0B73C8",
               textTransform: "uppercase",
               margin: "0 0 20px",
@@ -297,8 +297,8 @@ const About = () => {
           </p>
           <p
             style={{
-              fontSize: 17,
-              lineHeight: 1.8,
+              fontSize: "1.0625rem",
+              lineHeight: 1.75,
               color: "#555",
               margin: 0,
             }}
@@ -386,7 +386,7 @@ const About = () => {
             </div>
             <h3
               style={{
-                fontSize: isMobile ? 20 : 24,
+                fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
                 fontWeight: 700,
                 margin: "0 0 12px",
                 color: "#111",
@@ -396,7 +396,7 @@ const About = () => {
             </h3>
             <p
               style={{
-                fontSize: 17,
+                fontSize: "1.0625rem",
                 lineHeight: 1.75,
                 color: "#555",
                 margin: 0,
@@ -438,7 +438,7 @@ const About = () => {
             </div>
             <h3
               style={{
-                fontSize: isMobile ? 20 : 24,
+                fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
                 fontWeight: 700,
                 margin: "0 0 12px",
                 color: "#111",
@@ -448,7 +448,7 @@ const About = () => {
             </h3>
             <p
               style={{
-                fontSize: 17,
+                fontSize: "1.0625rem",
                 lineHeight: 1.75,
                 color: "#555",
                 margin: 0,
@@ -481,7 +481,7 @@ const About = () => {
           <h2
             style={{
               ...fadeUp(valuesVisible, 0),
-              fontSize: isMobile ? 24 : isTablet ? 30 : 36,
+              fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
               fontWeight: 700,
               margin: "0 0 10px",
               color: "#111",
@@ -562,7 +562,7 @@ const About = () => {
                   </div>
                   <h4
                     style={{
-                      fontSize: 18,
+                      fontSize: "1.125rem",
                       fontWeight: 700,
                       margin: "0 0 8px",
                       color: "#111",
@@ -572,8 +572,8 @@ const About = () => {
                   </h4>
                   <p
                     style={{
-                      fontSize: 15,
-                      lineHeight: 1.6,
+                      fontSize: "0.9375rem",
+                      lineHeight: 1.65,
                       color: "#777",
                       margin: 0,
                     }}
