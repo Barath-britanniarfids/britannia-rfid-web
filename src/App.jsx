@@ -9,7 +9,6 @@ import DigitalThread from './components/DigitalThread'
 // import Clients from './components/Clients'
 import TestimonialCTA from './components/TestimonialCTA'
 import Contact from './components/Contact'
-import LandingCTA from './components/LandingCTA'
 import Footer from './components/Footer'
 
 // import Products from './pages/Products'
