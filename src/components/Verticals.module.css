@@ -1,109 +1,307 @@
+/* ═══════════════════════════════════════════
+   VERTICALS — 3-card left/right carousel
+═══════════════════════════════════════════ */
+
 .section {
   padding: 6rem 2rem;
-  background: #fff;
+  background: #f8fafc;
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+/* ── Header ── */
 .header {
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 
 .tag {
   display: inline-block;
-  background: #fee2e2;
-  color: #ef4444;
-  font-size: 0.68rem;
+  background: rgba(52, 172, 224, 0.10);
+  border: 1px solid rgba(52, 172, 224, 0.28);
+  color: #34ace0;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  padding: 0.3rem 0.9rem;
+  padding: 0.3rem 0.95rem;
   border-radius: 100px;
   margin-bottom: 1rem;
 }
 
 .heading {
-  font-size: clamp(2rem, 3.5vw, 2.8rem);
-  font-weight: 700;
+  font-size: clamp(1.55rem, 3.5vw, 2.8rem);
+  font-weight: 800;
   color: #0f172a;
-  margin-bottom: 0.8rem;
-  font-style: normal;
+  margin-bottom: 0.75rem;
   line-height: 1.2;
 }
 
 .accent {
-  color: #2563eb;
+  color: #34ace0;
   font-style: italic;
 }
 
 .subheading {
   font-size: 0.95rem;
   color: #64748b;
-  max-width: 520px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+/* ── Slider wrapper ── */
+.sliderWrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.card {
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 1.8rem;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-  cursor: default;
-}
-
-.card:hover {
-  border-color: #bfdbfe;
-  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
-  transform: translateY(-4px);
-}
-
-.icon {
+/* ── Nav buttons ── */
+.navBtn {
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
-  background: #eff6ff;
-  border-radius: 10px;
+  border-radius: 50%;
+  border: 1.5px solid #e2e8f0;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
-  color: #2563eb;
+  cursor: pointer;
+  color: #64748b;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
-.icon svg {
-  width: 22px;
-  height: 22px;
+.navBtn:hover {
+  border-color: #34ace0;
+  color: #34ace0;
+  background: #f0fbff;
+  box-shadow: 0 4px 16px rgba(52, 172, 224, 0.18);
 }
 
+.navBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Cards track ── */
+.cardsTrack {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.08fr 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+/* Directional slide animation */
+.cardsTrack[data-dir="next"] {
+  animation: slideInRight 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.cardsTrack[data-dir="prev"] {
+  animation: slideInLeft 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Base card ── */
+.card {
+  border-radius: 18px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  border-top: 3px solid var(--clr, #34ace0);
+  transition: opacity 0.2s, box-shadow 0.2s;
+}
+
+/* Active / center card — dark featured */
+.cardActive {
+  background: #0f172a;
+  box-shadow: 0 12px 48px rgba(15, 23, 42, 0.18);
+}
+
+/* Side cards — light, clickable */
+.cardSide {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-top: 3px solid var(--clr, #34ace0);
+  opacity: 0.68;
+  cursor: pointer;
+}
+
+.cardSide:hover {
+  opacity: 0.92;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* ── Card icon ── */
+.cardIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clr, #34ace0);
+}
+
+.cardActive .cardIcon {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.cardSide .cardIcon {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(0, 0, 0, 0.07);
+}
+
+.cardIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Card counter ── */
+.cardCounter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.cardNum {
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.cardActive .cardNum  { color: #fff; }
+.cardSide   .cardNum  { color: #0f172a; }
+
+.cardTotal {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cardActive .cardTotal { color: rgba(255, 255, 255, 0.3); }
+.cardSide   .cardTotal { color: #94a3b8; }
+
+/* ── Card title ── */
 .cardTitle {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
 }
 
+.cardActive .cardTitle { color: #fff; }
+.cardSide   .cardTitle { color: #0f172a; }
+
+/* ── Card description ── */
 .cardDesc {
   font-size: 0.82rem;
-  color: #64748b;
-  line-height: 1.6;
+  line-height: 1.75;
+  margin: 0;
+  flex: 1;
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+.cardActive .cardDesc { color: rgba(226, 232, 240, 0.65); }
+.cardSide   .cardDesc { color: #64748b; }
+
+/* ── Dot navigation ── */
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: width 0.3s ease, background 0.3s ease, border-radius 0.3s ease;
+}
+
+.dotActive {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--clr, #34ace0);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+
+@media (max-width: 860px) {
+  /* show only the active (center) card on tablet/mobile */
+  .cardsTrack {
+    grid-template-columns: 1fr;
+  }
+
+  .cardSide {
+    display: none;
+  }
+
+  .navBtn {
+    width: 40px;
+    height: 40px;
   }
 }
 
-@media (max-width: 560px) {
-  .grid {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1.25rem;
+  }
+  .header {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 3.5rem 1rem;
+  }
+
+  .sliderWrap {
+    gap: 0.5rem;
+  }
+
+  .navBtn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navBtn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .card {
+    padding: 1.75rem;
+  }
+
+  .cardNum {
+    font-size: 1.6rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
   }
 }

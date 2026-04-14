@@ -86,7 +86,7 @@ const Contact = () => {
                 Our Response Time
               </p>
               <p style={{ fontSize: 16, color: "#333", margin: 0, fontWeight: 500, lineHeight: 1.5 }}>
-                "Expect a response within<br />4 business hours".
+                "Expect a response within<br />2 business days".
               </p>
             </div>
           )}

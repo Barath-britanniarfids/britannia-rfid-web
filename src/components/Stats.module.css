@@ -28,11 +28,17 @@
 }
 
 .label {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .label {
+    font-size: 0.72rem;
+  }
 }
 
 @media (max-width: 640px) {

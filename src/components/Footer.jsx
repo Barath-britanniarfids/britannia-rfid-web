@@ -13,7 +13,6 @@ const footerLinks = {
     'Unique Offerings',
     'Global Offices',
     'Careers',
-    'Contact',
   ],
   'Unique Offerings': [
     'RFID Ecosystem',
@@ -59,7 +58,7 @@ export default function Footer() {
 
       <div className={styles.bottom}>
         <div className={styles.bottomInner}>
-          <p className={styles.copyright}>© 2024 Britannia RFID Technologies. All rights reserved.</p>
+          <p className={styles.copyright}>© 2026 Britannia RFID Technologies. All rights reserved.</p>
         </div>
       </div>
     </footer>

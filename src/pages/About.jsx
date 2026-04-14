@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { MapPin, Eye, Sparkles, Waves, Shield, Wind } from "lucide-react";
+import { MapPin, Eye, Target, Zap, Shield, Users } from "lucide-react";
 import sourceimg from "../../public/images/Source Tagging.png";
 import containerimg from "../../public/images/Container.png";
 
@@ -60,30 +60,31 @@ const About = () => {
   const isTablet = width < 1024;
 
   const [heroRef, heroVisible] = useReveal();
+  const [quoteRef, quoteVisible] = useReveal();
   const [warehouseRef, warehouseVisible] = useReveal();
   const [missionRef, missionVisible] = useReveal();
   const [valuesRef, valuesVisible] = useReveal();
 
   const values = [
     {
-      icon: Sparkles,
-      title: "Clarity",
-      desc: "Eliminating the noise to reveal the essence.",
+      icon: Target,
+      title: "Precision",
+      desc: "Every tag, reader, and platform engineered for 99.9% read accuracy because a single missed scan carries real operational cost.",
     },
     {
-      icon: Waves,
-      title: "Fluidity",
-      desc: "Designing for motion and natural flow.",
+      icon: Zap,
+      title: "Innovation",
+      desc: "Continuously advancing AI analytics, software capabilities, and hardware to stay ahead of our clients' most demanding requirements.",
     },
     {
       icon: Shield,
-      title: "Integrity",
-      desc: "Quality that goes beyond the surface.",
+      title: "Reliability",
+      desc: "Battle-tested hardware and enterprise-grade software that perform at scale from a single site to a global supply chain.",
     },
     {
-      icon: Wind,
-      title: "Breathability",
-      desc: "Giving ideas the space they need to grow.",
+      icon: Users,
+      title: "Partnership",
+      desc: "45+ years building long-term relationships with 60+ global brands a trusted extension of our clients' operations teams.",
     },
   ];
 
@@ -101,22 +102,20 @@ const About = () => {
         ref={heroRef}
         style={{
           padding: isMobile
-            ? "100px 20px 60px"
+            ? "72px 16px 32px"
             : isTablet
-              ? "120px 40px 60px"
-              : "120px 80px 60px",
+              ? "80px 32px 32px"
+              : "80px 48px 32px",
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          gap: isMobile ? 32 : 60,
+          gap: isMobile ? 24 : 40,
           alignItems: "center",
-          maxWidth: 1400,
-          margin: "0 auto",
         }}
       >
         <div
           style={{
             ...fadeLeft(heroVisible, 0),
-            flex: isMobile ? "unset" : "0 0 520px",
+            flex: isMobile ? "unset" : "0 0 440px",
             width: isMobile ? "100%" : "auto",
           }}
         >
@@ -141,13 +140,13 @@ const About = () => {
         <div style={{ ...fadeRight(heroVisible, 0.15), flex: 1 }}>
           <h1
             style={{
-              fontSize: isMobile ? 40 : 56,
+              fontSize: isMobile ? 28 : 38,
               fontWeight: 800,
               margin: "0 0 14px",
               color: "#111",
             }}
           >
-            About us
+            Pioneering RFID Solutions
           </h1>
           <p
             style={{
@@ -159,7 +158,7 @@ const About = () => {
               margin: "0 0 20px",
             }}
           >
-            Visibility Starts Here
+            About Britannia RFID
           </p>
           <p
             style={{
@@ -167,32 +166,103 @@ const About = () => {
               lineHeight: 1.8,
               color: "#444",
               margin: 0,
-              maxWidth: 540,
             }}
           >
-            BRFID (Britannia RFID) redefines inventory management with real-time
-            insights, seamless scanning, and precise data capture, it helps
-            businesses move faster, operate smarter, and reduce losses across
-            retail and logistics environments.
+            Britannia RFID (BRFID) began as Britannia Garment Packaging in
+            Leicester, UK a trusted name in garment labelling and packaging
+            for over four decades. Today we deliver a complete AI-powered RFID
+            ecosystem across mutiple industry, giving businesses
+            real-time item-level visibility from source tag to enterprise
+            analytics.
           </p>
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div
+        style={{
+          margin: "0 48px",
+          height: 3,
+          background: "linear-gradient(to right, transparent, #0B73C8 30%, #34ace0 50%, #0B73C8 70%, transparent)",
+          opacity: 0.35,
+        }}
+      />
+
+      {/* Pull Quote */}
+      <div
+        ref={quoteRef}
+        style={{
+          ...fadeUp(quoteVisible, 0),
+          padding: isMobile ? "36px 20px" : isTablet ? "44px 40px" : "52px 80px",
+          textAlign: "center",
+          background: "#fff",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 820,
+            margin: "0 auto",
+            position: "relative",
+          }}
+        >
+          <p
+            style={{
+              fontSize: isMobile ? 18 : isTablet ? 22 : 26,
+              fontWeight: 600,
+              lineHeight: 1.55,
+              color: "#1a1a1a",
+              margin: "0 0 20px",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            We don&apos;t just supply RFID tags we build the intelligence
+            layer that connects your physical operations to real-time data,
+            turning every scanned item into a decision that saves time, cuts
+            cost, and drives growth.
+          </p>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <div
+              style={{
+                width: 32,
+                height: 2,
+                background: "#0B73C8",
+                borderRadius: 2,
+              }}
+            />
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: 3,
+                color: "#0B73C8",
+                textTransform: "uppercase",
+              }}
+            >
+              Britannia RFID
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* Automate Warehouse Section */}
       <section
         ref={warehouseRef}
         style={{
           padding: isMobile
-            ? "32px 20px"
+            ? "24px 16px"
             : isTablet
-              ? "36px 40px"
-              : "40px 80px",
+              ? "28px 32px"
+              : "32px 48px",
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          gap: isMobile ? 20 : 32,
+          gap: isMobile ? 20 : 40,
           alignItems: "center",
-          maxWidth: 1400,
-          margin: "0 auto",
         }}
       >
         <div
@@ -204,16 +274,14 @@ const About = () => {
         >
           <h2
             style={{
-              fontSize: isMobile ? 36 : 52,
+              fontSize: isMobile ? 28 : 36,
               fontWeight: 800,
               margin: "0 0 14px",
               lineHeight: 1.15,
               color: "#111",
             }}
           >
-            Automate Warehouse
-            <br />
-            Intelligence.
+            One Ecosystem Every Industry
           </h2>
           <p
             style={{
@@ -225,7 +293,7 @@ const About = () => {
               margin: "0 0 20px",
             }}
           >
-            Unrivaled Efficiency
+            Complete RFID Stack
           </p>
           <p
             style={{
@@ -233,20 +301,22 @@ const About = () => {
               lineHeight: 1.8,
               color: "#555",
               margin: 0,
-              maxWidth: 420,
             }}
           >
-            Zero-touch inventory control. Deploy tunnel scanners and overhead
-            readers to process thousands of items in seconds, eliminating human
-            error.
+            BRFID delivers a vertically integrated RFID stack precision tags
+            and labels, purpose-built readers for every touchpoint, and
+            AI-powered software platforms for Textile, Retail, Healthcare,
+            Logistics, Agriculture, Food, and more. With 500M+ units shipped
+            annually across 10+ global locations, we are the single accountable
+            partner from source encoding to enterprise intelligence.
           </p>
         </div>
         <div
           style={{
             ...fadeRight(warehouseVisible, 0.15),
-            flex: isMobile ? "unset" : "0 0 560px",
+            flex: isMobile ? "unset" : "0 0 440px",
             width: isMobile ? "100%" : "auto",
-            height: isMobile ? "auto" : 380,
+            height: isMobile ? "auto" : 340,
             borderRadius: 20,
             overflow: "hidden",
             order: isMobile ? 1 : 2,
@@ -270,10 +340,10 @@ const About = () => {
         style={{
           background: "#3B8DD0",
           padding: isMobile
-            ? "36px 20px"
+            ? "32px 16px"
             : isTablet
-              ? "40px 40px"
-              : "48px 80px",
+              ? "40px 32px"
+              : "48px 48px",
         }}
       >
         <div
@@ -281,8 +351,8 @@ const About = () => {
           style={{
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
-            gap: 32,
-            maxWidth: 1400,
+            gap: isMobile ? 20 : 28,
+            maxWidth: 1100,
             margin: "0 auto",
           }}
         >
@@ -292,27 +362,31 @@ const About = () => {
               flex: 1,
               background: "#fff",
               borderRadius: 20,
-              padding: isMobile ? "32px 24px" : "40px 36px",
+              padding: isMobile ? "24px 20px" : isTablet ? "32px 28px" : "36px 32px",
               boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
             }}
           >
             <div
               style={{
-                width: 48,
-                height: 48,
+                width: isMobile ? 40 : 48,
+                height: isMobile ? 40 : 48,
                 borderRadius: 10,
                 background: "#EBF5FF",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: 16,
+                marginBottom: 14,
               }}
             >
-              <MapPin size={24} color="#0B73C8" />
+              <MapPin size={isMobile ? 20 : 24} color="#0B73C8" />
             </div>
             <h3
               style={{
-                fontSize: 26,
+                fontSize: isMobile ? 20 : 24,
                 fontWeight: 700,
                 margin: "0 0 12px",
                 color: "#111",
@@ -328,8 +402,10 @@ const About = () => {
                 margin: 0,
               }}
             >
-              Empowering businesses with smart RFID Technologies for greater
-              visibility, precision, and seamless supply chain efficiency.
+              To empower businesses with a complete AI-driven RFID ecosystem
+              precision tags, purpose-built hardware, and intelligent software
+              delivering real-time item-level visibility and measurable cost
+              savings across every industry we serve.
             </p>
           </div>
           <div
@@ -338,27 +414,31 @@ const About = () => {
               flex: 1,
               background: "#fff",
               borderRadius: 20,
-              padding: isMobile ? "32px 24px" : "40px 36px",
+              padding: isMobile ? "24px 20px" : isTablet ? "32px 28px" : "36px 32px",
               boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
             }}
           >
             <div
               style={{
-                width: 48,
-                height: 48,
+                width: isMobile ? 40 : 48,
+                height: isMobile ? 40 : 48,
                 borderRadius: 10,
                 background: "#EBF5FF",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: 16,
+                marginBottom: 14,
               }}
             >
-              <Eye size={24} color="#0B73C8" />
+              <Eye size={isMobile ? 20 : 24} color="#0B73C8" />
             </div>
             <h3
               style={{
-                fontSize: 26,
+                fontSize: isMobile ? 20 : 24,
                 fontWeight: 700,
                 margin: "0 0 12px",
                 color: "#111",
@@ -374,8 +454,10 @@ const About = () => {
                 margin: 0,
               }}
             >
-              To lead globally in smart tracking driving innovation, intelligent
-              insights, and seamless automation across industries.
+              To be the world's most trusted end-to-end RFID solutions partner
+              setting the global standard for intelligent item-level tracking
+              from source tag to enterprise insight across every industry we
+              serve.
             </p>
           </div>
         </div>
@@ -385,27 +467,27 @@ const About = () => {
       <section
         style={{
           padding: isMobile
-            ? "36px 20px"
+            ? "32px 16px"
             : isTablet
-              ? "40px 40px"
-              : "48px 80px",
+              ? "40px 32px"
+              : "48px 48px",
           background: "#f7f9fb",
         }}
       >
         <div
           ref={valuesRef}
-          style={{ maxWidth: 1400, margin: "0 auto", textAlign: "center" }}
+          style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}
         >
           <h2
             style={{
               ...fadeUp(valuesVisible, 0),
-              fontSize: isMobile ? 30 : 40,
+              fontSize: isMobile ? 24 : isTablet ? 30 : 36,
               fontWeight: 700,
               margin: "0 0 10px",
               color: "#111",
             }}
           >
-            The Values We Live By
+            What Drives Everything We Build
           </h2>
           <div
             style={{
@@ -438,10 +520,10 @@ const About = () => {
                       ? "0 1 100%"
                       : isTablet
                         ? "0 1 calc(50% - 12px)"
-                        : "0 1 260px",
+                        : "0 1 240px",
                     background: "#fff",
                     borderRadius: 16,
-                    padding: "32px 24px 28px",
+                    padding: isMobile ? "24px 18px 20px" : "28px 20px 24px",
                     border:
                       hoveredValue === i
                         ? "1.5px solid #0B73C8"

@@ -2,7 +2,7 @@ import styles from './Stats.module.css'
 
 const stats = [
   { value: '45+', label: 'YEARS EXPERIENCE' },
-  { value: '60+', label: 'GLOBAL LOCATIONS' },
+  { value: '60+', label: 'GLOBAL BRANDS' },
   { value: '500M+', label: 'ANNUAL UNITS' },
 ]
 

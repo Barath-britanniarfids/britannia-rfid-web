@@ -37,7 +37,7 @@ export default function Navbar() {
               HOME
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
               to="/products"
               className={({ isActive }) => (isActive ? styles.active : "")}
@@ -45,7 +45,7 @@ export default function Navbar() {
             >
               PRODUCT
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink
               to="/about"
@@ -55,7 +55,7 @@ export default function Navbar() {
               ABOUT
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
               to="/clients"
               className={({ isActive }) => (isActive ? styles.active : "")}
@@ -63,16 +63,7 @@ export default function Navbar() {
             >
               CLIENT
             </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              onClick={() => setMenuOpen(false)}
-            >
-              CONTACT
-            </NavLink>
-          </li>
+          </li> */}
         </ul>
 
         <button

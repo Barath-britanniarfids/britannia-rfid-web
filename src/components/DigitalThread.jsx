@@ -54,7 +54,7 @@ export default function DigitalThread() {
   const [totalLineHeight, setTotalLineHeight] = useState(0);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768);
+    const check = () => setIsMobile(window.innerWidth <= 640);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -158,7 +158,7 @@ export default function DigitalThread() {
 
   return (
     <div style={{ background: "#f8fafc", fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}>
-      <section style={{ padding: isMobile ? "2rem 1rem" : "3rem 2rem" }}>
+      <section style={{ padding: isMobile ? "2rem 1rem" : window.innerWidth <= 1024 ? "3rem 1.5rem" : "3rem 2rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
             <span style={{ display: "inline-block", fontSize: "0.68rem", fontWeight: 700, color: "#64748b", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 10 }}>
@@ -282,7 +282,7 @@ function Row({ step, index, isActive, isMobile, dotRef }) {
       }}
     >
       <div style={{
-        width: "100%", height: isMobile ? 180 : 220, borderRadius: 14,
+        width: "100%", height: isMobile ? 160 : 220, borderRadius: 14,
         overflow: "hidden", border: "1px solid #e2e8f0",
         boxShadow: isActive
           ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(205,209,42,0.1)"
