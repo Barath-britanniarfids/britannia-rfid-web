@@ -10,6 +10,7 @@ import DigitalThread from './components/DigitalThread'
 import TestimonialCTA from './components/TestimonialCTA'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import MilestonePopup from './components/MilestonePopup'
 
 // import Products from './pages/Products'
 // import ProductDetail from './pages/ProductDetail'
@@ -48,6 +49,7 @@ function LandingPage() {
 
   return (
     <>
+      <MilestonePopup />
       <Hero />
       <Stats />
       <Verticals />

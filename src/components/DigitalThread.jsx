@@ -39,11 +39,11 @@ const steps = [
   },
 ];
 
-const NEON = "#CDD12A";
-const NEON_GLOW = "rgba(205,209,42,0.55)";
+const NEON = "#C9CD2C";
+const NEON_GLOW = "rgba(201,205,44,0.55)";
 const INACTIVE_LINE = "#e2e8f0";
-const INACTIVE_DOT_BG = "#3b82f6";
-const DOT_RING = "#bfdbfe";
+const INACTIVE_DOT_BG = "#34ACE0";
+const DOT_RING = "rgba(52,172,224,0.28)";
 
 export default function DigitalThread() {
   const timelineRef = useRef(null);
@@ -194,8 +194,8 @@ export default function DigitalThread() {
 
       <style>{`
         @keyframes neonPulse {
-          0%,100% { box-shadow: 0 0 0 4px rgba(205,209,42,0.2), 0 0 14px rgba(205,209,42,0.4), 0 0 30px rgba(205,209,42,0.15); }
-          50% { box-shadow: 0 0 0 6px rgba(205,209,42,0.3), 0 0 22px rgba(205,209,42,0.55), 0 0 44px rgba(205,209,42,0.25); }
+          0%,100% { box-shadow: 0 0 0 4px rgba(201,205,44,0.2), 0 0 14px rgba(201,205,44,0.4), 0 0 30px rgba(201,205,44,0.15); }
+          50% { box-shadow: 0 0 0 6px rgba(201,205,44,0.3), 0 0 22px rgba(201,205,44,0.55), 0 0 44px rgba(201,205,44,0.25); }
         }
         @keyframes dotPop {
           0% { transform: scale(1); }
@@ -285,7 +285,7 @@ function Row({ step, index, isActive, isMobile, dotRef }) {
         width: "100%", height: isMobile ? 160 : 220, borderRadius: 14,
         overflow: "hidden", border: "1px solid #e2e8f0",
         boxShadow: isActive
-          ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(205,209,42,0.1)"
+          ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(201,205,44,0.1)"
           : "0 4px 20px rgba(0,0,0,0.08)",
         background: "#e2e8f0", position: "relative",
       }}>

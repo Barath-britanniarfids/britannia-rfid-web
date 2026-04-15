@@ -8,25 +8,25 @@ const N = 5   // stages: 0=intro, 1-4=flow steps
 /* ─── FLOW STAGES ─── */
 const STAGES = [
   {
-    id: 'tag', step: '01', tag: 'RFID Tags & Labels', color: '#1EC9E8',
+    id: 'tag', step: '01', tag: 'RFID Tags & Labels', color: '#34ACE0',
     heading: 'Every Item Gets', accent: 'a Smart Identity.',
     desc: 'Britannia supplies the full tag portfolio, Swing Tags for item-level tracking, Variable Data Stickers for order logistics, Woven Labels sewn directly into garments, Care Labels with embedded tracking, and EAS + RFID Dual Tags combining security and smart retail in one.',
     stat: { val: '5+', key: 'Tag Types Available' },
   },
   {
-    id: 'hardware', step: '02', tag: 'RFID Hardware', color: '#C2D600',
+    id: 'hardware', step: '02', tag: 'RFID Hardware', color: '#AB3480',
     heading: 'The Right Reader', accent: 'Every Touchpoint',
     desc: 'Deploy purpose built hardware across your operation UHF Channel Door portals for hands free gate scanning, High Speed Tunnel Machines for bulk throughput, handheld Bluetooth Inventory Scanners, RFID Card Readers at returns desks, and Android Dual-Screen Cash Registers for seamless checkout.',
     stat: { val: '1,000+', key: 'Tags Read per Second' },
   },
   {
-    id: 'software', step: '03', tag: 'Software & Solution', color: '#D81BB0',
+    id: 'software', step: '03', tag: 'Solutions & Platform', color: '#C9CD2C',
     heading: 'Integrate Once.', accent: 'Scale Without Limits.',
-    desc: 'The Britannia RFID software provides comprehensive APIs for seamless reader connectivity and device management. Built with scalability and flexibility in mind, the platform supports growing data volumes, evolving workflows, and diverse deployment needs across industries such as Textile, Retail, Logistics, Healthcare, Agriculture, and Food.',
+    desc: 'The Britannia RFID solutions platform provides comprehensive APIs for seamless reader connectivity and device management. Built with scalability and flexibility in mind, the platform supports growing data volumes, evolving workflows, and diverse deployment needs across industries such as Textile, Retail, Logistics, Healthcare, Agriculture, and Food.',
     stat: { val: '9+', key: 'Industry Platforms' },
   },
   {
-    id: 'ai', step: '04', tag: 'Actionable Intelligence', color: '#f59e0b',
+    id: 'ai', step: '04', tag: 'Actionable Intelligence', color: '#34ACE0',
     heading: 'AI Analytics &', accent: 'Intelligence.',
     desc: 'AI turns raw tag events into actionable intelligence live inventory accuracy dashboards, shrinkage and loss prevention alerts, replenishment queue automation, and compliance audit reports. Machine learning at 99.9% read accuracy converts real time visibility into measurable cost savings.',
     stat: { val: '30%', key: 'Average Inventory Cost Reduction' },
@@ -36,27 +36,27 @@ const STAGES = [
 /* ─── ORBIT NODES — inner ring (CW, 24s) ─── */
 const orbitItems = [
   {
-    angle: 0, radius: 165, dur: 24, label: 'Tag & Encode', clr: '#1EC9E8',
+    angle: 0, radius: 165, dur: 24, label: 'Tag & Encode', clr: '#34ACE0',
     // Price tag — universally recognised "label/tag" icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg>,
   },
   {
-    angle: 72, radius: 165, dur: 24, label: 'RF Capture', clr: '#C2D600',
+    angle: 72, radius: 165, dur: 24, label: 'RF Capture', clr: '#AB3480',
     // Wifi / radio waves — standard signal / RF icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg>,
   },
   {
-    angle: 144, radius: 165, dur: 24, label: 'Edge Filter', clr: '#D81BB0',
+    angle: 144, radius: 165, dur: 24, label: 'Edge Filter', clr: '#C9CD2C',
     // CPU chip — clean minimal version, reads instantly at small size
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>,
   },
   {
-    angle: 216, radius: 165, dur: 24, label: 'Cloud Sync', clr: '#3b82f6',
+    angle: 216, radius: 165, dur: 24, label: 'Cloud Sync', clr: '#34ACE0',
     // Cloud upload — standard cloud platform icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>,
   },
   {
-    angle: 288, radius: 165, dur: 24, label: 'Analytics', clr: '#f59e0b',
+    angle: 288, radius: 165, dur: 24, label: 'Analytics', clr: '#AB3480',
     // Bar chart 2 — clean ascending bars, standard analytics icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
   },
@@ -65,32 +65,32 @@ const orbitItems = [
 /* ─── ORBIT NODES — outer ring (CCW, 36s, offset 30°) — Industry Verticals ─── */
 const orbitItems2 = [
   {
-    angle: 30, radius: 275, dur: 36, label: 'Garments', clr: '#34ace0',
+    angle: 30, radius: 275, dur: 36, label: 'Garments', clr: '#34ACE0',
     // Scissors — universally linked to textile / garment industry
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>,
   },
   {
-    angle: 90, radius: 275, dur: 36, label: 'Healthcare', clr: '#f59e0b',
+    angle: 90, radius: 275, dur: 36, label: 'Healthcare', clr: '#AB3480',
     // Heart pulse — clinical/medical standard icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
   },
   {
-    angle: 150, radius: 275, dur: 36, label: 'Logistics', clr: '#1EC9E8',
+    angle: 150, radius: 275, dur: 36, label: 'Logistics', clr: '#C9CD2C',
     // Truck — universal delivery/logistics icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
   },
   {
-    angle: 210, radius: 275, dur: 36, label: 'Retail', clr: '#C2D600',
+    angle: 210, radius: 275, dur: 36, label: 'Retail', clr: '#34ACE0',
     // Shopping cart — universal retail/commerce icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>,
   },
   {
-    angle: 270, radius: 275, dur: 36, label: 'Agriculture', clr: '#D81BB0',
+    angle: 270, radius: 275, dur: 36, label: 'Agriculture', clr: '#AB3480',
     // Leaf — clean single-path leaf, standard agriculture/nature icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>,
   },
   {
-    angle: 330, radius: 275, dur: 36, label: 'Asset Mgmt', clr: '#3b82f6',
+    angle: 330, radius: 275, dur: 36, label: 'Asset Mgmt', clr: '#C9CD2C',
     // Package (3-D box) — standard asset/inventory management icon
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>,
   },

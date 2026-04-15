@@ -74,17 +74,17 @@ const About = () => {
     {
       icon: Zap,
       title: "Innovation",
-      desc: "Continuously advancing AI analytics, software capabilities, and hardware to stay ahead of our clients' most demanding requirements.",
+      desc: "Continuously advancing AI analytics, solutions capabilities, and hardware to stay ahead of our clients' most demanding requirements.",
     },
     {
       icon: Shield,
       title: "Reliability",
-      desc: "Battle-tested hardware and enterprise-grade software that perform at scale from a single site to a global supply chain.",
+      desc: "Battle-tested hardware and enterprise-grade solutions that perform at scale from a single site to a global supply chain.",
     },
     {
       icon: Users,
       title: "Partnership",
-      desc: "45+ years building long-term relationships with 60+ global brands a trusted extension of our clients' operations teams.",
+      desc: "50+ years building long-term relationships with 60+ global brands a trusted extension of our clients' operations teams.",
     },
   ];
 
@@ -178,15 +178,12 @@ const About = () => {
         </div>
       </section>
 
-      {/* Section Divider */}
-      <div
-        style={{
-          margin: "0 48px",
-          height: 3,
-          background: "linear-gradient(to right, transparent, #0B73C8 30%, #34ace0 50%, #0B73C8 70%, transparent)",
-          opacity: 0.35,
-        }}
-      />
+      {/* Section Divider — brand colour bands */}
+      <div style={{ margin: "0 48px", display: "flex", height: 4, borderRadius: 2, overflow: "hidden", gap: 3 }}>
+        <div style={{ flex: 1, background: "#34ACE0", borderRadius: "2px 0 0 2px" }} />
+        <div style={{ flex: 1, background: "#AB3480" }} />
+        <div style={{ flex: 1, background: "#C9CD2C", borderRadius: "0 2px 2px 0" }} />
+      </div>
 
       {/* Pull Quote */}
       <div
@@ -305,7 +302,7 @@ const About = () => {
           >
             BRFID delivers a vertically integrated RFID stack precision tags
             and labels, purpose-built readers for every touchpoint, and
-            AI-powered software platforms for Textile, Retail, Healthcare,
+            AI-powered solutions platforms for Textile, Retail, Healthcare,
             Logistics, Agriculture, Food, and more. With 500M+ units shipped
             annually across 10+ global locations, we are the single accountable
             partner from source encoding to enterprise intelligence.
@@ -403,7 +400,7 @@ const About = () => {
               }}
             >
               To empower businesses with a complete AI-driven RFID ecosystem
-              precision tags, purpose-built hardware, and intelligent software
+              precision tags, purpose-built hardware, and intelligent solutions
               delivering real-time item-level visibility and measurable cost
               savings across every industry we serve.
             </p>

@@ -7,7 +7,7 @@ const verticals = [
     title: 'Textile & Garments',
     platform: 'BRFID Textile Manager',
     desc: 'End-to-end garment lifecycle visibility from source tagging at manufacture to store shelf, cycle counts, and omnichannel fulfilment.',
-    color: '#1EC9E8',
+    color: '#34ACE0',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
@@ -34,7 +34,7 @@ const verticals = [
     title: 'Medical & Healthcare',
     platform: 'BRFID MedTrack',
     desc: 'Closed loop tracking for surgical instruments, patient wristbands, medical equipment, and sterile supply chain compliance.',
-    color: '#f59e0b',
+    color: '#AB3480',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
@@ -60,7 +60,7 @@ const verticals = [
     title: 'Agriculture',
     platform: 'BRFID AgroTrack',
     desc: 'Livestock ear-tag tracking, harvest lot traceability, cold-chain monitoring, and compliance reporting.',
-    color: '#D81BB0',
+    color: '#C9CD2C',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
@@ -87,7 +87,7 @@ const verticals = [
     title: 'Transport & Logistics',
     platform: 'BRFID LogiTrack',
     desc: 'Pallet-level RFID tagging, dock-door portal scanning, load verification, and live shipment visibility from dock to delivery.',
-    color: '#34ace0',
+    color: '#34ACE0',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/>
@@ -116,7 +116,7 @@ const verticals = [
     title: 'Asset Management',
     platform: 'BRFID AssetIQ',
     desc: 'IT asset tagging, furniture inventory, tool crib management, field equipment dispatch, and GPS-stamped compliance audits.',
-    color: '#3b82f6',
+    color: '#AB3480',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -144,7 +144,7 @@ const verticals = [
     title: 'Food Industry',
     platform: 'BRFID FoodSafe',
     desc: 'Lot level RFID tagging, warehouse picking, cold chain pallet tracking, and traceability from processor to shelf.',
-    color: '#10b981',
+    color: '#C9CD2C',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
@@ -172,7 +172,7 @@ const verticals = [
     title: 'Dairy',
     platform: 'BRFID DairyTrack',
     desc: 'Product level tagging at processing plant, short shelf life dispatch, cold chain monitoring, and traceability compliance.',
-    color: '#8b5cf6',
+    color: '#34ACE0',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z"/>
@@ -198,7 +198,7 @@ const verticals = [
     title: 'Retail & Shopping',
     platform: 'BRFID RetailIQ',
     desc: 'Source tagged RFID from supplier, automated cycle counts, smart fitting rooms, EAS loss prevention, and planogram compliance monitoring.',
-    color: '#C2D600',
+    color: '#AB3480',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="9" cy="21" r="1" fill="currentColor" stroke="none"/>
@@ -226,7 +226,7 @@ const verticals = [
     title: 'Ticketing & Venue',
     platform: 'BRFID VenueIQ',
     desc: 'RFID wristband issuance, rapid gate entry, cashless payments, VIP access control, and real-time crowd density monitoring.',
-    color: '#ef4444',
+    color: '#C9CD2C',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1.5a2.5 2.5 0 0 0 0 5V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5a2.5 2.5 0 0 0 0-5V7z"/>
@@ -291,7 +291,7 @@ export default function Verticals() {
             Precision across <em className={styles.accent}>every</em> vertical.
           </h2>
           <p className={styles.subheading}>
-            Seamlessly integrating RFID intelligence into the world's most demanding industries backed by 45+ years of labelling and packaging expertise.
+            Seamlessly integrating RFID intelligence into the world's most demanding industries backed by 50+ years of labelling and packaging expertise.
           </p>
         </div>
 
