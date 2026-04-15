@@ -562,7 +562,7 @@ const About = () => {
                   </div>
                   <h4
                     style={{
-                      fontSize: "1.125rem",
+                      fontSize: "clamp(1rem, 2.5vw, 1.125rem)",
                       fontWeight: 700,
                       margin: "0 0 8px",
                       color: "#111",

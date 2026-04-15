@@ -38,7 +38,7 @@ const Contact = () => {
     padding: "10px 14px",
     border: `1.5px solid ${focused === field ? "#0B73C8" : "#e2e6ea"}`,
     borderRadius: 8,
-    fontSize: 13.5,
+    fontSize: "0.84375rem",
     fontFamily: "Inter, sans-serif",
     color: "#333",
     outline: "none",
@@ -63,10 +63,10 @@ const Contact = () => {
         position: "relative",
       }}>
         <div style={{ flex: 1, paddingTop: 10 }}>
-          <h1 style={{ fontSize: isMobile ? 44 : 64, fontWeight: 800, margin: "0 0 24px", lineHeight: 1.1, color: "#111" }}>
+          <h1 style={{ fontSize: "clamp(2rem, 7vw, 4rem)", fontWeight: 800, margin: "0 0 24px", lineHeight: 1.1, color: "#111" }}>
             Get in <span style={{ color: "#0B73C8" }}>Touch</span>
           </h1>
-          <p style={{ fontSize: 18, lineHeight: 1.8, color: "#555", margin: 0, maxWidth: 420 }}>
+          <p style={{ fontSize: "clamp(0.9375rem, 2vw, 1.125rem)", lineHeight: 1.8, color: "#555", margin: 0, maxWidth: 420 }}>
             Ready to explore what's next?<br />
             Connect with us to discuss your needs or discover new possibilities in technology.
           </p>
@@ -82,10 +82,10 @@ const Contact = () => {
               background: "#fff", borderRadius: 16, padding: "24px 28px",
               boxShadow: "0 8px 30px rgba(0,0,0,0.1)", minWidth: 260,
             }}>
-              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 10px" }}>
+              <p style={{ fontSize: "0.8125rem", fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 10px" }}>
                 Our Response Time
               </p>
-              <p style={{ fontSize: 16, color: "#333", margin: 0, fontWeight: 500, lineHeight: 1.5 }}>
+              <p style={{ fontSize: "1rem", color: "#333", margin: 0, fontWeight: 500, lineHeight: 1.5 }}>
                 "Expect a response within<br />2 business days".
               </p>
             </div>
@@ -117,7 +117,7 @@ const Contact = () => {
         }}>
           <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 18, marginBottom: 28 }}>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Full Name</label>
+              <label style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Full Name</label>
               <input
                 type="text"
                 placeholder="Jane Doe"
@@ -129,7 +129,7 @@ const Contact = () => {
               />
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Email Address</label>
+              <label style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Email Address</label>
               <input
                 type="email"
                 placeholder="jane@example.com"
@@ -142,7 +142,7 @@ const Contact = () => {
             </div>
           </div>
           <div style={{ marginBottom: 32 }}>
-            <label style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Message</label>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: 1.5, color: "#333", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Message</label>
             <textarea
               placeholder="Tell us about your project or inquiry..."
               value={form.message}
@@ -156,7 +156,7 @@ const Contact = () => {
           <button
             style={{
               background: "#0B73C8", color: "#fff", border: "none", borderRadius: 10,
-              padding: "14px 32px", fontSize: 15, fontWeight: 600, cursor: "pointer",
+              padding: "14px 32px", fontSize: "0.9375rem", fontWeight: 600, cursor: "pointer",
               display: "flex", alignItems: "center", gap: 8, transition: "background 0.2s",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "#095da0")}
@@ -174,9 +174,9 @@ const Contact = () => {
               <AtSign size={20} color="#0B73C8" />
             </div>
             <div>
-              <h4 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 6px", color: "#111" }}>Email Us</h4>
-              <p style={{ fontSize: 15, color: "#666", margin: "0 0 3px" }}>hello@luminoustech.com</p>
-              <p style={{ fontSize: 15, color: "#666", margin: 0 }}>support@luminoustech.com</p>
+              <h4 style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)", fontWeight: 700, margin: "0 0 6px", color: "#111" }}>Email Us</h4>
+              <p style={{ fontSize: "0.9375rem", color: "#666", margin: "0 0 3px" }}>hello@luminoustech.com</p>
+              <p style={{ fontSize: "0.9375rem", color: "#666", margin: 0 }}>support@luminoustech.com</p>
             </div>
           </div>
 
@@ -186,9 +186,9 @@ const Contact = () => {
               <Phone size={20} color="#0B73C8" />
             </div>
             <div>
-              <h4 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 6px", color: "#111" }}>Call Us</h4>
-              <p style={{ fontSize: 15, color: "#666", margin: "0 0 3px" }}>+1 (555) 234-5678</p>
-              <p style={{ fontSize: 15, color: "#666", margin: 0 }}>Mon - Fri, 9am - 6pm EST</p>
+              <h4 style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)", fontWeight: 700, margin: "0 0 6px", color: "#111" }}>Call Us</h4>
+              <p style={{ fontSize: "0.9375rem", color: "#666", margin: "0 0 3px" }}>+1 (555) 234-5678</p>
+              <p style={{ fontSize: "0.9375rem", color: "#666", margin: 0 }}>Mon - Fri, 9am - 6pm EST</p>
             </div>
           </div>
 
@@ -198,14 +198,14 @@ const Contact = () => {
               <MapPin size={20} color="#0B73C8" />
             </div>
             <div>
-              <h4 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 6px", color: "#111" }}>Visit Us</h4>
-              <p style={{ fontSize: 15, color: "#666", margin: "0 0 3px" }}>The Innovation Hub, Suite 400</p>
-              <p style={{ fontSize: 15, color: "#666", margin: 0 }}>250 Tech Plaza, Palo Alto, CA 94301</p>
+              <h4 style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)", fontWeight: 700, margin: "0 0 6px", color: "#111" }}>Visit Us</h4>
+              <p style={{ fontSize: "0.9375rem", color: "#666", margin: "0 0 3px" }}>The Innovation Hub, Suite 400</p>
+              <p style={{ fontSize: "0.9375rem", color: "#666", margin: 0 }}>250 Tech Plaza, Palo Alto, CA 94301</p>
             </div>
           </div>
 
           {/* Connect With Us */}
-          <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: 2, color: "#555", textTransform: "uppercase", margin: "0 0 16px" }}>Connect With Us</p>
+          <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: 2, color: "#555", textTransform: "uppercase", margin: "0 0 16px" }}>Connect With Us</p>
           <div style={{ display: "flex", gap: 14 }}>
             {socialIcons.map((s, i) => (
               <div
@@ -265,8 +265,8 @@ const Contact = () => {
               <MapPin size={16} color="#fff" />
             </div>
             <div>
-              <p style={{ fontSize: 13, fontWeight: 700, margin: 0, color: "#111" }}>Britannia RFID</p>
-              <p style={{ fontSize: 11, color: "#777", margin: 0 }}>Palo Alto, California</p>
+              <p style={{ fontSize: "0.8125rem", fontWeight: 700, margin: 0, color: "#111" }}>Britannia RFID</p>
+              <p style={{ fontSize: "0.6875rem", color: "#777", margin: 0 }}>Palo Alto, California</p>
             </div>
           </div>
           {/* Shadow under pin */}
@@ -282,7 +282,7 @@ const Contact = () => {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8",
+              fontSize: "0.75rem", fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8",
               textTransform: "uppercase", textDecoration: "none", display: "inline-flex",
               alignItems: "center", gap: 6,
             }}

@@ -354,13 +354,14 @@ export default function Hero() {
             <div className={styles.track} style={{ '--r': '165px' }} />
             {/* outer track */}
             <div className={styles.trackOuter} style={{ '--r': '275px' }} />
-            <div className={styles.logoCenter}>
-              <img src="/images/brfid-logo.png" alt="Britannia RFID" style={{ height: 68, width: 'auto' }} />
-            </div>
             {/* inner ring — CW */}
             {orbitItems.map(item => <OrbitNode key={item.label} item={item} />)}
             {/* outer ring — CCW */}
             {orbitItems2.map(item => <OrbitNode2 key={item.label} item={item} />)}
+          </div>
+          {/* logo card is outside orbitalContent so CSS scale() never shrinks it */}
+          <div className={styles.logoCenter}>
+            <img src="/images/brfid-logo.png" alt="Britannia RFID" className={styles.logoCenterImg} />
           </div>
         </div>
 

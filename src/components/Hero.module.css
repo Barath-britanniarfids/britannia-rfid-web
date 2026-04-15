@@ -259,6 +259,12 @@
   box-shadow: 0 8px 40px rgba(52,172,224,0.16), 0 2px 8px rgba(0,0,0,0.06);
 }
 
+.logoCenterImg {
+  height: 68px;
+  width: auto;
+  display: block;
+}
+
 .arm {
   position: absolute;
   top: 50%; left: 50%;
@@ -551,6 +557,8 @@
   .introDesc { max-width: 580px; }
   .flowStep { width: min(88%, 580px); }
   .flowBigNum { font-size: clamp(10rem, 22vw, 18rem); }
+  .logoCenter { padding: 0.65rem 0.85rem; border-radius: 14px; }
+  .logoCenterImg { height: 46px; }
 }
 
 /* ── 3. ≤860 px — large tablet ───────────────────────────────────────────
@@ -576,6 +584,8 @@
   .introInner { max-width: 100%; }
   .introHeading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
   .introDesc { max-width: 100%; font-size: 0.95rem; }
+  .logoCenter { padding: 0.6rem 0.75rem; border-radius: 12px; }
+  .logoCenterImg { height: 42px; }
 }
 
 /* ── 4. ≤768 px — tablet portrait / large phone landscape ────────────────
@@ -604,6 +614,8 @@
   .flowHeading { font-size: clamp(1.6rem, 3vw, 2.2rem); }
   .flowDesc { font-size: 0.88rem; }
   .flowBigNum { font-size: clamp(9rem, 21vw, 16rem); }
+  .logoCenter { padding: 0.55rem 0.7rem; border-radius: 11px; }
+  .logoCenterImg { height: 38px; }
 }
 
 /* ── 5. ≤600 px — standard phones ───────────────────────────────────────
@@ -635,6 +647,8 @@
   .flowStatVal { font-size: 1.4rem; }
   .flowBigNum { font-size: clamp(8rem, 20vw, 14rem); }
   .stageFooter { left: 50%; transform: translateX(-50%); }
+  .logoCenter { padding: 0.45rem 0.6rem; border-radius: 10px; }
+  .logoCenterImg { height: 34px; }
 }
 
 /* ── 6. ≤425 px — Mobile L: iPhone 14 / Pixel 7 ─────────────────────────
@@ -660,6 +674,8 @@
   .introHeading { font-size: 1.45rem; }
   .introDesc { font-size: 0.82rem; }
   .flowHeading { font-size: 1.35rem; }
+  .logoCenter { padding: 0.4rem 0.55rem; border-radius: 9px; }
+  .logoCenterImg { height: 30px; }
 }
 
 /* ── 7. ≤400 px — smallest Android phones ───────────────────────────────
@@ -685,4 +701,6 @@
   .introHeading { font-size: 1.35rem; }
   .introDesc { font-size: 0.8rem; }
   .flowHeading { font-size: 1.3rem; }
+  .logoCenter { padding: 0.35rem 0.5rem; border-radius: 8px; }
+  .logoCenterImg { height: 26px; }
 }
