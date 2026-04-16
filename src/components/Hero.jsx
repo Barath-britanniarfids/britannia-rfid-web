@@ -207,46 +207,47 @@ export default function Hero() {
 
       /* ── FLOW STAGES (1-5) ────────────────────────── */
       STAGES.forEach((stage, idx) => {
-        const i   = idx + 1
-        const raw = p * N - i   // 0 at stage start, 1 at stage end
+        const i      = idx + 1
+        const raw    = p * N - i   // 0 at stage start, 1 at stage end
+        const isLast = idx === STAGES.length - 1
 
         // Layer 1 — glow: slightly wider window than text so color is always present
-        const glowOp = clamp(
-          raw < -0.10 ? 0 :
-          raw <  0.10 ? (raw + 0.10) / 0.20 :
-          raw >  0.88 ? (1.10 - raw) / 0.22 :
-          raw >= 1.10 ? 0 : 1
-        , 0, 1)
+        // Last stage: hold at full on scroll-down, entry still fades in on scroll-up
+        let glowOp
+        if (raw < -0.10) glowOp = 0
+        else if (raw < 0.10) glowOp = (raw + 0.10) / 0.20
+        else if (!isLast && raw > 0.88) glowOp = (1.10 - raw) / 0.22
+        else glowOp = 1
+        glowOp = clamp(glowOp, 0, 1)
         o(glowEls.current[idx], glowOp)
         t(glowEls.current[idx], `translate(-50%, -50%)`)
 
         // Layer 2 — big number: symmetric zoom, same distance both ends
-        const numOp = clamp(
-          raw <  0.00 ? 0 :
-          raw <  0.18 ? raw / 0.18 :
-          raw >  0.75 ? (1.0 - raw) / 0.25 :
-          raw >= 1.00 ? 0 : 1
-        , 0, 1)
+        // Last stage: no exit fade/zoom — holds at full when scrolling past it
         const numEntry = clamp(raw / 0.18, 0, 1)
-        const numExit  = clamp((raw - 0.75) / 0.25, 0, 1)
+        const numExit  = isLast ? 0 : clamp((raw - 0.75) / 0.25, 0, 1)
+        let numOp
+        if (raw < 0.00) numOp = 0
+        else if (raw < 0.18) numOp = raw / 0.18
+        else if (!isLast && raw > 0.75) numOp = (1.0 - raw) / 0.25
+        else numOp = 1
+        numOp = clamp(numOp, 0, 1)
         const numScale = numExit > 0 ? lerp(1.0, 0.76, numExit) : lerp(0.76, 1.0, numEntry)
         o(numEls.current[idx], numOp * 0.06)
         t(numEls.current[idx], `translate(-50%, -50%) scale(${numScale})`)
 
-        // Layer 3 — text: FULLY SYMMETRIC zoom
-        // Scroll DOWN → entry zooms IN (0.52→1.0), exit zooms OUT (1.0→0.52)
-        // Scroll UP   → reverses exactly: entry zooms OUT (1.0→0.52), exit zooms IN (0.52→1.0)
-        // Both directions feel identical because the math is the same — just p going ↑ or ↓
-        const textOp = clamp(
-          raw <  0.00 ? 0 :
-          raw <  0.20 ? raw / 0.20 :
-          raw >  0.72 ? (1.0 - raw) / 0.28 :
-          raw >= 1.00 ? 0 : 1
-        , 0, 1)
-        const entryT = clamp(raw / 0.20, 0, 1)             // 0→1 as raw 0→0.20
-        const exitT  = clamp((raw - 0.72) / 0.28, 0, 1)   // 0→1 as raw 0.72→1.0
-        // entry: 0.52→1.0  |  hold: 1.0  |  exit: 1.0→0.52  (same scale both ends)
-        const scale  = exitT > 0
+        // Layer 3 — text: FULLY SYMMETRIC zoom for all stages except last
+        // Last stage: entry zooms IN normally (0.52→1.0), then HOLDS — no exit zoom/fade
+        // Scroll UP from end → entry reverses naturally (1.0→0.52 as raw drops below 0.20)
+        const entryT = clamp(raw / 0.20, 0, 1)
+        const exitT  = isLast ? 0 : clamp((raw - 0.72) / 0.28, 0, 1)
+        let textOp
+        if (raw < 0.00) textOp = 0
+        else if (raw < 0.20) textOp = raw / 0.20
+        else if (!isLast && raw > 0.72) textOp = (1.0 - raw) / 0.28
+        else textOp = 1
+        textOp = clamp(textOp, 0, 1)
+        const scale = exitT > 0
           ? lerp(1.0, 0.52, exitT)
           : lerp(0.52, 1.0, entryT)
         o(stepEls.current[idx], textOp)
@@ -257,9 +258,10 @@ export default function Hero() {
       const activeStage = clamp(Math.floor(p * N), 0, N - 1)
       if (elFooter.current) {
         if (activeStage > 0) {
-          const stage    = STAGES[activeStage - 1]
-          const frac     = clamp(p * N - activeStage, 0, 1)
-          const footerOp = frac < 0.12 ? frac / 0.12 : frac > 0.88 ? (1 - frac) / 0.12 : 1
+          const stage        = STAGES[activeStage - 1]
+          const frac         = clamp(p * N - activeStage, 0, 1)
+          const isLastStage  = activeStage === N - 1
+          const footerOp     = frac < 0.12 ? frac / 0.12 : (!isLastStage && frac > 0.88) ? (1 - frac) / 0.12 : 1
           o(elFooter.current, footerOp)
           s(elFooter.current, 'display', 'flex')
           if (elFStep.current) elFStep.current.textContent = stage.step

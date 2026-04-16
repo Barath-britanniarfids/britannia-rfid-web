@@ -11,6 +11,7 @@ import TestimonialCTA from './components/TestimonialCTA'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import MilestonePopup from './components/MilestonePopup'
+import TaglineStrip from './components/TaglineStrip'
 
 // import Products from './pages/Products'
 // import ProductDetail from './pages/ProductDetail'
@@ -52,6 +53,7 @@ function LandingPage() {
       <MilestonePopup />
       <Hero />
       <Stats />
+      <TaglineStrip />
       <Verticals />
       <DigitalThread />
 {/* <section id="clients"><Clients /></section>

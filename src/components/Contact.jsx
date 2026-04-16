@@ -64,7 +64,7 @@ const Contact = () => {
       }}>
         <div style={{ flex: 1, paddingTop: 10 }}>
           <h1 style={{ fontSize: "clamp(2rem, 7vw, 4rem)", fontWeight: 800, margin: "0 0 24px", lineHeight: 1.1, color: "#111" }}>
-            Get in <span style={{ color: "#0B73C8" }}>Touch</span>
+            Get in <span style={{ color: "#34ACE0" }}>Touch</span>
           </h1>
           <p style={{ fontSize: "clamp(0.9375rem, 2vw, 1.125rem)", lineHeight: 1.8, color: "#555", margin: 0, maxWidth: 420 }}>
             Ready to explore what's next?<br />
@@ -82,7 +82,7 @@ const Contact = () => {
               background: "#fff", borderRadius: 16, padding: "24px 28px",
               boxShadow: "0 8px 30px rgba(0,0,0,0.1)", minWidth: 260,
             }}>
-              <p style={{ fontSize: "0.8125rem", fontWeight: 700, letterSpacing: 1.5, color: "#0B73C8", textTransform: "uppercase", margin: "0 0 10px" }}>
+              <p style={{ fontSize: "0.8125rem", fontWeight: 700, letterSpacing: 1.5, color: "#34ACE0", textTransform: "uppercase", margin: "0 0 10px" }}>
                 Our Response Time
               </p>
               <p style={{ fontSize: "1rem", color: "#333", margin: 0, fontWeight: 500, lineHeight: 1.5 }}>
@@ -155,12 +155,12 @@ const Contact = () => {
           </div>
           <button
             style={{
-              background: "#0B73C8", color: "#fff", border: "none", borderRadius: 10,
+              background: "#34ACE0", color: "#fff", border: "none", borderRadius: 10,
               padding: "14px 32px", fontSize: "0.9375rem", fontWeight: 600, cursor: "pointer",
               display: "flex", alignItems: "center", gap: 8, transition: "background 0.2s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#095da0")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#0B73C8")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#2899c7")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#34ACE0")}
           >
             Send Message <Send size={15} />
           </button>
