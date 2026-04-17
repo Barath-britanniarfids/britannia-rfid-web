@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 const DISPLAY_MS = 7000
 const COLOR      = '#34ACE0'
@@ -25,6 +26,14 @@ export default function MilestonePopup() {
   const startRef   = useRef(null)
   const rafRef     = useRef(null)
   const leavingRef = useRef(false)
+  const { theme }  = useTheme()
+  const isDark     = theme === 'dark'
+
+  const cardBg      = isDark ? '#131d30' : '#fff'
+  const headingClr  = isDark ? '#f1f5f9' : '#0d1a2e'
+  const bodyClr     = isDark ? '#94a3b8' : '#555'
+  const dividerClr  = isDark ? '#1e293b' : '#f0f2f5'
+  const barBg       = isDark ? '#1e293b' : '#f0f2f5'
 
   useEffect(() => {
     if (_alreadyShown) return
@@ -35,6 +44,14 @@ export default function MilestonePopup() {
     }, 500)
     return () => clearTimeout(t)
   }, [])
+
+  /* Escape key — industry-standard keyboard dismiss */
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => { if (e.key === 'Escape') triggerDismiss() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -191,12 +208,13 @@ export default function MilestonePopup() {
           {/* ══ CARD ══ */}
           <div style={{
             position:'relative', zIndex:1,
-            background:'#fff',
+            background: cardBg,
             borderRadius:24,
             width:'min(520px, calc(100vw - 46px))',
             overflow:'hidden',
             boxShadow:`0 40px 120px rgba(0,0,0,0.40), 0 0 36px ${COLOR}44`,
             animation:`${leaving ? 'mp-card-out' : 'mp-card-in'} ${leaving ? '0.52s ease' : '0.72s cubic-bezier(0.22,1,0.36,1)'} forwards`,
+            transition: 'background 0.3s ease',
           }}>
 
             {/* Tri-color top band + shimmer */}
@@ -211,15 +229,6 @@ export default function MilestonePopup() {
               <div style={{ position:'absolute', top:18, left:18, width:86,  height:86,  borderRadius:'50%', border:`2px solid ${COLOR}`,   animation:'mp-ring-a 2.8s ease-in-out infinite',     pointerEvents:'none' }}/>
               <div style={{ position:'absolute', top:3,  left:3,  width:116, height:116, borderRadius:'50%', border:`1.5px solid ${COLOR}`, animation:'mp-ring-b 3.8s ease-in-out .4s infinite', pointerEvents:'none' }}/>
 
-              {/* Close button */}
-              <button
-                onClick={triggerDismiss}
-                aria-label="Close"
-                style={{ position:'absolute', top:16, right:16, width:32, height:32, borderRadius:'50%', border:'1.5px solid #e2e6ea', background:'transparent', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', color:'#aaa', fontSize:14, lineHeight:1, transition:'all .25s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor=COLOR; e.currentTarget.style.color=COLOR; e.currentTarget.style.background=COLOR+'15'; e.currentTarget.style.transform='rotate(90deg)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor='#e2e6ea'; e.currentTarget.style.color='#aaa'; e.currentTarget.style.background='transparent'; e.currentTarget.style.transform='rotate(0deg)' }}
-              >✕</button>
-
               {/* Label pill */}
               <div style={{ display:'inline-flex', alignItems:'center', gap:7, background:`${COLOR}18`, border:`1px solid ${COLOR}55`, borderRadius:20, padding:'4px 14px', marginBottom:20, animation:'mp-reveal .38s ease both' }}>
                 <div style={{ width:7, height:7, borderRadius:'50%', background:COLOR }}/>
@@ -230,28 +239,28 @@ export default function MilestonePopup() {
               <div style={{ display:'flex', alignItems:'flex-end', gap:10, marginBottom:12, animation:'mp-num-in .72s cubic-bezier(0.22,1,0.36,1) .08s both' }}>
                 <span style={{ fontSize:'clamp(5rem,15vw,7.5rem)', fontWeight:900, lineHeight:1, letterSpacing:'-0.04em', color:COLOR, fontFamily:'Inter,sans-serif' }}>50</span>
                 <div style={{ paddingBottom:'0.75rem' }}>
-                  <p style={{ fontSize:'clamp(1.1rem,3vw,1.5rem)', fontWeight:700, color:'#0d1a2e', margin:0, fontFamily:'Inter,sans-serif', letterSpacing:'-0.02em', lineHeight:1.15 }}>Years</p>
+                  <p style={{ fontSize:'clamp(1.1rem,3vw,1.5rem)', fontWeight:700, color:headingClr, margin:0, fontFamily:'Inter,sans-serif', letterSpacing:'-0.02em', lineHeight:1.15 }}>Years</p>
                 </div>
               </div>
 
               {/* Heading */}
               <div style={{ marginBottom:14, animation:'mp-reveal .42s ease .18s both' }}>
-                <h2 style={{ fontSize:'clamp(1.3rem,4vw,1.75rem)', fontWeight:800, margin:'0 0 6px', lineHeight:1.2, color:'#0d1a2e', fontFamily:'Inter,sans-serif', letterSpacing:'-.025em' }}>
+                <h2 style={{ fontSize:'clamp(1.3rem,4vw,1.75rem)', fontWeight:800, margin:'0 0 6px', lineHeight:1.2, color:headingClr, fontFamily:'Inter,sans-serif', letterSpacing:'-.025em' }}>
                   Celebrating Five Decades<br/>of Innovation
                 </h2>
                 <p style={{ fontSize:'1rem', fontWeight:600, color:COLOR, margin:0, fontFamily:'Inter,sans-serif' }}>in the RFID Industry</p>
               </div>
 
               {/* Body text */}
-              <p style={{ fontSize:'.9375rem', lineHeight:1.74, color:'#555', margin:'0 0 28px', fontFamily:'Inter,sans-serif', animation:'mp-reveal .46s ease .26s both' }}>
+              <p style={{ fontSize:'.9375rem', lineHeight:1.74, color:bodyClr, margin:'0 0 28px', fontFamily:'Inter,sans-serif', animation:'mp-reveal .46s ease .26s both' }}>
                 From garment labelling in Leicester to a global AI-powered RFID ecosystem five decades of innovation, precision, and trusted partnerships across the world.
               </p>
 
-              <div style={{ height:1, background:'#f0f2f5' }}/>
+              <div style={{ height:1, background:dividerClr }}/>
             </div>
 
             {/* Progress bar */}
-            <div style={{ height:5, background:'#f0f2f5', position:'relative', overflow:'hidden' }}>
+            <div style={{ height:5, background:barBg, position:'relative', overflow:'hidden', transition:'background 0.3s ease' }}>
               <div style={{ height:'100%', width:`${progress}%`, background:`linear-gradient(90deg,${COLOR}88,${COLOR})`, position:'relative', overflow:'hidden' }}>
                 <div style={{ position:'absolute', inset:0, background:'linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent)', animation:'mp-shimmer 1.8s ease-in-out infinite' }}/>
                 <div style={{ position:'absolute', right:0, top:0, bottom:0, width:20, background:`radial-gradient(ellipse at right,${COLOR},transparent)`, animation:'mp-bar-glow 1s ease-in-out infinite' }}/>

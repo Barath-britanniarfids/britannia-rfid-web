@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation, Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
+import { ThemeProvider } from './context/ThemeContext'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -65,6 +66,7 @@ function LandingPage() {
 
 export default function App() {
   return (
+    <ThemeProvider>
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
@@ -75,5 +77,6 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
       </Route>
     </Routes>
+    </ThemeProvider>
   )
 }

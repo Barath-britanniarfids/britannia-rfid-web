@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { MapPin, Eye, Target, Zap, Shield, Users } from "lucide-react";
 import sourceimg from "../../public/images/Source Tagging.png";
 import containerimg from "../../public/images/Container.png";
+import { useTheme } from "../context/ThemeContext";
 
 const useWindowWidth = () => {
   const [width, setWidth] = useState(
@@ -59,6 +60,29 @@ const About = () => {
   const isMobile = width < 768;
   const isTablet = width < 1024;
 
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const c = {
+    bg:        isDark ? "#0a0f1e" : "#ffffff",
+    bg2:       isDark ? "#0d1526" : "#f7f9fb",
+    bgCard:    isDark ? "#131d30" : "#ffffff",
+    text1:     isDark ? "#f1f5f9" : "#111",
+    text2:     isDark ? "#cbd5e1" : "#444",
+    text3:     isDark ? "#94a3b8" : "#555",
+    text4:     isDark ? "#64748b" : "#777",
+    border:    isDark ? "#1e293b" : "#e2e8f0",
+    iconBg:    isDark ? "rgba(52, 172, 224, 0.12)" : "#EBF5FF",
+    iconColor: "#0B73C8",
+    accent:    "#0B73C8",
+    cardHoverBorder: "#0B73C8",
+    cardHoverShadow: isDark ? "0 8px 30px rgba(11,115,200,0.2)" : "0 8px 30px rgba(11,115,200,0.12)",
+    cardShadow: isDark ? "0 2px 12px rgba(0,0,0,0.3)" : "0 2px 12px rgba(0,0,0,0.04)",
+    cardIconBg: (hovered) => hovered
+      ? (isDark ? "rgba(52,172,224,0.15)" : "#EBF5FF")
+      : (isDark ? "rgba(255,255,255,0.06)" : "#f4f6f8"),
+  };
+
   const [heroRef, heroVisible] = useReveal();
   const [quoteRef, quoteVisible] = useReveal();
   const [warehouseRef, warehouseVisible] = useReveal();
@@ -92,9 +116,10 @@ const About = () => {
     <div
       style={{
         fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-        background: "#fff",
-        color: "#1a1a1a",
+        background: c.bg,
+        color: c.text1,
         overflowX: "hidden",
+        transition: "background 0.3s ease, color 0.3s ease",
       }}
     >
       {/* Hero: About Us */}
@@ -143,7 +168,7 @@ const About = () => {
               fontSize: "clamp(1.75rem, 5vw, 2.375rem)",
               fontWeight: 800,
               margin: "0 0 14px",
-              color: "#111",
+              color: c.text1,
             }}
           >
             Pioneering RFID Solutions
@@ -153,7 +178,7 @@ const About = () => {
               fontSize: "0.8125rem",
               fontWeight: 600,
               letterSpacing: "0.15em",
-              color: "#0B73C8",
+              color: c.accent,
               textTransform: "uppercase",
               margin: "0 0 20px",
             }}
@@ -164,7 +189,7 @@ const About = () => {
             style={{
               fontSize: "1.0625rem",
               lineHeight: 1.75,
-              color: "#444",
+              color: c.text2,
               margin: 0,
             }}
           >
@@ -192,7 +217,8 @@ const About = () => {
           ...fadeUp(quoteVisible, 0),
           padding: isMobile ? "36px 20px" : isTablet ? "44px 40px" : "52px 80px",
           textAlign: "center",
-          background: "#fff",
+          background: c.bg,
+          transition: "background 0.3s ease",
         }}
       >
         <div
@@ -207,7 +233,7 @@ const About = () => {
               fontSize: "clamp(1.125rem, 3vw, 1.625rem)",
               fontWeight: 600,
               lineHeight: 1.55,
-              color: "#1a1a1a",
+              color: c.text1,
               margin: "0 0 20px",
               letterSpacing: "-0.01em",
             }}
@@ -228,7 +254,7 @@ const About = () => {
               style={{
                 width: 32,
                 height: 2,
-                background: "#0B73C8",
+                background: c.accent,
                 borderRadius: 2,
               }}
             />
@@ -237,7 +263,7 @@ const About = () => {
                 fontSize: "0.75rem",
                 fontWeight: 700,
                 letterSpacing: "0.15em",
-                color: "#0B73C8",
+                color: c.accent,
                 textTransform: "uppercase",
               }}
             >
@@ -275,7 +301,7 @@ const About = () => {
               fontWeight: 800,
               margin: "0 0 14px",
               lineHeight: 1.15,
-              color: "#111",
+              color: c.text1,
             }}
           >
             One Ecosystem Every Industry
@@ -285,7 +311,7 @@ const About = () => {
               fontSize: "0.8125rem",
               fontWeight: 600,
               letterSpacing: "0.15em",
-              color: "#0B73C8",
+              color: c.accent,
               textTransform: "uppercase",
               margin: "0 0 20px",
             }}
@@ -296,7 +322,7 @@ const About = () => {
             style={{
               fontSize: "1.0625rem",
               lineHeight: 1.75,
-              color: "#555",
+              color: c.text3,
               margin: 0,
             }}
           >
@@ -357,7 +383,7 @@ const About = () => {
             style={{
               ...fadeUp(missionVisible, 0),
               flex: 1,
-              background: "#fff",
+              background: c.bgCard,
               borderRadius: 20,
               padding: isMobile ? "24px 20px" : isTablet ? "32px 28px" : "36px 32px",
               boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
@@ -365,6 +391,7 @@ const About = () => {
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
+              transition: "background 0.3s ease",
             }}
           >
             <div
@@ -372,21 +399,22 @@ const About = () => {
                 width: isMobile ? 40 : 48,
                 height: isMobile ? 40 : 48,
                 borderRadius: 10,
-                background: "#EBF5FF",
+                background: c.iconBg,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: 14,
+                transition: "background 0.3s ease",
               }}
             >
-              <MapPin size={isMobile ? 20 : 24} color="#0B73C8" />
+              <MapPin size={isMobile ? 20 : 24} color={c.iconColor} />
             </div>
             <h3
               style={{
                 fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
                 fontWeight: 700,
                 margin: "0 0 12px",
-                color: "#111",
+                color: c.text1,
               }}
             >
               Our Mission
@@ -395,7 +423,7 @@ const About = () => {
               style={{
                 fontSize: "1.0625rem",
                 lineHeight: 1.75,
-                color: "#555",
+                color: c.text3,
                 margin: 0,
               }}
             >
@@ -409,7 +437,7 @@ const About = () => {
             style={{
               ...fadeUp(missionVisible, 0.15),
               flex: 1,
-              background: "#fff",
+              background: c.bgCard,
               borderRadius: 20,
               padding: isMobile ? "24px 20px" : isTablet ? "32px 28px" : "36px 32px",
               boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
@@ -417,6 +445,7 @@ const About = () => {
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
+              transition: "background 0.3s ease",
             }}
           >
             <div
@@ -424,21 +453,22 @@ const About = () => {
                 width: isMobile ? 40 : 48,
                 height: isMobile ? 40 : 48,
                 borderRadius: 10,
-                background: "#EBF5FF",
+                background: c.iconBg,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: 14,
+                transition: "background 0.3s ease",
               }}
             >
-              <Eye size={isMobile ? 20 : 24} color="#0B73C8" />
+              <Eye size={isMobile ? 20 : 24} color={c.iconColor} />
             </div>
             <h3
               style={{
                 fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
                 fontWeight: 700,
                 margin: "0 0 12px",
-                color: "#111",
+                color: c.text1,
               }}
             >
               Our Vision
@@ -447,11 +477,11 @@ const About = () => {
               style={{
                 fontSize: "1.0625rem",
                 lineHeight: 1.75,
-                color: "#555",
+                color: c.text3,
                 margin: 0,
               }}
             >
-              To be the world's most trusted end-to-end RFID solutions partner
+              To be the world&apos;s most trusted end-to-end RFID solutions partner
               setting the global standard for intelligent item-level tracking
               from source tag to enterprise insight across every industry we
               serve.
@@ -468,7 +498,8 @@ const About = () => {
             : isTablet
               ? "40px 32px"
               : "48px 48px",
-          background: "#f7f9fb",
+          background: c.bg2,
+          transition: "background 0.3s ease",
         }}
       >
         <div
@@ -481,7 +512,7 @@ const About = () => {
               fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
               fontWeight: 700,
               margin: "0 0 10px",
-              color: "#111",
+              color: c.text1,
             }}
           >
             What Drives Everything We Build
@@ -491,7 +522,7 @@ const About = () => {
               ...fadeUp(valuesVisible, 0.1),
               width: 50,
               height: 4,
-              background: "#0B73C8",
+              background: c.accent,
               borderRadius: 2,
               margin: "14px auto 28px",
             }}
@@ -506,6 +537,7 @@ const About = () => {
           >
             {values.map((v, i) => {
               const Icon = v.icon;
+              const isHovered = hoveredValue === i;
               return (
                 <div
                   key={v.title}
@@ -518,23 +550,19 @@ const About = () => {
                       : isTablet
                         ? "0 1 calc(50% - 12px)"
                         : "0 1 240px",
-                    background: "#fff",
+                    background: c.bgCard,
                     borderRadius: 16,
                     padding: isMobile ? "24px 18px 20px" : "28px 20px 24px",
-                    border:
-                      hoveredValue === i
-                        ? "1.5px solid #0B73C8"
-                        : "1.5px solid #e2e8f0",
+                    border: isHovered
+                      ? `1.5px solid ${c.cardHoverBorder}`
+                      : `1.5px solid ${c.border}`,
                     transition: "all 0.25s ease",
                     transform: valuesVisible
-                      ? hoveredValue === i
+                      ? isHovered
                         ? "translateY(-4px)"
                         : "translateY(0)"
                       : "translateY(36px)",
-                    boxShadow:
-                      hoveredValue === i
-                        ? "0 8px 30px rgba(11,115,200,0.12)"
-                        : "0 2px 12px rgba(0,0,0,0.04)",
+                    boxShadow: isHovered ? c.cardHoverShadow : c.cardShadow,
                     cursor: "default",
                     boxSizing: "border-box",
                   }}
@@ -544,7 +572,7 @@ const About = () => {
                       width: 60,
                       height: 60,
                       borderRadius: "50%",
-                      background: hoveredValue === i ? "#EBF5FF" : "#f4f6f8",
+                      background: c.cardIconBg(isHovered),
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -554,7 +582,7 @@ const About = () => {
                   >
                     <Icon
                       size={26}
-                      color={hoveredValue === i ? "#0B73C8" : "#7a8a9e"}
+                      color={isHovered ? c.iconColor : (isDark ? "#64748b" : "#7a8a9e")}
                     />
                   </div>
                   <h4
@@ -562,7 +590,7 @@ const About = () => {
                       fontSize: "clamp(1rem, 2.5vw, 1.125rem)",
                       fontWeight: 700,
                       margin: "0 0 8px",
-                      color: "#111",
+                      color: c.text1,
                     }}
                   >
                     {v.title}
@@ -571,7 +599,7 @@ const About = () => {
                     style={{
                       fontSize: "0.9375rem",
                       lineHeight: 1.65,
-                      color: "#777",
+                      color: c.text4,
                       margin: 0,
                     }}
                   >

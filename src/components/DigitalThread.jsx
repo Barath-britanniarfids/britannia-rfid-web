@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const steps = [
   {
@@ -41,7 +42,6 @@ const steps = [
 
 const NEON = "#C9CD2C";
 const NEON_GLOW = "rgba(201,205,44,0.55)";
-const INACTIVE_LINE = "#e2e8f0";
 const INACTIVE_DOT_BG = "#34ACE0";
 const DOT_RING = "rgba(52,172,224,0.28)";
 
@@ -52,6 +52,13 @@ export default function DigitalThread() {
   const [activeSteps, setActiveSteps] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
   const [totalLineHeight, setTotalLineHeight] = useState(0);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const inactiveLine = isDark ? "#1e293b" : "#e2e8f0";
+  const headingColor = isDark ? "#f1f5f9" : "#0f172a";
+  const subtitleColor = isDark ? "#94a3b8" : "#64748b";
+  const bgColor = isDark ? "#0d1526" : "#f8fafc";
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 640);
@@ -82,7 +89,6 @@ export default function DigitalThread() {
     const tRect = timelineRef.current.getBoundingClientRect();
     const triggerY = window.innerHeight * 0.6;
 
-    // --- Step 1: Compute which dots the trigger has passed ---
     const passedDots = [];
     dotRefs.current.forEach((dot, i) => {
       if (!dot) return;
@@ -90,7 +96,6 @@ export default function DigitalThread() {
       if (r.top + r.height / 2 <= triggerY) passedDots.push(i);
     });
 
-    // --- Step 2: Compute neon line height ---
     let computedHeight = 0;
     const highest = passedDots.length > 0 ? Math.max(...passedDots) : -1;
 
@@ -99,13 +104,11 @@ export default function DigitalThread() {
       const dotCenterFromTop = dotRect.top + dotRect.height / 2 - tRect.top;
 
       if (highest === steps.length - 1) {
-        // Last dot: let line grow to bottom of timeline
         const overshoot = triggerY - (dotRect.top + dotRect.height / 2);
         const remaining = tRect.height - dotCenterFromTop;
         const ratio = Math.min(Math.max(overshoot / 200, 0), 1);
         computedHeight = dotCenterFromTop + ratio * remaining;
       } else {
-        // Interpolate toward next dot
         const nextDot = dotRefs.current[highest + 1];
         if (nextDot) {
           const nextRect = nextDot.getBoundingClientRect();
@@ -118,7 +121,6 @@ export default function DigitalThread() {
         }
       }
     } else {
-      // Before first dot — ease in
       const first = dotRefs.current[0];
       if (first) {
         const r = first.getBoundingClientRect();
@@ -132,7 +134,6 @@ export default function DigitalThread() {
 
     setLineHeight(computedHeight);
 
-    // --- Step 3: Activate dots ONLY if the neon line has reached them ---
     const newActive = new Set();
     dotRefs.current.forEach((dot, i) => {
       if (!dot) return;
@@ -157,14 +158,14 @@ export default function DigitalThread() {
   const lineTransform = isMobile ? "none" : "translateX(-50%)";
 
   return (
-    <div style={{ background: "#f8fafc", fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}>
+    <div style={{ background: bgColor, fontFamily: "'Inter', system-ui, -apple-system, sans-serif", transition: "background 0.3s ease" }}>
       <section style={{ padding: isMobile ? "2rem 1rem" : window.innerWidth <= 1024 ? "3rem 1.5rem" : "3rem 2rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <span style={{ display: "inline-block", fontSize: "0.68rem", fontWeight: 700, color: "#64748b", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 10 }}>
+            <span style={{ display: "inline-block", fontSize: "0.68rem", fontWeight: 700, color: subtitleColor, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 10 }}>
               SYSTEM LIFECYCLE
             </span>
-            <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700, color: "#0f172a", margin: 0 }}>
+            <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700, color: headingColor, margin: 0, transition: "color 0.3s ease" }}>
               The Digital Thread
             </h2>
           </div>
@@ -172,7 +173,8 @@ export default function DigitalThread() {
           <div ref={timelineRef} style={{ position: "relative" }}>
             <div style={{
               position: "absolute", left: lineLeft, top: 0, bottom: 0,
-              width: 2, background: INACTIVE_LINE, transform: lineTransform, zIndex: 0
+              width: 2, background: inactiveLine, transform: lineTransform, zIndex: 0,
+              transition: "background 0.3s ease",
             }} />
             <div style={{
               position: "absolute", left: lineLeft, top: 0,
@@ -186,7 +188,7 @@ export default function DigitalThread() {
 
             {steps.map((s, i) => (
               <Row key={i} step={s} index={i} isActive={activeSteps.has(i)} isMobile={isMobile}
-                dotRef={el => (dotRefs.current[i] = el)} />
+                dotRef={el => (dotRefs.current[i] = el)} isDark={isDark} />
             ))}
           </div>
         </div>
@@ -212,11 +214,16 @@ export default function DigitalThread() {
   );
 }
 
-function Row({ step, index, isActive, isMobile, dotRef }) {
+function Row({ step, index, isActive, isMobile, dotRef, isDark }) {
   const isLeft = step.side === "left";
   const [wasActive, setWasActive] = useState(false);
   const [justActivated, setJustActivated] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+
+  const titleColor  = isDark ? "#f1f5f9" : "#0f172a";
+  const descColor   = isDark ? "#94a3b8" : "#64748b";
+  const borderColor = isDark ? "#1e293b" : "#e2e8f0";
+  const imgPlaceholder = isDark ? "#1e293b" : "#e2e8f0";
 
   useEffect(() => {
     if (isActive && !wasActive) {
@@ -263,10 +270,11 @@ function Row({ step, index, isActive, isMobile, dotRef }) {
         justifyContent: "center",
       }}
     >
-      <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", margin: "0 0 8px" }}>{step.title}</h3>
+      <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: titleColor, margin: "0 0 8px", transition: "color 0.3s ease" }}>{step.title}</h3>
       <p style={{
-        fontSize: "0.84rem", color: "#64748b", lineHeight: 1.7, margin: 0, maxWidth: 380,
+        fontSize: "0.84rem", color: descColor, lineHeight: 1.7, margin: 0, maxWidth: 380,
         marginLeft: !isMobile && isLeft ? "auto" : 0,
+        transition: "color 0.3s ease",
       }}>{step.desc}</p>
     </div>
   );
@@ -283,11 +291,12 @@ function Row({ step, index, isActive, isMobile, dotRef }) {
     >
       <div style={{
         width: "100%", height: isMobile ? 160 : 220, borderRadius: 14,
-        overflow: "hidden", border: "1px solid #e2e8f0",
+        overflow: "hidden", border: `1px solid ${borderColor}`,
         boxShadow: isActive
           ? "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(201,205,44,0.1)"
           : "0 4px 20px rgba(0,0,0,0.08)",
-        background: "#e2e8f0", position: "relative",
+        background: imgPlaceholder, position: "relative",
+        transition: "border-color 0.3s ease, background 0.3s ease",
       }}>
         <img src={step.img} alt={step.title} loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />

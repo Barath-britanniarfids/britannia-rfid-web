@@ -18,7 +18,7 @@
 .introBg {
   position: absolute;
   inset: 0;
-  background: #f0f4ff;
+  background: var(--hero-intro);
   background-image:
     radial-gradient(ellipse 65% 55% at 72% 42%, rgba(52,172,224,0.10) 0%, transparent 70%),
     radial-gradient(ellipse 45% 45% at 12% 78%, rgba(52,172,224,0.06) 0%, transparent 60%);
@@ -251,7 +251,7 @@
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
-  background: rgba(255,255,255,0.92);
+  background: var(--logo-center);
   border: 1.5px solid rgba(52,172,224,0.22);
   border-radius: 18px;
   padding: 0.9rem 1.1rem;
@@ -295,7 +295,7 @@
 
 .nodeIcon {
   width: 54px; height: 54px;
-  background: #fff;
+  background: var(--bg-card);
   border: 1.5px solid color-mix(in srgb, var(--clr, #34ace0) 35%, #e2e8f0);
   border-radius: 14px;
   display: flex;
@@ -311,7 +311,7 @@
 .nodeLabel {
   font-size: 0.6rem;
   font-weight: 700;
-  color: #334155;
+  color: var(--text-2);
   white-space: nowrap;
 }
 
@@ -348,7 +348,7 @@
 /* circular icon style — visually distinct from inner square nodes */
 .nodeIcon2 {
   width: 52px; height: 52px;
-  background: rgba(255,255,255,0.90);
+  background: var(--node-bg);
   border: 1.5px solid color-mix(in srgb, var(--clr, #34ace0) 40%, #dbeafe);
   border-radius: 50%;
   display: flex;
@@ -400,7 +400,7 @@
   font-size: clamp(2.2rem, 3.8vw, 3.6rem);
   font-weight: 900;
   line-height: 1.1;
-  color: #0f172a;
+  color: var(--text-1);
   letter-spacing: -0.03em;
 }
 
@@ -408,7 +408,7 @@
 
 .introDesc {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--text-3);
   line-height: 1.75;
   max-width: 500px;
 }
